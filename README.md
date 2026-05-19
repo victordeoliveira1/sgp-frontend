@@ -1,19 +1,19 @@
 # SGP - Frontend
 
-Interface web do Sistema de Gerenciamento de Projetos, desenvolvida em HTML, CSS, JavaScript e Bootstrap.
+Web interface for the Project Management System, built with HTML, CSS, JavaScript and Bootstrap.
 
-## 📌 Sobre o Projeto
+## 📌 About
 
-Frontend do SGP, sistema que permite gerenciar usuários, projetos e tarefas. Desenvolvido em conjunto com a API REST disponível em [api-rest-spring-boot](https://github.com/victordeoliveira1/api-rest-spring-boot).
+Frontend of the SGP system, which allows managing users, projects and tasks. Developed alongside the REST API available at [api-rest-spring-boot](https://github.com/victordeoliveira1/api-rest-spring-boot).
 
-## 🚀 Páginas
+## 🚀 Pages
 
-- **Dashboard** - Visão geral do sistema
-- **Usuários** - Gerenciamento de usuários
-- **Projetos** - Gerenciamento de projetos
-- **Tarefas** - Gerenciamento de tarefas
+- **Dashboard** - System overview
+- **Users** - User management
+- **Projects** - Project management
+- **Tasks** - Task management
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies
 
 - HTML5
 - CSS3
@@ -22,9 +22,9 @@ Frontend do SGP, sistema que permite gerenciar usuários, projetos e tarefas. De
 
 ## 🔗 Status
 
-Projeto em desenvolvimento. Integração com a API e migração para React em andamento.
+Project under development. API integration and React migration in progress.
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 Victor de Oliveira Alves
 
