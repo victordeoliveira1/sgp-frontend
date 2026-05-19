@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Gestão de Projetos</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- Linha geral -->
+        <div class="row">
+            <!-- INICIO DA ESTRUTURA BASE -->
+            <!-- Barra lateral -->
+            <div class="barraLateral col-4 col-md-4 col-lg-2">
+
+                <div class="logo">
+                    <img src="img/logo.png" alt="">
+                </div>
+                <hr style="background-color: white; border: none;height: 2px;">
+
+                <!-- Menu -->
+                <div class="menu">
+                    <ul>
+                        <li><a class="menuItem" href="index.html">
+                                <span class="material-icons">dashboard</span>
+                                Dashboard
+                            </a>
+
+                        </li>
+                        <li><a class=" menuItem" href="projetos.html">
+                                <span class="material-icons">folder</span>
+                                Projetos
+                            </a>
+                        </li>
+                        <li><a class="menuItem active" href="tarefas.html">
+                                <span class="material-icons">task</span>
+                                Tarefas
+                            </a></li>
+
+                        <li><a class="menuItem" href="usuarios.html">
+                                <span class="material-icons">person</span>
+                                Usuarios
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Segunda coluna -->
+            <div class="geral col-8 col-md-8 col-lg-10">
+
+                <!-- Barra superior -->
+                <div class="row barraSuperior">
+                    <div class="row barraPerfil mx-0">
+                        <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                        </div>
+                        <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
+                            <div class="userPerfil card shadow">
+                                <button class="btn">
+                                    <span class="material-icons" style="font-size: 24px;margin-top: 3px; ">
+                                        notifications_none
+                                    </span>
+                                </button>
+                                <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
+                                <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
+                                    style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                    id="siglaNome"></b>
+                                <b>Victor</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- título da página -->
+                    <div class="row mx-0">
+                        <div class="barraTitulo col-md-12">
+                            <span class="material-icons">task</span>
+                            Tarefas
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FIM DA ESTRUTURA BASE -->
+
+                <!-- Conteúdo principal -->
+                <div class="row">
+                    <div class="conteudo col-md-12">
+
+
+
+
+                    </div>
+                    <!-- Fim conteúdo principal -->
+                </div>
+                <!-- Fim segunda coluna -->
+            </div>
+            <!-- Fim linha geral -->
+        </div>
+
+        <script src=" js/bootstrap.js">
+        </script>
+        <script src="js/script.js">
+        </script>
+</body>
+
+</html>
