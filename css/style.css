@@ -1,0 +1,214 @@
+:root {
+    --cor-primaria: #172135;
+    --cor-secundaria: #dfdfdf;
+    --cor-menuSelecionado: #303f73;
+    --cor-menuHover: #3c4e8f;
+    --cor-geral: aliceblue;
+    --font-textos: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    --cor-icone-projetos: 0, 102, 255;
+    --cor-icone-tarefas: 0, 102, 255;
+    --cor-icone-concluidos: 37, 230, 117;
+    --cor-icone-atrasadas: 238, 22, 22;
+    --opacidade-icone: 0.15;
+
+    --teste: dashCards col-sm-12 col-md-12 col-lg-6 col-xl-3;
+}
+
+a {
+    text-decoration: none;
+}
+
+span.material-icons {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+/* ----------------> BARRA LATERAL E MENU <----------------*/
+.barraLateral {
+    min-height: 100vh;
+    background-color: var(--cor-primaria);
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.menu {
+    padding: 0px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.menu ul li {
+    display: flex;
+}
+
+.menuItem {
+    background-color: var(--cor-primaria);
+    width: 100%;
+    margin: 2px 0px;
+    padding: 15px 10px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    font-size: clamp(12px, 1.3vw, 18px);
+    white-space: nowrap;
+}
+
+.menuItem:hover {
+    background-color: var(--cor-menuHover);
+}
+
+.menu a.active {
+    background-color: var(--cor-menuSelecionado);
+}
+
+/* ----------------> GERAL <----------------*/
+
+.geral {
+    height: 100vh;
+    background-color: var(--cor-geral);
+    flex: 1;
+    overflow-y: auto;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* ----------------> BARRA SUPERIOR E PERFIL <----------------*/
+.barraSuperior {
+    height: fit-content;
+    background-color: var(--cor-geral);
+    padding: 0px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.barraPerfil {
+    height: 80px;
+}
+
+.userPerfil {
+    align-self: center;
+    width: fit-content;
+    height: fit-content;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    padding: 0px 15px;
+    gap: 5px;
+}
+
+
+
+/* ----------------> BARRA TITULO E CONTEUDO <----------------*/
+.barraTitulo {
+    height: 50px;
+    background-color: var(--cor-primaria);
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+
+}
+
+.conteudo {
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 10px;
+}
+
+/* ----------------> Dashboard <----------------*/
+
+.dashCards {
+    height: 200px;
+    padding: 10px 10px;
+}
+
+.dashCards .card {
+    height: 100%;
+    justify-content: center;
+    border-radius: 15px;
+    border: none;
+}
+
+.dashCards .dashInfo {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    gap: 5px;
+    text-align: center;
+
+}
+
+.dashInfo .icones {
+    border-radius: 500px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card span {
+    font-size: 80px;
+    margin: 0px;
+}
+
+h2.h2numeros {
+    font-size: 60px;
+    margin: 0px;
+}
+
+/* ----------------> Dashboard tarefas <----------------*/
+
+.dashTarefas {
+    padding: 10px 10px;
+}
+
+.dashTarefas .card {
+    border-radius: 15px;
+    border: none;
+    height: 400px;
+    height: clamp(250px, 40vw, 400px);
+    min-height: 250px;
+    padding: 0px 30px;
+    white-space: nowrap;
+    font-size: 10px;
+}
+
+.graficoTarefas {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: cadetblue;
+}
