@@ -96,7 +96,109 @@
                 <div class="row">
                     <div class="conteudo col-md-12">
 
+                        <!-- Botão -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            Novo Usuário
+                        </button>
 
+
+                        <!-- Modal COM FORM-->
+                        <div class="modal fade" id="modalUsuario" tabindex="-1">
+
+                            <div class="modal-dialog modal-dialog-centered modal-lg"> >
+
+                                <div class="modal-content">
+
+                                    <!-- Cabeçalho -->
+                                    <div class="modal-header">
+
+                                        <h5 class="modal-title">
+                                            Novo Usuário
+                                        </h5>
+
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                                    </div>
+
+                                    <!-- Corpo -->
+                                    <div class="modal-body">
+
+                                        <form id="formUsuario">
+
+                                            <!-- Nome -->
+                                            <div class="mb-3">
+                                                <label for="nomeUsuario" class="form-label fw-semibold">Nome: <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" id="nomeUsuario" name="nomeUsuario"
+                                                    class="form-control" placeholder="Digite o nome" />
+                                            </div>
+
+                                            <!-- CPF -->
+                                            <div class="mb-3">
+                                                <label for="cpfUsuario" class="form-label fw-semibold">CPF: <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" id="cpfUsuario" name="cpfUsuario"
+                                                    class="form-control" placeholder="000.000.000-00" maxlength="14"
+                                                    inputmode="numeric" />
+                                            </div>
+
+                                            <!-- E-mail -->
+                                            <div class="mb-3">
+                                                <label for="emailUsuario" class="form-label fw-semibold">E-mail: <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="email" id="emailUsuario" name="emailUsuario"
+                                                    class="form-control" placeholder="email@email.com" />
+                                            </div>
+
+                                            <!-- Data de Nascimento -->
+                                            <div class="mb-3">
+                                                <label for="dataNascimento" class="form-label fw-semibold">Data de
+                                                    Nascimento: <span class="text-danger">*</span></label>
+                                                <input type="date" id="dataNascimento" name="dataNascimento"
+                                                    class="form-control" />
+                                            </div>
+
+                                            <!-- Status -->
+                                            <div class="mb-3">
+                                                <label for="statusUsuario" class="form-label fw-semibold">Status: <span
+                                                        class="text-danger">*</span></label>
+                                                <select id="statusUsuario" name="statusUsuario" class="form-select">
+                                                    <option value="" disabled selected>Selecione o status</option>
+                                                    <option value="ATIVO">Ativo</option>
+                                                    <option value="INATIVO">Inativo</option>
+                                                    <option value="BLOQUEADO">Bloqueado</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Senha Temporária -->
+                                            <div class="mb-4">
+                                                <label for="senhaUsuario" class="form-label fw-semibold">Senha
+                                                    Temporária: <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="password" id="senhaUsuario" name="senhaUsuario"
+                                                        class="form-control" placeholder="Digite a senha" />
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="toggleSenha">Mostrar</button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Botões -->
+                                            <div class="d-grid gap-2">
+                                                <button type="button" class="btn btn-success btn-lg"
+                                                    onclick="validarFormUsuario()">Adicionar Usuário</button>
+                                                <button type="button" class="btn btn-outline-danger btn-lg"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- Fim do modal -->
 
 
                     </div>

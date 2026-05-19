@@ -96,7 +96,108 @@
                 <div class="row">
                     <div class="conteudo col-md-12">
 
+                        <!-- Botão -->
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            Novo Projeto
+                        </button>
 
+
+                        <!-- Modal com form-->
+                        <div class="modal fade" id="modalUsuario" tabindex="-1">
+
+                            <div class="modal-dialog modal-dialog-centered modal-lg"> >
+
+                                <div class="modal-content">
+
+                                    <!-- Cabeçalho -->
+                                    <div class="modal-header">
+
+                                        <h5 class="modal-title">
+                                            Novo Projeto
+                                        </h5>
+
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                                    </div>
+
+                                    <!-- Corpo -->
+                                    <div class="modal-body">
+                                        <form id="formProjeto">
+
+                                            <!-- Nome do projeto -->
+                                            <div class="mb-3">
+                                                <label for="tituloProjeto" class="form-label fw-semibold">Nome do
+                                                    projeto : <span class="text-danger">*</span></label>
+                                                <input type="text" id="tituloProjeto" name="tituloProjeto"
+                                                    class="form-control" placeholder="Digite o nome do projeto" />
+                                            </div>
+
+                                            <!-- Descrição -->
+                                            <div class="mb-3">
+                                                <label for="descricaoProjeto"
+                                                    class="form-label fw-semibold">Descrição:</label>
+                                                <textarea id="descricaoProjeto" name="descricaoProjeto"
+                                                    class="form-control" placeholder="Descreva o projeto"
+                                                    rows="4"></textarea>
+                                            </div>
+
+                                            <!-- Data de criação + Data de conclusão -->
+                                            <div class="row mb-3">
+                                                <div class="col-6">
+                                                    <label for="dataCriacaoProjeto" class="form-label fw-semibold">Data
+                                                        de criação: <span class="text-danger">*</span></label>
+                                                    <input type="date" id="dataCriacaoProjeto" name="dataCriacaoProjeto"
+                                                        class="form-control" />
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="dataConclusaoProjeto"
+                                                        class="form-label fw-semibold">Data de conclusão:
+                                                        <span class="text-danger">*</span></label>
+                                                    <input type="date" id="dataConclusaoProjeto"
+                                                        name="dataConclusaoProjeto" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <!-- statusProjeto + Responsável -->
+                                            <div class="row mb-4">
+                                                <div class="col-6">
+                                                    <label for="statusProjeto"
+                                                        class="form-label fw-semibold">statusProjeto: <span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="statusProjeto" name="statusProjeto" class="form-select">
+                                                        <option value="" disabled selected>Selecione</option>
+                                                        <option value="ATIVO">Ativo</option>
+                                                        <option value="CONCLUIDO">Concluido</option>
+                                                        <option value="CANCELADO">Cancelado</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="responsavelProjeto"
+                                                        class="form-label fw-semibold">Responsável: <span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" id="responsavelProjeto" name="responsavelProjeto"
+                                                        class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <!-- Botões -->
+                                            <div class="d-grid gap-2">
+                                                <button type="button" class="btn btn-success btn-lg"
+                                                    onclick="validarFormProjeto()">Salvar</button>
+                                                <button type="button" class="btn btn-outline-danger btn-lg"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- Fim do modal -->
 
 
                     </div>
