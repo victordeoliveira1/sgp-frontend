@@ -74,7 +74,7 @@
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
                                     <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                        style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        style="width: 40px; height: 40px;min-width: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b>Victor</b>
                                 </div>
@@ -92,15 +92,36 @@
                 </div>
 
                 <!-- FIM DA ESTRUTURA BASE -->
-
+                <div class="barraAcoes">
+                    <div class="row mx-0 flex-row">
+                        <div class="col-7 col-md-8 col-lg-5">
+                            <div class="input-group flex-nowrap">
+                                <span class="input-group-text mx">
+                                    <span class="material-icons">search</span>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search..." aria-label="Username"
+                                    aria-describedby="addon-wrapping">
+                            </div>
+                        </div>
+                        <div class="col-5 col-md-4 col-lg-7 d-flex justify-content-end" style="white-space: nowrap;">
+                            <!-- Botão Novo Usuario-->
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                                <b>+ Novo Usuário</b>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- Conteúdo principal -->
                 <div class="row">
                     <div class="conteudo col-md-12">
+                        <!-- Tabela Usuarios -->
+                        <div class="row mx-0 mt-4" style="height: 800px;">
+                            <div class="graficoTarefas col-12 h-100">
+                                <h4><b>TABELA</b></h4>
+                            </div>
+                        </div>
+                        <!-- Fim tabela Usuarios -->
 
-                        <!-- Botão -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
-                            Novo Usuário
-                        </button>
 
                     </div>
                     <!-- Fim conteúdo principal -->
@@ -136,33 +157,31 @@
                             <div class="mb-3">
                                 <label for="nomeUsuario" class="form-label fw-semibold">Nome: <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="nomeUsuario" name="nomeUsuario"
-                                    class="form-control" placeholder="Digite o nome" />
+                                <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control"
+                                    placeholder="Digite o nome" />
                             </div>
 
                             <!-- CPF -->
                             <div class="mb-3">
                                 <label for="cpfUsuario" class="form-label fw-semibold">CPF: <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="cpfUsuario" name="cpfUsuario"
-                                    class="form-control" placeholder="000.000.000-00" maxlength="14"
-                                    inputmode="numeric" />
+                                <input type="text" id="cpfUsuario" name="cpfUsuario" class="form-control"
+                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" />
                             </div>
 
                             <!-- E-mail -->
                             <div class="mb-3">
                                 <label for="emailUsuario" class="form-label fw-semibold">E-mail: <span
                                         class="text-danger">*</span></label>
-                                <input type="email" id="emailUsuario" name="emailUsuario"
-                                    class="form-control" placeholder="email@email.com" />
+                                <input type="email" id="emailUsuario" name="emailUsuario" class="form-control"
+                                    placeholder="email@email.com" />
                             </div>
 
                             <!-- Data de Nascimento -->
                             <div class="mb-3">
                                 <label for="dataNascimento" class="form-label fw-semibold">Data de
                                     Nascimento: <span class="text-danger">*</span></label>
-                                <input type="date" id="dataNascimento" name="dataNascimento"
-                                    class="form-control" />
+                                <input type="date" id="dataNascimento" name="dataNascimento" class="form-control" />
                             </div>
 
                             <!-- Status -->
@@ -182,8 +201,8 @@
                                 <label for="senhaUsuario" class="form-label fw-semibold">Senha
                                     Temporária: <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="password" id="senhaUsuario" name="senhaUsuario"
-                                        class="form-control" placeholder="Digite a senha" />
+                                    <input type="password" id="senhaUsuario" name="senhaUsuario" class="form-control"
+                                        placeholder="Digite a senha" />
                                     <button class="btn btn-outline-secondary" type="button"
                                         id="toggleSenha">Mostrar</button>
                                 </div>

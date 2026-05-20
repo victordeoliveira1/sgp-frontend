@@ -119,10 +119,19 @@ span.material-icons {
     justify-content: flex-end;
     margin-left: auto;
     padding: 0px 15px;
+    margin-right: 15px;
     gap: 5px;
 }
 
 
+
+/* ----------------> BARRA DE AÇÕES <----------------*/
+.barraAcoes {
+    position: sticky;
+    top: 130px;
+    z-index: 99;
+    padding: 10px 15px;
+}
 
 /* ----------------> BARRA TITULO E CONTEUDO <----------------*/
 .barraTitulo {
@@ -198,8 +207,7 @@ h2.h2numeros {
 .dashTarefas .card {
     border-radius: 15px;
     border: none;
-    height: 400px;
-    height: clamp(250px, 40vw, 400px);
+    height: 400px;  
     min-height: 250px;
     padding: 0px 30px;
     font-size: 10px;

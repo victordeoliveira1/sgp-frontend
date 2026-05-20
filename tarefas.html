@@ -74,7 +74,7 @@
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
                                     <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                        style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        style="width: 40px; height: 40px;min-width: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b>Victor</b>
                                 </div>
@@ -91,14 +91,35 @@
                     </div>
                 </div>
                 <!-- FIM DA ESTRUTURA BASE -->
-
+                <div class="barraAcoes">
+                    <div class="row mx-0 flex-row">
+                        <div class="col-7 col-md-8 col-lg-5">
+                            <div class="input-group flex-nowrap">
+                                <span class="input-group-text mx">
+                                    <span class="material-icons">search</span>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search..." aria-label="Username"
+                                    aria-describedby="addon-wrapping">
+                            </div>
+                        </div>
+                        <div class="col-5 col-md-4 col-lg-7 d-flex justify-content-end" style="white-space: nowrap;">
+                            <!-- Botão Nova tarefa-->
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                                <b>+ Nova Tarefa</b>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- Conteúdo principal -->
                 <div class="row">
                     <div class="conteudo col-md-12">
-                        <!-- Botão -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
-                            Nova Tarefa
-                        </button>
+                        <!-- Tabela Tarefas -->
+                        <div class="row mx-0 mt-4" style="height: 800px;">
+                            <div class="graficoTarefas col-12 h-100">
+                                <h4><b>TABELA</b></h4>
+                            </div>
+                        </div>
+                        <!-- Fim tabela Tarefas -->
 
                     </div>
                     <!-- Fim conteúdo principal -->
@@ -133,18 +154,16 @@
                             <div class="mb-3">
                                 <label for="tituloTarefa" class="form-label fw-semibold">Título: <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="tituloTarefa" name="tituloTarefa"
-                                    class="form-control" placeholder="Digite o título da tarefa" />
+                                <input type="text" id="tituloTarefa" name="tituloTarefa" class="form-control"
+                                    placeholder="Digite o título da tarefa" />
                             </div>
 
                             <!-- prioridadeTarefa -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="prioridadeTarefa"
-                                        class="form-label fw-semibold">prioridade: <span
+                                    <label for="prioridadeTarefa" class="form-label fw-semibold">prioridade: <span
                                             class="text-danger">*</span></label>
-                                    <select id="prioridadeTarefa" name="prioridadeTarefa"
-                                        class="form-select">
+                                    <select id="prioridadeTarefa" name="prioridadeTarefa" class="form-select">
                                         <option value="" disabled selected>Selecione</option>
                                         <option value="BAIXA">Baixa</option>
                                         <option value="MEDIA">Média</option>
@@ -154,8 +173,7 @@
 
                                 <!-- Responsável -->
                                 <div class="col-md-6 mb-3">
-                                    <label for="responsavelTarefa"
-                                        class="form-label fw-semibold">Responsável: <span
+                                    <label for="responsavelTarefa" class="form-label fw-semibold">Responsável: <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="responsavelTarefa" name="responsavelTarefa"
                                         class="form-control" />
@@ -164,11 +182,9 @@
 
                             <!-- Descrição -->
                             <div class="mb-3">
-                                <label for="descricaoTarefa"
-                                    class="form-label fw-semibold">Descrição:</label>
-                                <textarea id="descricaoTarefa" name="descricaoTarefa"
-                                    class="form-control" placeholder="Descreva a tarefa"
-                                    rows="4"></textarea>
+                                <label for="descricaoTarefa" class="form-label fw-semibold">Descrição:</label>
+                                <textarea id="descricaoTarefa" name="descricaoTarefa" class="form-control"
+                                    placeholder="Descreva a tarefa" rows="4"></textarea>
                             </div>
 
                             <!-- Data de criação + Data de conclusão -->
@@ -186,8 +202,8 @@
                                     <label for="dataConclusaoTarefa" class="form-label fw-semibold">Data de
                                         conclusão:
                                         <span class="text-danger">*</span></label>
-                                    <input type="date" id="dataConclusaoTarefa"
-                                        name="dataConclusaoTarefa" class="form-control" />
+                                    <input type="date" id="dataConclusaoTarefa" name="dataConclusaoTarefa"
+                                        class="form-control" />
                                 </div>
                             </div>
 
@@ -221,8 +237,7 @@
                             <!-- Definir Lembrete -->
                             <div class="mb-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="lembrete"
-                                        name="lembrete" />
+                                    <input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" />
                                     <label class="form-check-label fw-semibold" for="lembrete">Definir
                                         Lembrete</label>
                                 </div>
