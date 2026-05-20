@@ -61,145 +61,51 @@
 
                 <!-- Barra superior -->
                 <div class="row barraSuperior">
-                    <div class="row barraPerfil mx-0">
-                        <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                    <div class="col-12 px-0">
+                        <div class="row barraPerfil mx-0">
+                            <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                            </div>
+                            <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
+                                <div class="userPerfil card shadow">
+                                    <button class="btn">
+                                        <span class="material-icons" style="font-size: 24px;margin-top: 3px; ">
+                                            notifications_none
+                                        </span>
+                                    </button>
+                                    <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
+                                    <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
+                                        style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        id="siglaNome"></b>
+                                    <b>Victor</b>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
-                            <div class="userPerfil card shadow">
-                                <button class="btn">
-                                    <span class="material-icons" style="font-size: 24px;margin-top: 3px; ">
-                                        notifications_none
-                                    </span>
-                                </button>
-                                <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
-                                <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                    style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
-                                    id="siglaNome"></b>
-                                <b>Victor</b>
+
+
+                        <!-- título da página -->
+                        <div class="row mx-0">
+                            <div class="barraTitulo col-md-12">
+                                <span class="material-icons">folder</span>
+                                Projetos
                             </div>
                         </div>
                     </div>
-
-                    <!-- título da página -->
-                    <div class="row mx-0">
-                        <div class="barraTitulo col-md-12">
-                            <span class="material-icons">folder</span>
-                            Projetos
-                        </div>
-                    </div>
-
                 </div>
 
                 <!-- FIM DA ESTRUTURA BASE -->
 
                 <!-- Conteúdo principal -->
-                <div class="row">
+                <div class="row mx-0 px-0">
                     <div class="conteudo col-md-12">
-
-                        <!-- Botão -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
-                            Novo Projeto
-                        </button>
-
-
-                        <!-- Modal com form-->
-                        <div class="modal fade" id="modalUsuario" tabindex="-1">
-
-                            <div class="modal-dialog modal-dialog-centered modal-lg"> >
-
-                                <div class="modal-content">
-
-                                    <!-- Cabeçalho -->
-                                    <div class="modal-header">
-
-                                        <h5 class="modal-title">
-                                            Novo Projeto
-                                        </h5>
-
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-
-                                    </div>
-
-                                    <!-- Corpo -->
-                                    <div class="modal-body">
-                                        <form id="formProjeto">
-
-                                            <!-- Nome do projeto -->
-                                            <div class="mb-3">
-                                                <label for="tituloProjeto" class="form-label fw-semibold">Nome do
-                                                    projeto : <span class="text-danger">*</span></label>
-                                                <input type="text" id="tituloProjeto" name="tituloProjeto"
-                                                    class="form-control" placeholder="Digite o nome do projeto" />
-                                            </div>
-
-                                            <!-- Descrição -->
-                                            <div class="mb-3">
-                                                <label for="descricaoProjeto"
-                                                    class="form-label fw-semibold">Descrição:</label>
-                                                <textarea id="descricaoProjeto" name="descricaoProjeto"
-                                                    class="form-control" placeholder="Descreva o projeto"
-                                                    rows="4"></textarea>
-                                            </div>
-
-                                            <!-- Data de criação + Data de conclusão -->
-                                            <div class="row mb-3">
-                                                <div class="col-6">
-                                                    <label for="dataCriacaoProjeto" class="form-label fw-semibold">Data
-                                                        de criação: <span class="text-danger">*</span></label>
-                                                    <input type="date" id="dataCriacaoProjeto" name="dataCriacaoProjeto"
-                                                        class="form-control" />
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="dataConclusaoProjeto"
-                                                        class="form-label fw-semibold">Data de conclusão:
-                                                        <span class="text-danger">*</span></label>
-                                                    <input type="date" id="dataConclusaoProjeto"
-                                                        name="dataConclusaoProjeto" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <!-- statusProjeto + Responsável -->
-                                            <div class="row mb-4">
-                                                <div class="col-6">
-                                                    <label for="statusProjeto"
-                                                        class="form-label fw-semibold">statusProjeto: <span
-                                                            class="text-danger">*</span></label>
-                                                    <select id="statusProjeto" name="statusProjeto" class="form-select">
-                                                        <option value="" disabled selected>Selecione</option>
-                                                        <option value="ATIVO">Ativo</option>
-                                                        <option value="CONCLUIDO">Concluido</option>
-                                                        <option value="CANCELADO">Cancelado</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="responsavelProjeto"
-                                                        class="form-label fw-semibold">Responsável: <span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" id="responsavelProjeto" name="responsavelProjeto"
-                                                        class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <!-- Botões -->
-                                            <div class="d-grid gap-2">
-                                                <button type="button" class="btn btn-success btn-lg"
-                                                    onclick="validarFormProjeto()">Salvar</button>
-                                                <button type="button" class="btn btn-outline-danger btn-lg"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                            </div>
-
-                                        </form>
-
-                                    </div>
-
-                                </div>
-
+                        <div class="row mx-0">
+                            <div class="col-12 mx-0 d-flex flex-row-reverse">
+                                <!-- Botão Novo projeto -->
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                                    Novo Projeto
+                                </button>
                             </div>
 
                         </div>
-                        <!-- Fim do modal -->
-
-
                     </div>
                     <!-- Fim conteúdo principal -->
                 </div>
@@ -207,11 +113,102 @@
             </div>
             <!-- Fim linha geral -->
         </div>
+        <!-- Modal com form-->
+        <div class="modal fade" id="modalUsuario" tabindex="-1">
 
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                <div class="modal-content">
+
+                    <!-- Cabeçalho -->
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+                            Novo Projeto
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                    </div>
+
+                    <!-- Corpo -->
+                    <div class="modal-body">
+                        <form id="formProjeto">
+
+                            <!-- Nome do projeto -->
+                            <div class="mb-3">
+                                <label for="tituloProjeto" class="form-label fw-semibold">Nome do
+                                    projeto : <span class="text-danger">*</span></label>
+                                <input type="text" id="tituloProjeto" name="tituloProjeto" class="form-control"
+                                    placeholder="Digite o nome do projeto" />
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="mb-3">
+                                <label for="descricaoProjeto" class="form-label fw-semibold">Descrição:</label>
+                                <textarea id="descricaoProjeto" name="descricaoProjeto" class="form-control"
+                                    placeholder="Descreva o projeto" rows="4"></textarea>
+                            </div>
+
+                            <!-- Data de criação + Data de conclusão -->
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="dataCriacaoProjeto" class="form-label fw-semibold">Data
+                                        de criação: <span class="text-danger">*</span></label>
+                                    <input type="date" id="dataCriacaoProjeto" name="dataCriacaoProjeto"
+                                        class="form-control" />
+                                </div>
+                                <div class="col-6">
+                                    <label for="dataConclusaoProjeto" class="form-label fw-semibold">Data de conclusão:
+                                        <span class="text-danger">*</span></label>
+                                    <input type="date" id="dataConclusaoProjeto" name="dataConclusaoProjeto"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- statusProjeto + Responsável -->
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <label for="statusProjeto" class="form-label fw-semibold">statusProjeto: <span
+                                            class="text-danger">*</span></label>
+                                    <select id="statusProjeto" name="statusProjeto" class="form-select">
+                                        <option value="" disabled selected>Selecione</option>
+                                        <option value="ATIVO">Ativo</option>
+                                        <option value="CONCLUIDO">Concluido</option>
+                                        <option value="CANCELADO">Cancelado</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="responsavelProjeto" class="form-label fw-semibold">Responsável: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" id="responsavelProjeto" name="responsavelProjeto"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Botões -->
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-success btn-lg"
+                                    onclick="validarFormProjeto()">Salvar</button>
+                                <button type="button" class="btn btn-outline-danger btn-lg"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Fim do modal -->
         <script src=" js/bootstrap.js">
         </script>
         <script src="js/script.js">
         </script>
+
 </body>
 
 </html>

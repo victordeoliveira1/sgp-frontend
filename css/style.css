@@ -91,6 +91,7 @@ span.material-icons {
     background-color: var(--cor-geral);
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 0px;
     margin: 0px;
 }
@@ -201,7 +202,6 @@ h2.h2numeros {
     height: clamp(250px, 40vw, 400px);
     min-height: 250px;
     padding: 0px 30px;
-    white-space: nowrap;
     font-size: 10px;
 }
 

@@ -61,35 +61,35 @@
 
                 <!-- Barra superior -->
                 <div class="row barraSuperior">
-                    <div class="row barraPerfil mx-0">
-                        <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                    <div class="col-12 px-0">
+                        <div class="row barraPerfil mx-0">
+                            <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                            </div>
+                            <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
+                                <div class="userPerfil card shadow">
+                                    <button class="btn">
+                                        <span class="material-icons" style="font-size: 24px;margin-top: 3px; ">
+                                            notifications_none
+                                        </span>
+                                    </button>
+                                    <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
+                                    <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
+                                        style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        id="siglaNome"></b>
+                                    <b>Victor</b>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
-                            <div class="userPerfil card shadow">
-                                <button class="btn">
-                                    <span class="material-icons" style="font-size: 24px;margin-top: 3px; ">
-                                        notifications_none
-                                    </span>
-                                </button>
-                                <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
-                                <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                    style="width: 40px; height: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
-                                    id="siglaNome"></b>
-                                <b>Victor</b>
+
+                        <!-- título da página -->
+                        <div class="row mx-0">
+                            <div class="barraTitulo col-md-12">
+                                <span class="material-icons">dashboard</span>
+                                Dashboard
                             </div>
                         </div>
                     </div>
-
-                    <!-- título da página -->
-                    <div class="row mx-0">
-                        <div class="barraTitulo col-md-12">
-                            <span class="material-icons">task</span>
-                            Tarefas
-                        </div>
-                    </div>
-
                 </div>
-
                 <!-- FIM DA ESTRUTURA BASE -->
 
                 <!-- Conteúdo principal -->
@@ -100,145 +100,6 @@
                             Nova Tarefa
                         </button>
 
-
-                        <!--  Inicio Modal -->
-                        <div class="modal fade" id="modalUsuario" tabindex="-1">
-
-                            <div class="modal-dialog modal-dialog-centered modal-lg"> >
-
-                                <div class="modal-content">
-
-                                    <!-- Cabeçalho -->
-                                    <div class="modal-header">
-
-                                        <h5 class="modal-title">
-                                            Nova Tarefa
-                                        </h5>
-
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-
-                                    </div>
-
-                                    <!-- Corpo -->
-                                    <div class="modal-body">
-
-                                        <form id="formTarefa">
-                                            <!-- Título -->
-                                            <div class="mb-3">
-                                                <label for="tituloTarefa" class="form-label fw-semibold">Título: <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" id="tituloTarefa" name="tituloTarefa"
-                                                    class="form-control" placeholder="Digite o título da tarefa" />
-                                            </div>
-
-                                            <!-- prioridadeTarefa -->
-                                            <div class="row">
-                                                <div class=" col-md-6 mb-3">
-                                                    <label for="prioridadeTarefa"
-                                                        class="form-label fw-semibold">prioridade: <span
-                                                            class="text-danger">*</span></label>
-                                                    <select id="prioridadeTarefa" name="prioridadeTarefa"
-                                                        class="form-select">
-                                                        <option value="" disabled selected>Selecione</option>
-                                                        <option value="BAIXA">Baixa</option>
-                                                        <option value="MEDIA">Média</option>
-                                                        <option value="ALTA">Alta</option>
-                                                    </select>
-                                                </div>
-
-                                                <!-- Responsável -->
-                                                <div class=" col-md-6 mb-3">
-                                                    <label for="responsavelTarefa"
-                                                        class="form-label fw-semibold">Responsável: <span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" id="responsavelTarefa" name="responsavelTarefa"
-                                                        class="form-control" />
-                                                </div>
-                                            </div>
-                                            <!-- Descrição -->
-                                            <div class="mb-3">
-                                                <label for="descricaoTarefa"
-                                                    class="form-label fw-semibold">Descrição:</label>
-                                                <textarea id="descricaoTarefa" name="descricaoTarefa"
-                                                    class="form-control" placeholder="Descreva a tarefa"
-                                                    rows="4"></textarea>
-                                            </div>
-
-                                            <!-- Data de criação -->
-                                            <div class="row">
-                                                <div class=" col-md-6 mb-3">
-                                                    <label for="dataCriacaoTarefa" class="form-label fw-semibold">Data
-                                                        de criação:
-                                                        <span class="text-danger">*</span></label>
-                                                    <input type="date" id="dataCriacaoTarefa" name="dataCriacaoTarefa"
-                                                        class="form-control" />
-                                                </div>
-
-                                                <!-- Data de conclusão -->
-                                                <div class=" col-md-6 mb-3">
-                                                    <label for="dataConclusaoTarefa" class="form-label fw-semibold">Data
-                                                        de
-                                                        conclusão:
-                                                        <span class="text-danger">*</span></label>
-                                                    <input type="date" id="dataConclusaoTarefa"
-                                                        name="dataConclusaoTarefa" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <!-- StatusTarefa -->
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="statusTarefa" class="form-label fw-semibold">Status:
-                                                        <span class="text-danger">*</span></label>
-                                                    <select id="statusTarefa" name="statusTarefa" class="form-select">
-                                                        <option value="" disabled selected>Selecione</option>
-                                                        <option value="pendente">Pendente</option>
-                                                        <option value="em_andamento">Em andamento</option>
-                                                        <option value="concluido">Concluído</option>
-                                                        <option value="cancelado">Cancelado</option>
-                                                    </select>
-                                                </div>
-
-                                                <!-- Projeto -->
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="projetoTarefa" class="form-label fw-semibold">Projeto:
-                                                        <span class="text-danger">*</span></label>
-                                                    <select id="projetoTarefa" name="projetoTarefa" class="form-select">
-                                                        <option value="" disabled selected>Selecione</option>
-                                                        <option value="projeto1">Projeto 1</option>
-                                                        <option value="projeto2">Projeto 2</option>
-                                                        <option value="projeto3">Projeto 3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!-- Definir Lembrete -->
-                                            <div class="mb-4">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="lembrete"
-                                                        name="lembrete" />
-                                                    <label class="form-check-label fw-semibold" for="lembrete">Definir
-                                                        Lembrete</label>
-                                                </div>
-                                            </div>
-
-                                            <!-- Botões -->
-                                            <div class="d-grid gap-2">
-                                                <button type="submit" class="btn btn-success btn-lg"
-                                                    onclick="validarFormTarefa()">Salvar</button>
-                                                <button type="button"
-                                                    class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal">Cancelar</button>
-                                            </div>
-
-                                        </form>
-
-                                    </div>                                    
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- Fim do modal -->
-
                     </div>
                     <!-- Fim conteúdo principal -->
                 </div>
@@ -246,7 +107,145 @@
             </div>
             <!-- Fim linha geral -->
         </div>
+        <!--  Inicio Modal -->
+        <div class="modal fade" id="modalUsuario" tabindex="-1">
 
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                <div class="modal-content">
+
+                    <!-- Cabeçalho -->
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+                            Nova Tarefa
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                    </div>
+
+                    <!-- Corpo -->
+                    <div class="modal-body">
+
+                        <form id="formTarefa">
+                            <!-- Título -->
+                            <div class="mb-3">
+                                <label for="tituloTarefa" class="form-label fw-semibold">Título: <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" id="tituloTarefa" name="tituloTarefa"
+                                    class="form-control" placeholder="Digite o título da tarefa" />
+                            </div>
+
+                            <!-- prioridadeTarefa -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="prioridadeTarefa"
+                                        class="form-label fw-semibold">prioridade: <span
+                                            class="text-danger">*</span></label>
+                                    <select id="prioridadeTarefa" name="prioridadeTarefa"
+                                        class="form-select">
+                                        <option value="" disabled selected>Selecione</option>
+                                        <option value="BAIXA">Baixa</option>
+                                        <option value="MEDIA">Média</option>
+                                        <option value="ALTA">Alta</option>
+                                    </select>
+                                </div>
+
+                                <!-- Responsável -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="responsavelTarefa"
+                                        class="form-label fw-semibold">Responsável: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" id="responsavelTarefa" name="responsavelTarefa"
+                                        class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="mb-3">
+                                <label for="descricaoTarefa"
+                                    class="form-label fw-semibold">Descrição:</label>
+                                <textarea id="descricaoTarefa" name="descricaoTarefa"
+                                    class="form-control" placeholder="Descreva a tarefa"
+                                    rows="4"></textarea>
+                            </div>
+
+                            <!-- Data de criação + Data de conclusão -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="dataCriacaoTarefa" class="form-label fw-semibold">Data
+                                        de criação:
+                                        <span class="text-danger">*</span></label>
+                                    <input type="date" id="dataCriacaoTarefa" name="dataCriacaoTarefa"
+                                        class="form-control" />
+                                </div>
+
+                                <!-- Data de conclusão -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="dataConclusaoTarefa" class="form-label fw-semibold">Data de
+                                        conclusão:
+                                        <span class="text-danger">*</span></label>
+                                    <input type="date" id="dataConclusaoTarefa"
+                                        name="dataConclusaoTarefa" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Status + Projeto -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="statusTarefa" class="form-label fw-semibold">Status:
+                                        <span class="text-danger">*</span></label>
+                                    <select id="statusTarefa" name="statusTarefa" class="form-select">
+                                        <option value="" disabled selected>Selecione</option>
+                                        <option value="pendente">Pendente</option>
+                                        <option value="em_andamento">Em andamento</option>
+                                        <option value="concluido">Concluído</option>
+                                        <option value="cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+
+                                <!-- Projeto -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="projetoTarefa" class="form-label fw-semibold">Projeto:
+                                        <span class="text-danger">*</span></label>
+                                    <select id="projetoTarefa" name="projetoTarefa" class="form-select">
+                                        <option value="" disabled selected>Selecione</option>
+                                        <option value="projeto1">Projeto 1</option>
+                                        <option value="projeto2">Projeto 2</option>
+                                        <option value="projeto3">Projeto 3</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Definir Lembrete -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="lembrete"
+                                        name="lembrete" />
+                                    <label class="form-check-label fw-semibold" for="lembrete">Definir
+                                        Lembrete</label>
+                                </div>
+                            </div>
+
+                            <!-- Botões -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg"
+                                    onclick="validarFormTarefa()">Salvar</button>
+                                <button type="button" class="btn btn-outline-danger btn-lg"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Fim do modal -->
         <script src=" js/bootstrap.js">
         </script>
         <script src="js/script.js">
