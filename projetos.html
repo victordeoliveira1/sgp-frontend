@@ -63,7 +63,7 @@
                 <div class="row barraSuperior">
                     <div class="col-12 px-0">
                         <div class="row barraPerfil mx-0">
-                            <div class="col-5 col-sm-6 col-md-8 col-lg-10">
+                            <div class="col-5 col-s col-md-8 col-lg-10">
                             </div>
                             <div class="col-7 col-sm-6 col-md-4 col-lg-2 d-flex">
                                 <div class="userPerfil card shadow">
@@ -73,7 +73,7 @@
                                         </span>
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
-                                    <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center text-white"
+                                    <b class="rounm-6ded-circle align-middle d-inline-flex justify-content-center align-items-center text-white"
                                         style="width: 40px; height: 40px; min-width: 40px; background-color: gray; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b>Victor</b>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-5 col-md-4 col-lg-7 d-flex justify-content-end" style="white-space: nowrap;">
                             <!-- Botão Novo projeto -->
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProjeto">
                                 <b>+ Novo Projeto</b>
                             </button>
                         </div>
@@ -134,7 +134,7 @@
         <!-- Fim linha geral -->
     </div>
     <!-- Modal com form-->
-    <div class="modal fade" id="modalUsuario" tabindex="-1">
+    <div class="modal fade" id="modalProjeto" tabindex="-1">
 
         <div class="modal-dialog modal-dialog-centered modal-lg">
 
@@ -160,7 +160,9 @@
                             <label for="tituloProjeto" class="form-label fw-semibold">Nome do
                                 projeto : <span class="text-danger">*</span></label>
                             <input type="text" id="tituloProjeto" name="tituloProjeto" class="form-control"
-                                placeholder="Digite o nome do projeto" />
+                                placeholder="Digite o nome do projeto" required>
+                            <div class="invalid-feedback">Informe o título do projeto.</div>
+
                         </div>
 
                         <!-- Descrição -->
@@ -176,13 +178,14 @@
                                 <label for="dataCriacaoProjeto" class="form-label fw-semibold">Data
                                     de criação: <span class="text-danger">*</span></label>
                                 <input type="date" id="dataCriacaoProjeto" name="dataCriacaoProjeto"
-                                    class="form-control" />
+                                    class="form-control" required>
+                                <div class="invalid-feedback">Informe a data de criação.</div>
+
                             </div>
                             <div class="col-6">
-                                <label for="dataConclusaoProjeto" class="form-label fw-semibold">Data de conclusão:
-                                    <span class="text-danger">*</span></label>
-                                <input type="date" id="dataConclusaoProjeto" name="dataConclusaoProjeto"
-                                    class="form-control" />
+                                <label for="dataConclusaoProjeto" class="form-label fw-semibold">Data de conclusão
+                                    <input type="date" id="dataConclusaoProjeto" name="dataConclusaoProjeto"
+                                        class="form-control">
                             </div>
                         </div>
 
@@ -191,27 +194,35 @@
                             <div class="col-6">
                                 <label for="statusProjeto" class="form-label fw-semibold">status: <span
                                         class="text-danger">*</span></label>
-                                <select id="statusProjeto" name="statusProjeto" class="form-select">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option value="ATIVO">Ativo</option>
+                                <select id="statusProjeto" name="statusProjeto" class="form-select" required>
+                                    <option value="" disabled>Selecione</option>
+                                    <option value="ATIVO" selected>Ativo</option>
                                     <option value="CONCLUIDO">Concluido</option>
                                     <option value="CANCELADO">Cancelado</option>
                                 </select>
+                                <div class="invalid-feedback">Selecione o status.</div>
+
                             </div>
                             <div class="col-6">
+                                
                                 <label for="responsavelProjeto" class="form-label fw-semibold">Responsável: <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="responsavelProjeto" name="responsavelProjeto"
-                                    class="form-control" />
+                                        <input type="text" id="responsavelProjeto" name="responsavelProjeto"
+                                        class="form-control" list="listaUsuarios" placeholder="Digite o responsável"
+                                        autocomplete="off" required>
+                                    <datalist id="listaUsuarios"></datalist>
+                                
+                                <div class="invalid-feedback">Informe um responsável.</div>
+
                             </div>
                         </div>
 
                         <!-- Botões -->
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success btn-lg"
+                            <button type="button" class="btn btn-success btn-lg"
                                 onclick="validarFormProjeto()">Salvar</button>
-                            <button type="button" class="btn btn-outline-danger btn-lg"
-                                data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
+                                onclick="cancelarFormulario('formProjeto');setarData('dataCriacaoProjeto',hoje)">Cancelar</button>
                         </div>
 
                     </form>

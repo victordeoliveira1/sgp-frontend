@@ -11,20 +11,100 @@
 // console.log(tarefaTeste);
 
 // let numProjetos = JSON.parse(localStorage.getItem("projetos")).length;
-let numProjetos = JSON.parse(localStorage.getItem("projetos")).filter(projeto => projeto.status == "Ativo").length;
-let numTarefas = JSON.parse(localStorage.getItem("tarefas")).length;
-let numTarefasConcluidas = JSON.parse(localStorage.getItem("tarefas")).filter(tarefa => tarefa.status == "concluido").length;
-let pTotalTarefas = ((numTarefasConcluidas/numTarefas)*100).toFixed(1);
+// const hoje = Date.now().toString();
 
+alimentarLocalStorage();
+const listaUsuarios = elem("listaUsuarios");
+if (listaUsuarios) {
+    carregarUsuariosAutocomplete();
+}
 
+function elem(idElemento) {
+    return document.getElementById(idElemento)
+}
+function setarData(idElemento, data) {
+    elem(idElemento).value = data;
+}
 
-document.getElementById("numProjetosAtivos").innerHTML = numProjetos;
-document.getElementById("numTarefasTotal").innerHTML = numTarefas;
-document.getElementById("numTarefasConcluidas").innerHTML = numTarefasConcluidas;
-document.getElementById("pTarefasConcluidas").innerHTML = pTotalTarefas+"% do total";
+const hoje = new Date().toISOString().split('T')[0];
 
+const dataCriacaoTarefa = elem("dataCriacaoTarefa");
+if (dataCriacaoTarefa) {
+    dataCriacaoTarefa.value = hoje;
+}
 
+const statusProjeto = elem("statusProjeto");
+if (statusProjeto) {
+    statusProjeto.value = "ATIVO";
+}
 
+const dataCriacaoProjeto = elem("dataCriacaoProjeto");
+if (dataCriacaoProjeto) {
+    dataCriacaoProjeto.value = hoje;
+}
+
+const arrayProjetos = JSON.parse(localStorage.getItem("projetos") || "[]");
+const arrayTarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
+const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
+//===============================================================
+// ====================== DASHBOARD =============================
+//===============================================================
+const numProjetos = arrayProjetos.filter(projeto => projeto.status == "Ativo" || projeto.status == "ATIVO").length;
+const numTarefas = arrayTarefas.length;
+const numTarefasConcluidas = arrayTarefas.filter(tarefa => tarefa.status == "concluida" || tarefa.status == "CONCLUIDA").length;
+let pTotalTarefas = 0;
+if (numTarefas > 0) {
+    pTotalTarefas = ((numTarefasConcluidas / numTarefas) * 100).toFixed(1);
+}
+const numTarefasAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje).length
+let pTarefasAtrasadas = 0;
+if (numTarefas > 0) {
+    pTarefasAtrasadas = ((numTarefasAtrasadas / numTarefas) * 100).toFixed(1);
+}
+
+const projetosAtivos = elem("numProjetosAtivos");
+const tarefasTotal = elem("numTarefasTotal");
+const tarefasConcluidas = elem("numTarefasConcluidas");
+const porcentagemTarefasConcluidas = elem("pTarefasConcluidas");
+const tarefasAtrasadas = elem("numTarefasAtrasadas");
+const porcentagemTarefasAtrasadas = elem("pTarefasAtrasadas");
+const selectProjetoTarefa = elem("projetoTarefa");
+
+if (projetosAtivos) {
+    projetosAtivos.innerHTML = numProjetos;
+}
+
+if (tarefasTotal) {
+    tarefasTotal.innerHTML = numTarefas;
+}
+
+if (tarefasConcluidas) {
+    tarefasConcluidas.innerHTML = numTarefasConcluidas;
+}
+
+if (porcentagemTarefasConcluidas) {
+    porcentagemTarefasConcluidas.innerHTML = pTotalTarefas + "% do total";
+}
+if (tarefasAtrasadas) {
+    tarefasAtrasadas.innerHTML = numTarefasAtrasadas;
+}
+if (porcentagemTarefasAtrasadas) {
+    porcentagemTarefasAtrasadas.innerHTML = pTarefasAtrasadas + "% do total";
+}
+
+if (selectProjetoTarefa) {
+    let listaDeProjetos = '<option value="" disabled selected>Selecione</option>';
+    arrayProjetos.forEach(projeto => {
+        listaDeProjetos = listaDeProjetos + "<option value=" + projeto.titulo + ">" + projeto.titulo + "</option>";
+    })
+    selectProjetoTarefa.innerHTML = listaDeProjetos;
+
+}
+
+//===============================================================
+// ======================  ================================
+//===============================================================
 
 
 
@@ -59,40 +139,41 @@ function exibirSiglaNome(nomeUsuario) {
 document.getElementById("siglaNome").innerHTML =
     exibirSiglaNome(nomeUsuario);
 
-// ---------------------------------------------------------
+//===============================================================
+// ====================== TAREFA ================================
+//===============================================================
+
 function validarFormTarefa() {
+    const form = elem("formTarefa");
 
-    let titulo = document.getElementById("tituloTarefa").value;
-    let prioridade = document.getElementById("prioridadeTarefa").value;
-    let responsavel = document.getElementById("responsavelTarefa").value;
-    let descricao = document.getElementById("descricaoTarefa").value;
-    let dataCriacao = document.getElementById("dataCriacaoTarefa").value;
-    let dataConclusao = document.getElementById("dataConclusaoTarefa").value;
-    let status = document.getElementById("statusTarefa").value;
-    let projeto = document.getElementById("projetoTarefa").value;
+    const titulo = elem("tituloTarefa").value;
+    const prioridade = elem("prioridadeTarefa").value;
+    const responsavel = elem("responsavelTarefa").value;
+    const descricao = elem("descricaoTarefa").value;
+    const dataCriacao = elem("dataCriacaoTarefa").value;
+    const dataConclusao = elem("dataConclusaoTarefa").value;
+    const status = elem("statusTarefa").value;
+    const projeto = elem("projetoTarefa").value;
 
-    if (titulo == "") {
-        alert("O campo título é obrigatório!");
+    if (!form.checkValidity()) {
+        form.classList.add("was-validated");
+        return;
     }
-    if (prioridade == "") {
-        alert("O campo prioridade é obrigatório!");
-    }
-    if (responsavel == "") {
-        alert("O campo responsável é obrigatório!");
-    }
-    if (dataCriacao == "") {
-        alert("O campo data de criação é obrigatório!");
-    }
-    if (dataConclusao == "") {
-        alert("O campo data de conclusão é obrigatório!");
-    }
-    if (status == "") {
-        alert("O campo status é obrigatório!");
-    }
-    if (projeto == "") {
-        alert("O campo projeto é obrigatório!");
-    }
+    const inputCriacao = elem("dataCriacaoTarefa");
+    const inputConclusao = elem("dataConclusaoTarefa");
 
+    inputCriacao.classList.remove("is-invalid");
+    inputConclusao.classList.remove("is-invalid");
+
+    if (dataCriacao > dataConclusao) {
+
+        inputCriacao.classList.add("is-invalid");
+        inputConclusao.classList.add("is-invalid");
+
+        alert("A data de criação deve ser anterior à data de conclusão.");
+
+        return;
+    }
     const tarefa = {
         id: Date.now().toString(),
         titulo: titulo,
@@ -104,39 +185,60 @@ function validarFormTarefa() {
         status: status,
         projeto: projeto
     };
+
     console.log(tarefa);
     let tarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
     tarefas.push(tarefa);
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
+
+    const modal = bootstrap.Modal.getInstance(elem("modalTarefa"));
+
+    modal.hide();
+
+    alert("✅ Tarefa salva com sucesso!");
+    form.reset();
+    form.classList.remove("was-validated");
+    elem("dataCriacaoTarefa").value = hoje;
+
 }
+
+//===============================================================
+// ====================== PROJETO ===============================
+//===============================================================
 
 function validarFormProjeto() {
 
-    let titulo = document.getElementById("tituloProjeto").value;
-    let descricao = document.getElementById("descricaoProjeto").value;
-    let dataCriacao = document.getElementById("dataCriacaoProjeto").value;
-    let dataConclusao = document.getElementById("dataConclusaoProjeto").value;
-    let status = document.getElementById("statusProjeto").value;
-    let responsavel = document.getElementById("responsavelProjeto").value;
+    const form = elem("formProjeto");
 
-    if (titulo == "") {
-        alert("O campo título é obrigatório!");
+    const titulo = elem("tituloProjeto").value;
+    const descricao = elem("descricaoProjeto").value;
+    const dataCriacao = elem("dataCriacaoProjeto").value;
+    const dataConclusao = elem("dataConclusaoProjeto").value;
+    const status = elem("statusProjeto").value;
+    const responsavel = elem("responsavelProjeto").value;
+
+    // Validação HTML5
+    if (!form.checkValidity()) {
+        form.classList.add("was-validated");
+        return;
     }
-    if (descricao == "") {
-        alert("O campo descrição é obrigatório!");
+
+    // Inputs de data
+    const inputCriacao = elem("dataCriacaoProjeto");
+    const inputConclusao = elem("dataConclusaoProjeto");
+
+    // Remove erro anterior
+    inputCriacao.classList.remove("is-invalid");
+    inputConclusao.classList.remove("is-invalid");
+
+    // Validação de datas
+    if (dataCriacao > dataConclusao) {
+        inputCriacao.classList.add("is-invalid");
+        inputConclusao.classList.add("is-invalid");
+        alert("A data de criação deve ser anterior à data de conclusão.");
+        return;
     }
-    if (dataCriacao == "") {
-        alert("O campo data de criação é obrigatório!");
-    }
-    if (dataConclusao == "") {
-        alert("O campo data de conclusão é obrigatório!");
-    }
-    if (status == "") {
-        alert("O campo status é obrigatório!");
-    }
-    if (responsavel == "") {
-        alert("O campo responsável é obrigatório!");
-    }
+
     const projeto = {
         id: Date.now().toString(),
         titulo: titulo,
@@ -145,39 +247,44 @@ function validarFormProjeto() {
         dataConclusao: dataConclusao,
         status: status,
         responsavel: responsavel
+
     };
+
     console.log(projeto);
+
     let projetos = JSON.parse(localStorage.getItem("projetos") || "[]");
     projetos.push(projeto);
     localStorage.setItem("projetos", JSON.stringify(projetos));
+
+    const modal = bootstrap.Modal.getInstance(elem("modalProjeto"));
+    modal.hide();
+
+
+    alert("✅ Projeto salvo com sucesso!");
+    form.reset();
+    form.classList.remove("was-validated");
+
+    elem("dataCriacaoProjeto").value = hoje;
 }
+
+//===============================================================
+// ====================== USUARIO ===============================
+//===============================================================
 
 function validarFormUsuario() {
 
-    let nome = document.getElementById("nomeUsuario").value;
-    let cpf = document.getElementById("cpfUsuario").value;
-    let email = document.getElementById("emailUsuario").value;
-    let dataNascimento = document.getElementById("dataNascimento").value;
-    let status = document.getElementById("statusUsuario").value;
-    let senha = document.getElementById("senhaUsuario").value;
+    const form = elem("formUsuario");
 
-    if (nome == "") {
-        alert("O campo nome é obrigatório!");
-    }
-    if (cpf == "") {
-        alert("O campo CPF é obrigatório!");
-    }
-    if (email == "") {
-        alert("O campo e-mail é obrigatório!");
-    }
-    if (dataNascimento == "") {
-        alert("O campo data de nascimento é obrigatório!");
-    }
-    if (status == "") {
-        alert("O campo status é obrigatório!");
-    }
-    if (senha == "") {
-        alert("O campo senha é obrigatório!");
+    const nome = elem("nomeUsuario").value;
+    const cpf = elem("cpfUsuario").value;
+    const email = elem("emailUsuario").value;
+    const dataNascimento = elem("dataNascimento").value;
+    const status = elem("statusUsuario").value;
+    const senha = elem("senhaUsuario").value;
+
+    if (!form.checkValidity()) {
+        form.classList.add("was-validated");
+        return;
     }
 
     const usuario = {
@@ -194,4 +301,313 @@ function validarFormUsuario() {
     let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+    const modal = bootstrap.Modal.getInstance(elem("modalUsuario"));
+    modal.hide();
+
+
+    alert("✅ Usuário salvo com sucesso!");
+    form.reset();
+    form.classList.remove("was-validated");
+}
+
+//===============================================================
+// ====================== OUTROS ================================
+//===============================================================
+
+function cancelarFormulario(idFormulario) {
+
+    const form = elem(idFormulario);
+
+    form.reset();
+
+    form.classList.remove("was-validated");
+
+    form.querySelectorAll(".is-invalid")
+        .forEach(campo => {
+            campo.classList.remove("is-invalid");
+        });
+
+}
+
+function carregarUsuariosAutocomplete() {
+    const listaUsuarios = elem("listaUsuarios");
+    listaUsuarios.innerHTML = "";
+    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
+    usuarios.forEach(usuario => {
+        const option = document.createElement("option");
+        option.value = usuario.nome;
+        listaUsuarios.appendChild(option);
+    });
+
+}
+
+
+
+function alimentarLocalStorage() {
+    const projetos = [
+
+        {
+            id: "1",
+            titulo: "Sistema de Gestão Escolar",
+            descricao: "Projeto para gerenciamento de alunos e professores.",
+            dataCriacao: "2026-05-01",
+            dataConclusao: "2026-08-30",
+            status: "ATIVO",
+            responsavel: "Victor Alves"
+        },
+
+        {
+            id: "2",
+            titulo: "App de Academia",
+            descricao: "Aplicativo para acompanhamento de treinos.",
+            dataCriacao: "2026-04-10",
+            dataConclusao: "2026-07-15",
+            status: "PENDENTE",
+            responsavel: "Maria Souza"
+        },
+
+        {
+            id: "3",
+            titulo: "Sistema Financeiro",
+            descricao: "Controle de receitas e despesas empresariais.",
+            dataCriacao: "2026-03-05",
+            dataConclusao: "2026-06-20",
+            status: "CONCLUIDO",
+            responsavel: "João Pedro"
+        },
+
+        {
+            id: "4",
+            titulo: "Website Portfólio",
+            descricao: "Criação de site pessoal responsivo.",
+            dataCriacao: "2026-05-12",
+            dataConclusao: "2026-05-28",
+            status: "FAZENDO",
+            responsavel: "Ana Clara"
+        },
+
+        {
+            id: "5",
+            titulo: "Sistema de Estoque",
+            descricao: "Controle de entrada e saída de produtos.",
+            dataCriacao: "2026-02-18",
+            dataConclusao: "2026-06-01",
+            status: "ATIVO",
+            responsavel: "Carlos Henrique"
+        }
+
+    ];
+    let projetosLista = JSON.parse(
+        localStorage.getItem("projetos") || "[]"
+    );
+
+    projetos.forEach(projetoNovo => {
+
+        const jaExiste = projetosLista.some(
+            projeto => projeto.titulo === projetoNovo.titulo
+        );
+
+        if (!jaExiste) {
+            projetosLista.push(projetoNovo);
+        }
+
+    });
+
+    localStorage.setItem(
+        "projetos",
+        JSON.stringify(projetosLista)
+    );
+
+
+    const usuarios = [
+
+        {
+            id: "1",
+            nome: "Victor Alves",
+            cpf: "123.456.789-00",
+            email: "victor@email.com",
+            dataNascimento: "2002-05-14",
+            status: "ATIVO",
+            senha: "123456"
+        },
+
+        {
+            id: "2",
+            nome: "Maria Souza",
+            cpf: "987.654.321-00",
+            email: "maria@email.com",
+            dataNascimento: "1998-11-20",
+            status: "ATIVO",
+            senha: "maria123"
+        },
+
+        {
+            id: "3",
+            nome: "João Pedro",
+            cpf: "456.123.789-00",
+            email: "joao@email.com",
+            dataNascimento: "1995-03-08",
+            status: "INATIVO",
+            senha: "joao456"
+        },
+
+        {
+            id: "4",
+            nome: "Ana Clara",
+            cpf: "741.852.963-00",
+            email: "ana@email.com",
+            dataNascimento: "2000-07-25",
+            status: "ATIVO",
+            senha: "ana789"
+        },
+
+        {
+            id: "5",
+            nome: "Carlos Henrique",
+            cpf: "159.357.258-00",
+            email: "carlos@email.com",
+            dataNascimento: "1992-01-17",
+            status: "ATIVO",
+            senha: "carlos321"
+        }
+
+    ];
+    let usuariosLista = JSON.parse(
+        localStorage.getItem("usuarios") || "[]"
+    );
+
+    usuarios.forEach(usuarioNovo => {
+
+        const cpfExiste = usuariosLista.some(
+            usuario => usuario.cpf === usuarioNovo.cpf
+        );
+
+        if (!cpfExiste) {
+            usuariosLista.push(usuarioNovo);
+        }
+
+    });
+
+    localStorage.setItem(
+        "usuarios",
+        JSON.stringify(usuariosLista)
+    );
+
+    const tarefas = [
+
+        {
+            id: "1",
+            titulo: "Criar tela de login",
+            prioridade: "ALTA",
+            responsavel: "Victor Alves",
+            descricao: "Desenvolver a interface de login do sistema.",
+            dataCriacao: "2026-05-01",
+            dataConclusao: "2026-05-10",
+            status: "CONCLUIDA",
+            projeto: "Sistema de Gestão Escolar"
+        },
+
+        {
+            id: "2",
+            titulo: "Implementar cadastro de usuários",
+            prioridade: "MEDIA",
+            responsavel: "Maria Souza",
+            descricao: "Criar funcionalidade de cadastro de usuários.",
+            dataCriacao: "2026-05-03",
+            dataConclusao: "2026-05-20",
+            status: "FAZENDO",
+            projeto: "Sistema Financeiro"
+        },
+
+        {
+            id: "3",
+            titulo: "Criar dashboard",
+            prioridade: "ALTA",
+            responsavel: "João Pedro",
+            descricao: "Desenvolver dashboard principal do sistema.",
+            dataCriacao: "2026-04-15",
+            dataConclusao: "2026-05-05",
+            status: "PENDENTE",
+            projeto: "Sistema de Estoque"
+        },
+
+        {
+            id: "4",
+            titulo: "Configurar banco de dados",
+            prioridade: "BAIXA",
+            responsavel: "Ana Clara",
+            descricao: "Criar tabelas e relacionamentos no banco.",
+            dataCriacao: "2026-05-08",
+            dataConclusao: "2026-05-18",
+            status: "FAZENDO",
+            projeto: "App de Academia"
+        },
+
+        {
+            id: "5",
+            titulo: "Criar página inicial",
+            prioridade: "MEDIA",
+            responsavel: "Carlos Henrique",
+            descricao: "Desenvolver homepage responsiva.",
+            dataCriacao: "2026-05-12",
+            dataConclusao: "2026-05-25",
+            status: "PENDENTE",
+            projeto: "Website Portfólio"
+        },
+
+        {
+            id: "6",
+            titulo: "Corrigir bugs do sistema",
+            prioridade: "ALTA",
+            responsavel: "Victor Alves",
+            descricao: "Resolver erros identificados pelos usuários.",
+            dataCriacao: "2026-05-02",
+            dataConclusao: "2026-05-06",
+            status: "CONCLUIDA",
+            projeto: "Sistema Financeiro"
+        },
+
+        {
+            id: "7",
+            titulo: "Implementar responsividade",
+            prioridade: "MEDIA",
+            responsavel: "Maria Souza",
+            descricao: "Adaptar telas para dispositivos móveis.",
+            dataCriacao: "2026-05-09",
+            dataConclusao: "2026-05-22",
+            status: "FAZENDO",
+            projeto: "Sistema de Gestão Escolar"
+        }
+
+    ];
+    let tarefasLista = JSON.parse(
+        localStorage.getItem("tarefas") || "[]"
+    );
+
+    tarefas.forEach(tarefaNova => {
+
+        const tarefaExiste = tarefasLista.some(tarefa =>
+
+            tarefa.titulo.toLowerCase() ===
+            tarefaNova.titulo.toLowerCase()
+
+            &&
+
+            tarefa.projeto.toLowerCase() ===
+            tarefaNova.projeto.toLowerCase()
+
+        );
+
+        if (!tarefaExiste) {
+            tarefasLista.push(tarefaNova);
+        }
+
+    });
+
+    localStorage.setItem(
+        "tarefas",
+        JSON.stringify(tarefasLista)
+    );
 }

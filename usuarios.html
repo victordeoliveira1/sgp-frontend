@@ -158,7 +158,9 @@
                                 <label for="nomeUsuario" class="form-label fw-semibold">Nome: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control"
-                                    placeholder="Digite o nome" />
+                                    placeholder="Digite o nome" required>
+                                <div class="invalid-feedback">Informe o nome.</div>
+
                             </div>
 
                             <!-- CPF -->
@@ -166,7 +168,9 @@
                                 <label for="cpfUsuario" class="form-label fw-semibold">CPF: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="cpfUsuario" name="cpfUsuario" class="form-control"
-                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" />
+                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" maxlength="11" minlength="11"  required>
+                                <div class="invalid-feedback">Informe o CPF.</div>
+
                             </div>
 
                             <!-- E-mail -->
@@ -174,14 +178,19 @@
                                 <label for="emailUsuario" class="form-label fw-semibold">E-mail: <span
                                         class="text-danger">*</span></label>
                                 <input type="email" id="emailUsuario" name="emailUsuario" class="form-control"
-                                    placeholder="email@email.com" />
+                                    placeholder="email@email.com" required>
+                                <div class="invalid-feedback">Informe o email.</div>
+
                             </div>
 
                             <!-- Data de Nascimento -->
                             <div class="mb-3">
                                 <label for="dataNascimento" class="form-label fw-semibold">Data de
                                     Nascimento: <span class="text-danger">*</span></label>
-                                <input type="date" id="dataNascimento" name="dataNascimento" class="form-control" />
+                                <input type="date" id="dataNascimento" name="dataNascimento" class="form-control"
+                                    required />
+                                <div class="invalid-feedback">Informe a data de nascimento.</div>
+
                             </div>
 
                             <!-- Status -->
@@ -189,11 +198,13 @@
                                 <label for="statusUsuario" class="form-label fw-semibold">Status: <span
                                         class="text-danger">*</span></label>
                                 <select id="statusUsuario" name="statusUsuario" class="form-select">
-                                    <option value="" disabled selected>Selecione o status</option>
-                                    <option value="ATIVO">Ativo</option>
+                                    <option value="" disabled>Selecione o status</option>
+                                    <option value="ATIVO" selected>Ativo</option>
                                     <option value="INATIVO">Inativo</option>
                                     <option value="BLOQUEADO">Bloqueado</option>
                                 </select>
+                                <div class="invalid-feedback">Selecione um status</div>
+
                             </div>
 
                             <!-- Senha Temporária -->
@@ -202,9 +213,11 @@
                                     Temporária: <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <input type="password" id="senhaUsuario" name="senhaUsuario" class="form-control"
-                                        placeholder="Digite a senha" />
+                                        placeholder="Digite a senha" maxlength="19" minlength="6" required>
                                     <button class="btn btn-outline-secondary" type="button"
                                         id="toggleSenha">Mostrar</button>
+                                    <div class="invalid-feedback">Insira uma senha com 8 a 19 digitos</div>
+
                                 </div>
                             </div>
 

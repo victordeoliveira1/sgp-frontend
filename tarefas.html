@@ -84,8 +84,8 @@
                         <!-- título da página -->
                         <div class="row mx-0">
                             <div class="barraTitulo col-md-12">
-                                <span class="material-icons">Tarefas</span>
-                                Dashboard
+                                <span class="material-icons">task</span>
+                                Tarefas
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-5 col-md-4 col-lg-7 d-flex justify-content-end" style="white-space: nowrap;">
                             <!-- Botão Nova tarefa-->
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTarefa">
                                 <b>+ Nova Tarefa</b>
                             </button>
                         </div>
@@ -129,7 +129,7 @@
             <!-- Fim linha geral -->
         </div>
         <!--  Inicio Modal -->
-        <div class="modal fade" id="modalUsuario" tabindex="-1">
+        <div class="modal fade" id="modalTarefa" tabindex="-1">
 
             <div class="modal-dialog modal-dialog-centered modal-lg">
 
@@ -147,7 +147,7 @@
                     </div>
 
                     <!-- Corpo -->
-                    <div class="modal-body">
+                    <div class="modal-body" id="modalTarefa">
 
                         <form id="formTarefa">
                             <!-- Título -->
@@ -155,7 +155,9 @@
                                 <label for="tituloTarefa" class="form-label fw-semibold">Título: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="tituloTarefa" name="tituloTarefa" class="form-control"
-                                    placeholder="Digite o título da tarefa" />
+                                    placeholder="Digite o título da tarefa" required>
+                                <div class="invalid-feedback">Informe o título da tarefa.</div>
+
                             </div>
 
                             <!-- prioridadeTarefa -->
@@ -163,20 +165,33 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="prioridadeTarefa" class="form-label fw-semibold">prioridade: <span
                                             class="text-danger">*</span></label>
-                                    <select id="prioridadeTarefa" name="prioridadeTarefa" class="form-select">
+                                    <select id="prioridadeTarefa" name="prioridadeTarefa" class="form-select" required>
                                         <option value="" disabled selected>Selecione</option>
                                         <option value="BAIXA">Baixa</option>
                                         <option value="MEDIA">Média</option>
                                         <option value="ALTA">Alta</option>
                                     </select>
-                                </div>
+                                    <div class="invalid-feedback">Selecione a prioridade.</div>
 
+                                </div>
                                 <!-- Responsável -->
                                 <div class="col-md-6 mb-3">
-                                    <label for="responsavelTarefa" class="form-label fw-semibold">Responsável: <span
-                                            class="text-danger">*</span></label>
+
+                                    <label for="responsavelTarefa" class="form-label fw-semibold">
+                                        Responsável:
+                                        <span class="text-danger">*</span>
+                                    </label>
+
                                     <input type="text" id="responsavelTarefa" name="responsavelTarefa"
-                                        class="form-control" />
+                                        class="form-control" list="listaUsuarios" placeholder="Digite o responsável"
+                                        autocomplete="off" required>
+
+                                    <datalist id="listaUsuarios"></datalist>
+
+                                    <div class="invalid-feedback">
+                                        Informe o responsável.
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -194,7 +209,9 @@
                                         de criação:
                                         <span class="text-danger">*</span></label>
                                     <input type="date" id="dataCriacaoTarefa" name="dataCriacaoTarefa"
-                                        class="form-control" />
+                                        class="form-control" required>
+                                    <div class="invalid-feedback">Informe a data de criação.</div>
+
                                 </div>
 
                                 <!-- Data de conclusão -->
@@ -212,43 +229,45 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="statusTarefa" class="form-label fw-semibold">Status:
                                         <span class="text-danger">*</span></label>
-                                    <select id="statusTarefa" name="statusTarefa" class="form-select">
+                                    <select id="statusTarefa" name="statusTarefa" class="form-select" required>
                                         <option value="" disabled selected>Selecione</option>
-                                        <option value="pendente">Pendente</option>
-                                        <option value="em_andamento">Em andamento</option>
-                                        <option value="concluido">Concluído</option>
-                                        <option value="cancelado">Cancelado</option>
+                                        <option value="PENDENTE">Pendente</option>
+                                        <option value="FAZENDO">Em andamento</option>
+                                        <option value="CONCLUIDA">Concluído</option>
                                     </select>
+                                    <div class="invalid-feedback">Selecione o status.</div>
+
                                 </div>
 
                                 <!-- Projeto -->
                                 <div class="col-md-6 mb-3">
                                     <label for="projetoTarefa" class="form-label fw-semibold">Projeto:
                                         <span class="text-danger">*</span></label>
-                                    <select id="projetoTarefa" name="projetoTarefa" class="form-select">
+                                    <select id="projetoTarefa" name="projetoTarefa" class="form-select" required>
                                         <option value="" disabled selected>Selecione</option>
                                         <option value="projeto1">Projeto 1</option>
                                         <option value="projeto2">Projeto 2</option>
                                         <option value="projeto3">Projeto 3</option>
                                     </select>
+                                    <div class="invalid-feedback">Selecione o projeto.</div>
                                 </div>
                             </div>
 
                             <!-- Definir Lembrete -->
-                            <div class="mb-4">
+                            <!-- <div class="mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="lembrete" name="lembrete" />
                                     <label class="form-check-label fw-semibold" for="lembrete">Definir
                                         Lembrete</label>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- Botões -->
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-lg"
+                                <button type="button" class="btn btn-success btn-lg"
                                     onclick="validarFormTarefa()">Salvar</button>
-                                <button type="button" class="btn btn-outline-danger btn-lg"
-                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
+                                    onclick="cancelarFormulario('formTarefa');setarData('dataCriacaoTarefa',hoje)">Cancelar</button>
                             </div>
 
                         </form>
