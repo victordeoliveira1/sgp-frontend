@@ -1,4 +1,34 @@
-const nomeUsuario = "Victor";
+// const number = [1, 2, 3, 4, 5];
+// const teste02 = number.filter(num => num >= 3);
+
+// const arrayMap = number.map(k => k * 2);
+
+// console.log(number.shift());
+
+
+// const tarefaTeste = JSON.parse(localStorage.getItem("tarefa"));
+
+// console.log(tarefaTeste);
+
+// let numProjetos = JSON.parse(localStorage.getItem("projetos")).length;
+let numProjetos = JSON.parse(localStorage.getItem("projetos")).filter(projeto => projeto.status == "Ativo").length;
+let numTarefas = JSON.parse(localStorage.getItem("tarefas")).length;
+let numTarefasConcluidas = JSON.parse(localStorage.getItem("tarefas")).filter(tarefa => tarefa.status == "concluido").length;
+let pTotalTarefas = ((numTarefasConcluidas/numTarefas)*100).toFixed(1);
+
+
+
+document.getElementById("numProjetosAtivos").innerHTML = numProjetos;
+document.getElementById("numTarefasTotal").innerHTML = numTarefas;
+document.getElementById("numTarefasConcluidas").innerHTML = numTarefasConcluidas;
+document.getElementById("pTarefasConcluidas").innerHTML = pTotalTarefas+"% do total";
+
+
+
+
+
+
+const nomeUsuario = "Victor de Oliveira";
 function exibirSiglaNome(nomeUsuario) {
     const ignorar = ["de", "da", "do", "dos", "das"];
 
@@ -28,6 +58,7 @@ function exibirSiglaNome(nomeUsuario) {
 }
 document.getElementById("siglaNome").innerHTML =
     exibirSiglaNome(nomeUsuario);
+
 // ---------------------------------------------------------
 function validarFormTarefa() {
 
@@ -63,6 +94,7 @@ function validarFormTarefa() {
     }
 
     const tarefa = {
+        id: Date.now().toString(),
         titulo: titulo,
         prioridade: prioridade,
         responsavel: responsavel,
@@ -72,9 +104,10 @@ function validarFormTarefa() {
         status: status,
         projeto: projeto
     };
-
     console.log(tarefa);
-    localStorage.setItem("tarefa", JSON.stringify(tarefa));
+    let tarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
+    tarefas.push(tarefa);
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
 }
 
 function validarFormProjeto() {
@@ -105,6 +138,7 @@ function validarFormProjeto() {
         alert("O campo responsável é obrigatório!");
     }
     const projeto = {
+        id: Date.now().toString(),
         titulo: titulo,
         descricao: descricao,
         dataCriacao: dataCriacao,
@@ -113,6 +147,9 @@ function validarFormProjeto() {
         responsavel: responsavel
     };
     console.log(projeto);
+    let projetos = JSON.parse(localStorage.getItem("projetos") || "[]");
+    projetos.push(projeto);
+    localStorage.setItem("projetos", JSON.stringify(projetos));
 }
 
 function validarFormUsuario() {
@@ -144,6 +181,7 @@ function validarFormUsuario() {
     }
 
     const usuario = {
+        id: Date.now().toString(),
         nome: nome,
         cpf: cpf,
         email: email,
@@ -151,5 +189,9 @@ function validarFormUsuario() {
         status: status,
         senha: senha
     };
+
     console.log(usuario);
+    let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
