@@ -158,7 +158,7 @@
                                 <label for="nomeUsuario" class="form-label fw-semibold">Nome: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control"
-                                    placeholder="Digite o nome" required>
+                                    placeholder="Digite o nome" autocomplete="off" required>
                                 <div class="invalid-feedback">Informe o nome.</div>
 
                             </div>
@@ -168,7 +168,7 @@
                                 <label for="cpfUsuario" class="form-label fw-semibold">CPF: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="cpfUsuario" name="cpfUsuario" class="form-control"
-                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" maxlength="11" minlength="11"  required>
+                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" maxlength="11" minlength="11" autocomplete="off" required>
                                 <div class="invalid-feedback">Informe o CPF.</div>
 
                             </div>
@@ -178,7 +178,7 @@
                                 <label for="emailUsuario" class="form-label fw-semibold">E-mail: <span
                                         class="text-danger">*</span></label>
                                 <input type="email" id="emailUsuario" name="emailUsuario" class="form-control"
-                                    placeholder="email@email.com" required>
+                                    placeholder="email@email.com" autocomplete="off" required>
                                 <div class="invalid-feedback">Informe o email.</div>
 
                             </div>
@@ -215,7 +215,7 @@
                                     <input type="password" id="senhaUsuario" name="senhaUsuario" class="form-control"
                                         placeholder="Digite a senha" maxlength="19" minlength="6" required>
                                     <button class="btn btn-outline-secondary" type="button"
-                                        id="toggleSenha">Mostrar</button>
+                                        id="toggleSenha" onclick="mostrarSenha()">Mostrar</button>
                                     <div class="invalid-feedback">Insira uma senha com 8 a 19 digitos</div>
 
                                 </div>
@@ -226,7 +226,7 @@
                                 <button type="button" class="btn btn-success btn-lg"
                                     onclick="validarFormUsuario()">Adicionar Usuário</button>
                                 <button type="button" class="btn btn-outline-danger btn-lg"
-                                    data-bs-dismiss="modal">Cancelar</button>
+                                    data-bs-dismiss="modal" onclick="cancelarFormulario('formUsuario')">Cancelar</button>
                             </div>
 
                         </form>

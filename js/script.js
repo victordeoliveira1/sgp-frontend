@@ -13,105 +13,87 @@
 // let numProjetos = JSON.parse(localStorage.getItem("projetos")).length;
 // const hoje = Date.now().toString();
 
+//===============================================================
+// ====================== INICIALIZAÇÃO =========================
+//===============================================================
 alimentarLocalStorage();
-const listaUsuarios = elem("listaUsuarios");
-if (listaUsuarios) {
-    carregarUsuariosAutocomplete();
-}
-
-function elem(idElemento) {
-    return document.getElementById(idElemento)
-}
-function setarData(idElemento, data) {
-    elem(idElemento).value = data;
-}
 
 const hoje = new Date().toISOString().split('T')[0];
-
-const dataCriacaoTarefa = elem("dataCriacaoTarefa");
-if (dataCriacaoTarefa) {
-    dataCriacaoTarefa.value = hoje;
-}
-
-const statusProjeto = elem("statusProjeto");
-if (statusProjeto) {
-    statusProjeto.value = "ATIVO";
-}
-
-const dataCriacaoProjeto = elem("dataCriacaoProjeto");
-if (dataCriacaoProjeto) {
-    dataCriacaoProjeto.value = hoje;
-}
 
 const arrayProjetos = JSON.parse(localStorage.getItem("projetos") || "[]");
 const arrayTarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
 const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-//===============================================================
-// ====================== DASHBOARD =============================
-//===============================================================
-const numProjetos = arrayProjetos.filter(projeto => projeto.status == "Ativo" || projeto.status == "ATIVO").length;
-const numTarefas = arrayTarefas.length;
-const numTarefasConcluidas = arrayTarefas.filter(tarefa => tarefa.status == "concluida" || tarefa.status == "CONCLUIDA").length;
-let pTotalTarefas = 0;
-if (numTarefas > 0) {
-    pTotalTarefas = ((numTarefasConcluidas / numTarefas) * 100).toFixed(1);
-}
-const numTarefasAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje).length
-let pTarefasAtrasadas = 0;
-if (numTarefas > 0) {
-    pTarefasAtrasadas = ((numTarefasAtrasadas / numTarefas) * 100).toFixed(1);
-}
+const nomeUsuario = "Victor de Oliveira";
 
-const projetosAtivos = elem("numProjetosAtivos");
-const tarefasTotal = elem("numTarefasTotal");
-const tarefasConcluidas = elem("numTarefasConcluidas");
-const porcentagemTarefasConcluidas = elem("pTarefasConcluidas");
-const tarefasAtrasadas = elem("numTarefasAtrasadas");
-const porcentagemTarefasAtrasadas = elem("pTarefasAtrasadas");
+
+//===============================================================
+// ====================== ELEMENTOS =============================
+//===============================================================
+
+const listaUsuarios = elem("listaUsuarios");
+const siglaNomeUsuario = elem("siglaNome");
+
 const selectProjetoTarefa = elem("projetoTarefa");
 
-if (projetosAtivos) {
-    projetosAtivos.innerHTML = numProjetos;
-}
+const cpfInput = elem("cpfUsuario");
 
-if (tarefasTotal) {
-    tarefasTotal.innerHTML = numTarefas;
-}
+const ERROS = {
+    emailVazio: "Informe o E-mail",
+    emailCadastrado: "Este e-mail já está cadastrado!",
+    cpfVazio: "Informe o CPF.",
+    cpfCadastrado: "Este cpf já está cadastrado!",
+    dataCriacao: "A data de criação deve ser anterior à data de conclusão."
+};
 
-if (tarefasConcluidas) {
-    tarefasConcluidas.innerHTML = numTarefasConcluidas;
-}
-
-if (porcentagemTarefasConcluidas) {
-    porcentagemTarefasConcluidas.innerHTML = pTotalTarefas + "% do total";
-}
-if (tarefasAtrasadas) {
-    tarefasAtrasadas.innerHTML = numTarefasAtrasadas;
-}
-if (porcentagemTarefasAtrasadas) {
-    porcentagemTarefasAtrasadas.innerHTML = pTarefasAtrasadas + "% do total";
-}
-
-if (selectProjetoTarefa) {
-    let listaDeProjetos = '<option value="" disabled selected>Selecione</option>';
-    arrayProjetos.forEach(projeto => {
-        listaDeProjetos = listaDeProjetos + "<option value=" + projeto.titulo + ">" + projeto.titulo + "</option>";
-    })
-    selectProjetoTarefa.innerHTML = listaDeProjetos;
-
+const CONFIRMACAO = {
+    cadastroUsuario: "✅ Usuário salvo com sucesso!",
+    cadastroProjeto: "✅ Projeto salvo com sucesso!",
+    cadastroTarefas: "✅ Tarefa salva com sucesso!"
 }
 
 //===============================================================
-// ======================  ================================
+// ====================== HELPERS ===============================
 //===============================================================
 
+function elem(idElemento) {
+    return document.getElementById(idElemento)
+}
 
+function setarData(idElemento, data) {
+    elem(idElemento).value = data;
+}
 
-const nomeUsuario = "Victor de Oliveira";
+function setMensagemErro(idElemento, mensagem) {
+    const input = elem(idElemento);
+    const feedback = input.parentElement.querySelector(".invalid-feedback")
+    feedback.textContent = mensagem;
+    input.classList.add("is-invalid");
+}
+
+function limparErro(idElemento, mensagemPadrao) {
+    const input = elem(idElemento);
+    const feedback = input.parentElement.querySelector(".invalid-feedback")
+    feedback.textContent = mensagemPadrao;
+    input.classList.remove("is-invalid");
+}
+
+function setTextValue(id, texto) {
+    const elemento = elem(id)
+    if (elemento) {
+        elemento.value = texto;
+    }
+}
+
+function setTextHTML(id, texto) {
+    const elemento = elem(id)
+    if (elemento) {
+        elemento.innerHTML = texto;
+    }
+}
+
 function exibirSiglaNome(nomeUsuario) {
     const ignorar = ["de", "da", "do", "dos", "das"];
-
     const partesNome = nomeUsuario
         .trim()
         .toLowerCase()
@@ -119,9 +101,7 @@ function exibirSiglaNome(nomeUsuario) {
         .filter(nome => !ignorar.includes(nome));
 
     let sigla = "";
-
     if (partesNome.length > 1) {
-
         // Primeira letra do primeiro nome
         // + primeira letra do segundo nome válido
         sigla =
@@ -129,18 +109,112 @@ function exibirSiglaNome(nomeUsuario) {
             partesNome[1][0];
 
     } else {
-
         // Apenas um nome
         sigla = partesNome[0].substring(0, 2);
-
     }
     return sigla.toUpperCase();
 }
-document.getElementById("siglaNome").innerHTML =
-    exibirSiglaNome(nomeUsuario);
+
+function formatarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, "");
+    cpf = cpf.slice(0, 11);
+    cpf = cpf.replace(
+        /(\d{3})(\d)/,
+        "$1.$2"
+    );
+
+    cpf = cpf.replace(
+        /(\d{3})(\d)/,
+        "$1.$2"
+    );
+
+    cpf = cpf.replace(
+        /(\d{3})(\d{1,2})$/,
+        "$1-$2"
+    );
+
+    return cpf;
+}
 
 //===============================================================
-// ====================== TAREFA ================================
+// ====================== AUTOCOMPLETE ==========================
+//===============================================================
+
+if (listaUsuarios) {
+    carregarUsuariosAutocomplete();
+}
+
+//===============================================================
+// ====================== DASHBOARD =============================
+//===============================================================
+const numProjetos = arrayProjetos.filter(projeto => projeto.status.toUpperCase() == "ATIVO").length;
+const numTarefas = arrayTarefas.length;
+const numTarefasConcluidas = arrayTarefas.filter(tarefa => tarefa.status.toUpperCase() == "CONCLUIDA").length;
+
+let pTotalTarefas = 0;
+if (numTarefas > 0) {
+    pTotalTarefas = ((numTarefasConcluidas / numTarefas) * 100).toFixed(1);
+}
+
+const numTarefasAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje).length
+
+let pTarefasAtrasadas = 0;
+if (numTarefas > 0) {
+    pTarefasAtrasadas = ((numTarefasAtrasadas / numTarefas) * 100).toFixed(1);
+}
+
+//===============================================================
+// ====================== SETANDO VALORES =======================
+//===============================================================
+
+setTextValue("dataCriacaoTarefa", hoje);
+
+setTextValue("statusProjeto", "ATIVO");
+
+setTextValue("dataCriacaoProjeto", hoje);
+
+//===============================================================
+// ===================== SETANDO INNERHTML ======================
+//===============================================================
+
+//======================== DASHBOARD ============================
+
+setTextHTML("numProjetosAtivos", numProjetos);
+
+setTextHTML("numTarefasTotal", numTarefas);
+
+setTextHTML("numTarefasConcluidas", numTarefasConcluidas);
+
+setTextHTML("pTarefasConcluidas", pTotalTarefas + "% do total");
+
+setTextHTML("numTarefasAtrasadas", numTarefasAtrasadas);
+
+setTextHTML("pTarefasAtrasadas", pTarefasAtrasadas + "% do total");
+//===============================================================
+
+setTextHTML("siglaNome", exibirSiglaNome(nomeUsuario));
+
+//===============================================================
+// ====================== SELECT PROJETOS =======================
+//===============================================================
+if (selectProjetoTarefa) {
+    let listaDeProjetos = '<option value="" disabled selected>Selecione</option>';
+    arrayProjetos.forEach(projeto => {
+        listaDeProjetos = listaDeProjetos + "<option value=" + projeto.titulo + ">" + projeto.titulo + "</option>";
+    })
+    selectProjetoTarefa.innerHTML = listaDeProjetos;
+}
+
+//===============================================================
+// =================== USANDO MÁSCARAS ==========================
+//===============================================================
+
+if (cpfInput) {
+    mascaraCPF("cpfUsuario");
+}
+
+//===============================================================
+// ================ VALIDAÇÃO FORM TAREFA =======================
 //===============================================================
 
 function validarFormTarefa() {
@@ -165,12 +239,12 @@ function validarFormTarefa() {
     inputCriacao.classList.remove("is-invalid");
     inputConclusao.classList.remove("is-invalid");
 
-    if (dataCriacao > dataConclusao) {
+    if (dataConclusao && dataCriacao > dataConclusao) {
 
         inputCriacao.classList.add("is-invalid");
         inputConclusao.classList.add("is-invalid");
 
-        alert("A data de criação deve ser anterior à data de conclusão.");
+        alert(ERROS.dataCriacao);
 
         return;
     }
@@ -195,7 +269,7 @@ function validarFormTarefa() {
 
     modal.hide();
 
-    alert("✅ Tarefa salva com sucesso!");
+    alert(CONFIRMACAO.cadastroTarefas);
     form.reset();
     form.classList.remove("was-validated");
     elem("dataCriacaoTarefa").value = hoje;
@@ -203,7 +277,7 @@ function validarFormTarefa() {
 }
 
 //===============================================================
-// ====================== PROJETO ===============================
+// ================ VALIDAÇÃO FORM PROJETO ======================
 //===============================================================
 
 function validarFormProjeto() {
@@ -217,25 +291,22 @@ function validarFormProjeto() {
     const status = elem("statusProjeto").value;
     const responsavel = elem("responsavelProjeto").value;
 
-    // Validação HTML5
     if (!form.checkValidity()) {
         form.classList.add("was-validated");
         return;
     }
 
-    // Inputs de data
     const inputCriacao = elem("dataCriacaoProjeto");
     const inputConclusao = elem("dataConclusaoProjeto");
 
-    // Remove erro anterior
     inputCriacao.classList.remove("is-invalid");
     inputConclusao.classList.remove("is-invalid");
 
-    // Validação de datas
-    if (dataCriacao > dataConclusao) {
+
+    if (dataConclusao && dataCriacao > dataConclusao) {
         inputCriacao.classList.add("is-invalid");
         inputConclusao.classList.add("is-invalid");
-        alert("A data de criação deve ser anterior à data de conclusão.");
+        alert(ERROS.dataCriacao);
         return;
     }
 
@@ -260,7 +331,7 @@ function validarFormProjeto() {
     modal.hide();
 
 
-    alert("✅ Projeto salvo com sucesso!");
+    alert(CONFIRMACAO.cadastroProjeto);
     form.reset();
     form.classList.remove("was-validated");
 
@@ -268,7 +339,7 @@ function validarFormProjeto() {
 }
 
 //===============================================================
-// ====================== USUARIO ===============================
+// ================ VALIDAÇÃO FORM USUARIO ======================
 //===============================================================
 
 function validarFormUsuario() {
@@ -282,23 +353,42 @@ function validarFormUsuario() {
     const status = elem("statusUsuario").value;
     const senha = elem("senhaUsuario").value;
 
+    limparErro("emailUsuario", ERROS.emailVazio)
+    limparErro("cpfUsuario", ERROS.cpfVazio)
+
     if (!form.checkValidity()) {
         form.classList.add("was-validated");
         return;
     }
+    let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
+    const cpfLimpo = cpf.replace(/\D/g, "");
+
+    const cpfJaExiste = usuarios.some(usuario => usuario.cpf == cpfLimpo);
+    if (cpfJaExiste) {
+        setMensagemErro("cpfUsuario", ERROS.cpfCadastrado);
+        return;
+    }
+
+    const emailJaExiste = usuarios.some(usuario => usuario.email.toLowerCase() == email.toLowerCase());
+    if (emailJaExiste) {
+        setMensagemErro("emailUsuario", ERROS.emailCadastrado);
+        return;
+    }
+
+
+
 
     const usuario = {
         id: Date.now().toString(),
         nome: nome,
-        cpf: cpf,
+        cpf: cpfLimpo,
         email: email,
         dataNascimento: dataNascimento,
         status: status,
         senha: senha
     };
 
-    console.log(usuario);
-    let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
@@ -306,7 +396,7 @@ function validarFormUsuario() {
     modal.hide();
 
 
-    alert("✅ Usuário salvo com sucesso!");
+    alert(CONFIRMACAO.cadastroUsuario);
     form.reset();
     form.classList.remove("was-validated");
 }
@@ -318,16 +408,22 @@ function validarFormUsuario() {
 function cancelarFormulario(idFormulario) {
 
     const form = elem(idFormulario);
-
     form.reset();
-
     form.classList.remove("was-validated");
 
     form.querySelectorAll(".is-invalid")
         .forEach(campo => {
             campo.classList.remove("is-invalid");
         });
+}
 
+function mostrarSenha() {
+    const inputSenha = elem("senhaUsuario");
+    if (inputSenha.type === "password") {
+        inputSenha.type = "text";
+    } else {
+        inputSenha.type = "password";
+    }
 }
 
 function carregarUsuariosAutocomplete() {
@@ -340,10 +436,43 @@ function carregarUsuariosAutocomplete() {
         option.value = usuario.nome;
         listaUsuarios.appendChild(option);
     });
+}
+//===============================================================
+// ======================= MASCARAS =============================
+//===============================================================
+function mascaraCPF(idCampo) {
+
+    const input = elem(idCampo);
+
+    input.addEventListener("input", () => {
+
+        let valor = input.value;
+        valor = valor.replace(/\D/g, "");
+        valor = valor.slice(0, 11);
+        valor = valor.replace(
+            /(\d{3})(\d)/,
+            "$1.$2"
+        );
+
+        valor = valor.replace(
+            /(\d{3})(\d)/,
+            "$1.$2"
+        );
+
+        valor = valor.replace(
+            /(\d{3})(\d{1,2})$/,
+            "$1-$2"
+        );
+
+        input.value = valor;
+
+    });
 
 }
 
-
+//===============================================================
+// ==============================================================
+//===============================================================
 
 function alimentarLocalStorage() {
     const projetos = [
@@ -426,7 +555,7 @@ function alimentarLocalStorage() {
         {
             id: "1",
             nome: "Victor Alves",
-            cpf: "123.456.789-00",
+            cpf: "12345678900",
             email: "victor@email.com",
             dataNascimento: "2002-05-14",
             status: "ATIVO",
@@ -436,7 +565,7 @@ function alimentarLocalStorage() {
         {
             id: "2",
             nome: "Maria Souza",
-            cpf: "987.654.321-00",
+            cpf: "98765432100",
             email: "maria@email.com",
             dataNascimento: "1998-11-20",
             status: "ATIVO",
@@ -446,7 +575,7 @@ function alimentarLocalStorage() {
         {
             id: "3",
             nome: "João Pedro",
-            cpf: "456.123.789-00",
+            cpf: "45612378900",
             email: "joao@email.com",
             dataNascimento: "1995-03-08",
             status: "INATIVO",
@@ -456,7 +585,7 @@ function alimentarLocalStorage() {
         {
             id: "4",
             nome: "Ana Clara",
-            cpf: "741.852.963-00",
+            cpf: "74185296300",
             email: "ana@email.com",
             dataNascimento: "2000-07-25",
             status: "ATIVO",
@@ -466,7 +595,7 @@ function alimentarLocalStorage() {
         {
             id: "5",
             nome: "Carlos Henrique",
-            cpf: "159.357.258-00",
+            cpf: "15935725800",
             email: "carlos@email.com",
             dataNascimento: "1992-01-17",
             status: "ATIVO",
