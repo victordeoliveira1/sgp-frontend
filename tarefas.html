@@ -22,39 +22,58 @@
             <!-- INICIO DA ESTRUTURA BASE -->
             <!-- Barra lateral -->
             <div class="barraLateral col-4 col-md-4 col-lg-2">
-
-                <div class="logo">
-                    <img src="img/logo.png" alt="">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="logo">
+                            <img src="img/logo.png" alt="">
+                        </div>
+                    </div>
                 </div>
                 <hr style="background-color: white; border: none;height: 2px;">
 
                 <!-- Menu -->
-                <div class="menu">
-                    <ul>
-                        <li><a class="menuItem" href="index.html">
-                                <span class="material-icons">dashboard</span>
-                                Dashboard
-                            </a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="menu">
+                            <ul>
+                                <li><a class="menuItem active" href="index.html">
+                                        <span class="material-icons">dashboard</span>
+                                        Dashboard
+                                    </a>
 
-                        </li>
-                        <li><a class=" menuItem" href="projetos.html">
-                                <span class="material-icons">folder</span>
-                                Projetos
-                            </a>
-                        </li>
-                        <li><a class="menuItem active" href="tarefas.html">
-                                <span class="material-icons">task</span>
-                                Tarefas
-                            </a></li>
+                                </li>
+                                <li><a class=" menuItem" href="projetos.html">
+                                        <span class="material-icons">folder</span>
+                                        Projetos
+                                    </a>
+                                </li>
+                                <li><a class="menuItem" href="tarefas.html">
+                                        <span class="material-icons">task</span>
+                                        Tarefas
+                                    </a></li>
 
-                        <li><a class="menuItem" href="usuarios.html">
-                                <span class="material-icons">person</span>
-                                Usuarios
-                            </a>
-                        </li>
-                    </ul>
+                                <li><a class="menuItem" href="usuarios.html">
+                                        <span class="material-icons">person</span>
+                                        Usuarios
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-auto mb-5">
+                    <div class="col-12">
+                        <hr class="mb-1" style="background-color: white; border: none;height: 2px;">
+
+                        <button class="menuItem m-0" style="border: none; height:40px;" onclick="logout()">
+                            <span class="material-icons text-white">logout</span>
+                            Sair
+                        </button>
+                        <hr class="mt-1" style="background-color: white; border: none;height: 2px;">
+                    </div>
                 </div>
             </div>
+            <!-- Fim da barra lateral -->
 
             <!-- Segunda coluna -->
             <div class="geral col-8 col-md-8 col-lg-10">
@@ -76,7 +95,7 @@
                                     <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
                                         style="width: 40px; height: 40px;min-width: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
-                                    <b>Victor</b>
+                                    <b id="nomeUsuario">Username</b>
                                 </div>
                             </div>
                         </div>

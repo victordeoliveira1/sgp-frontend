@@ -21,12 +21,15 @@ a {
 }
 
 span.material-icons {
-    font-size: 25px;
+    font-size:25px;
     margin-right: 10px;
 }
 
 /* ----------------> PÁGINA LOGIN <----------------*/
 
+.camposLogin.is-invalid:focus {
+    box-shadow: none;
+}
 .backgroundLogin {
     height: 100vh;
     width: 100vw;
@@ -48,7 +51,6 @@ span.material-icons {
 }
 
 .inputLogin {
-    /* background-color: aquamarine; */
     border-radius: 50px;
     height: 60px;
     padding: 0px;
@@ -86,6 +88,7 @@ span.material-icons {
     background-image: url(/img/loginBG.png);
     background-repeat: no-repeat;
     background-size: cover;
+    text-align: center;
 }
 
 /* ----------------> BARRA LATERAL E MENU <----------------*/
@@ -221,7 +224,7 @@ span.material-icons {
 
 /* ----------------> Dashboard <----------------*/
 .barraCorCards {
-    height: 5px;
+    height: 10px;
     background: linear-gradient(to right,
             #ff5e00,
             #ff8a00,

@@ -20,12 +20,31 @@ alimentarLocalStorage();
 
 const hoje = new Date().toISOString().split('T')[0];
 
+
 const arrayProjetos = JSON.parse(localStorage.getItem("projetos") || "[]");
 const arrayTarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
 const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
 const nomeUsuario = "Victor de Oliveira";
 
+setTextValue("emailLogin", "victor@email.com");
+setTextValue("senhaLogin", "123456");
+
+
+const dadosUsuarioLogado = JSON.parse(localStorage.getItem("dadosUser") || null);
+
+const usuarioLogado = JSON.parse(localStorage.getItem("user") || null);
+if (usuarioLogado) {
+    if (window.location.href.includes("login.html")) {
+        logar(usuarioLogado);
+        window.location.href = "index.html";
+    }
+} else {
+    if (!window.location.href.includes("login.html")) {
+        localStorage.removeItem("dadosUser");
+        window.location.href = "login.html";
+    }
+}
 
 //===============================================================
 // ====================== ELEMENTOS =============================
@@ -38,12 +57,15 @@ const selectProjetoTarefa = elem("projetoTarefa");
 
 const cpfInput = elem("cpfUsuario");
 
+
 const ERROS = {
     emailVazio: "Informe o E-mail",
     emailCadastrado: "Este e-mail já está cadastrado!",
     cpfVazio: "Informe o CPF.",
     cpfCadastrado: "Este cpf já está cadastrado!",
-    dataCriacao: "A data de criação deve ser anterior à data de conclusão."
+    dataCriacao: "A data de criação deve ser anterior à data de conclusão.",
+    emailOuSenhaNaoEncontrado: "Não foi encontrado uma conta com este e-mail e senha.",
+    erroInesperado: "Ocorreu um erro inesperado"
 };
 
 const CONFIRMACAO = {
@@ -137,6 +159,98 @@ function formatarCPF(cpf) {
 }
 
 //===============================================================
+// ================== LOGAR E LOGOUT ========================
+//===============================================================
+function logar(usuarioLogado) {
+    const usuarioCompletoEncontrado = arrayUsuarios.find(usuario => usuario.id == usuarioLogado.id);
+    const existeUserSalvo = JSON.parse(localStorage.getItem("user") || null);
+    if (existeUserSalvo) {
+        localStorage.removeItem("user");
+    }
+    if (usuarioLogado.ml) {
+        localStorage.setItem("user", JSON.stringify(usuarioLogado));
+    }
+
+    if (usuarioCompletoEncontrado) {
+        const dadosUser = {
+            nome: usuarioCompletoEncontrado.nome,
+            email: usuarioCompletoEncontrado.email,
+            dataNascimento: usuarioCompletoEncontrado.dataNascimento,
+            status: usuarioCompletoEncontrado.status
+        }
+        localStorage.setItem("dadosUser", JSON.stringify(dadosUser));
+        window.location.href = "index.html";
+    } else {
+        localStorage.removeItem("user");
+        localStorage.removeItem("dadosUser");
+        alert(ERROS.erroInesperado)
+        window.location.href = "login.html"
+    }
+}
+function logout() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("dadosUser");
+    window.location.href = "login.html"
+
+}
+//===============================================================
+// ================== AUTENTICAÇÃO LOGIN ========================
+//===============================================================
+
+function autenticacaoLogin() {
+    elem("MensagemErroLogin").style.opacity = 0;
+    setTextHTML("MensagemErroLogin", ERROS.emailOuSenhaNaoEncontrado);
+    limparErro("emailLogin");
+    limparErro("senhaLogin");
+
+    const login = elem("emailLogin").value;
+    const senha = elem("senhaLogin").value;
+
+    if (login == "") {
+        setMensagemErro("emailLogin", "");
+        setTextHTML("MensagemErroLogin", "Preencha o campo.");
+    }
+    if (senha == "") {
+        setMensagemErro("senhaLogin", "");
+        setTextHTML("MensagemErroLogin", "Preencha o campo.");
+    }
+
+    const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
+    const autLogin = arrayUsuarios.some(usuario => usuario.email.toLowerCase() == login.toLowerCase());
+    if (!autLogin) {
+        setMensagemErro("emailLogin", "");
+        setMensagemErro("senhaLogin", "");
+        elem("MensagemErroLogin").style.opacity = 1;
+        return;
+    }
+
+    const autSenha = arrayUsuarios.some(usuario => usuario.senha == senha);
+    if (!autSenha) {
+        setMensagemErro("emailLogin", "");
+        setMensagemErro("senhaLogin", "");
+        elem("MensagemErroLogin").style.opacity = 1;
+        return;
+    }
+
+    const user = arrayUsuarios.find(usuario => usuario.email.toLowerCase() == login.toLowerCase() && usuario.senha == senha);
+    if (!user) {
+        setTextHTML("MensagemErroLogin", ERROS.erroInesperado);
+        elem("MensagemErroLogin").style.opacity = 1;
+    } else {
+        const manterLogado = elem("manterLogado").checked;
+        const userLogado = {
+            ml: manterLogado,
+            id: user.id,
+            timestampLogin: Date.now()
+        }
+        logar(userLogado);
+    }
+
+
+}
+
+//===============================================================
 // ====================== AUTOCOMPLETE ==========================
 //===============================================================
 
@@ -176,7 +290,10 @@ setTextValue("dataCriacaoProjeto", hoje);
 //===============================================================
 // ===================== SETANDO INNERHTML ======================
 //===============================================================
-
+if (elem("MensagemErroLogin")) {
+    elem("MensagemErroLogin").style.opacity = 0;
+    setTextHTML("MensagemErroLogin", ERROS.emailOuSenhaNaoEncontrado);
+}
 //======================== DASHBOARD ============================
 
 setTextHTML("numProjetosAtivos", numProjetos);
@@ -190,9 +307,13 @@ setTextHTML("pTarefasConcluidas", pTotalTarefas + "% do total");
 setTextHTML("numTarefasAtrasadas", numTarefasAtrasadas);
 
 setTextHTML("pTarefasAtrasadas", pTarefasAtrasadas + "% do total");
-//===============================================================
+//====================== PERFIL USUARIO ========================
 
-setTextHTML("siglaNome", exibirSiglaNome(nomeUsuario));
+if (dadosUsuarioLogado) {
+    setTextHTML("siglaNome", exibirSiglaNome(dadosUsuarioLogado.nome));
+    const nomePreview = dadosUsuarioLogado.nome.split(' ')[0];
+    setTextHTML("nomeUsuario", nomePreview);
+}
 
 //===============================================================
 // ====================== SELECT PROJETOS =======================
