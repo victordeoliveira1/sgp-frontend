@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Gestão de Projetos</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container-fluid backgroundLogin">
+        <div class="row">
+            <!-- JANELA -->
+            <div class="col-12 d-flex align-items-center justify-content-center" style="height: 100vh;">
+                <!-- BLOCO DE BOAS VINDAS -->
+                <div class="card row overflow-hidden">
+                    <div class="col-7 h-100 d-flex flex-column align-items-center justify-content-center boardWelcome">
+                        <h1 class="text-white"><b>Bem vindo!</b></h1>
+                        <h5 class="text-white">Você pode acessar com sua conta existente.</h5>
+                    </div>
+                    <!-- COLUNA DE LOGIN -->
+                    <div class="col-5 h-100 px-0 d-flex align-items-center justify-content-center bg-white">
+                        <!-- ÁREA DE LOGIN -->
+                        <div class="w-100 h-100 mx-3 px-2 ">
+                            <div class="row">
+                                <div class="col-12 d-flex align-items-center justify-content-center my-4 mx-0">
+                                    <img src="img/logo_2.png" alt="" width="230px">
+                                </div>
+                            </div>
+
+                            <h1 class="my-2 mx-0"><b>Sign in</b></h1>
+
+                            <form action="">
+                                <!-- EMAIL -->
+                                <div class="my-3 mx-0 inputLogin overflow-hidden">
+                                    <div class="row input-group d-flex align-items-center h-100 m-0">
+                                        <div
+                                            class="col-2 h-100 d-flex flex-row align-items-center justify-content-center  px-0">
+                                            <span class="material-icons">person</span>
+                                        </div>
+                                        <div class="col-10 h-100 px-0">
+                                            <input type="email" id="emailUsuario" name="emailUsuario" class=""
+                                                placeholder="email@email.com" autocomplete="off" required>
+                                            <div class="invalid-feedback">Informe o email.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SENHA -->
+                                <div class="mb-3 inputLogin overflow-hidden px-0">
+                                    <div class="row input-group d-flex align-items-center h-100 m-0">
+                                        <div
+                                            class="col-2 h-100 d-flex flex-row align-items-center justify-content-center  px-0">
+                                            <span class="material-icons">lock</span>
+                                        </div>
+                                        <div class="col-10 h-100 px-0">
+                                            <input type="password" id="senhaUsuario" name="senhaUsuario" class="w"
+                                                placeholder="Senha" maxlength="19" autocomplete="off" required>
+                                        </div>
+                                        <div class="invalid-feedback">Insira uma senha</div>
+                                    </div>
+                                </div>
+                                <!-- MANTER LOGADO E ESQUECEU A SENHA -->
+                                <div class="mb-3 overflow-hidden px-0">
+                                    <div class="row input-group d-flex align-items-center h-100 m-0 ">
+
+                                        <div class="col-6 d-flex align-items-center text-nowrap gap-1">
+                                            <input type="checkbox" id="manterLogado" name="manterLogado" checked
+                                                style="width: 18px; height:18px;cursor: pointer;">
+                                            <label for="manterLogado">Manter logado?</label>
+                                        </div>
+
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <button type="button" class="btn p-0" onclick="">Esqueceu a
+                                                senha?</button>
+                                        </div>
+                                        <div class="invalid-feedback">Insira uma senha</div>
+                                    </div>
+                                </div>
+                                <!-- BOTAO ENTRAR -->
+                                <div class="mb-3 overflow-hidden mt-5">
+                                    <div class="row input-group d-flex align-items-center h-100 m-0">
+                                        <div class="mb-3 px-0 w-100 ">
+                                            <button type="button" class="btn btLogin h-100 w-100 m-0 d-flex"
+                                                onclick="">Entrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <!-- FIM DA AREA DE LOGIN -->
+                    </div>
+                    <!-- FIM DA COLUNA DE LOGIN -->
+                </div>
+                <!-- FIM DO BLOCO DE BOAS VINDAS -->
+            </div>
+        </div>
+        <!-- FIM DA JANELA -->
+    </div>
+
+
+
+    <script src=" js/bootstrap.js">
+    </script>
+    <script src="js/script.js">
+    </script>
+</body>
+
+</html>

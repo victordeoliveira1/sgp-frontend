@@ -5,6 +5,7 @@
     --cor-menuHover: #3c4e8f;
     --cor-geral: aliceblue;
     --font-textos: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --cor-login: rgb(212, 211, 211);
 
     --cor-icone-projetos: 0, 102, 255;
     --cor-icone-tarefas: 0, 102, 255;
@@ -22,6 +23,69 @@ a {
 span.material-icons {
     font-size: 25px;
     margin-right: 10px;
+}
+
+/* ----------------> PÁGINA LOGIN <----------------*/
+
+.backgroundLogin {
+    height: 100vh;
+    width: 100vw;
+    background-image: url(/img/background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.backgroundLogin .card {
+    height: 600px;
+    width: 1000px;
+    border-radius: 20px;
+    border: none;
+}
+
+.input-group .material-icons {
+    font-size: 30px;
+    color: var(--cor-login);
+}
+
+.inputLogin {
+    /* background-color: aquamarine; */
+    border-radius: 50px;
+    height: 60px;
+    padding: 0px;
+    border: 2px solid;
+    border-color: var(--cor-login);
+}
+
+.inputLogin input {
+    line-height: 0;
+    font-size: clamp(12px, 1.5vw, 18px);
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
+.inputLogin input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btLogin {
+    background: linear-gradient(to right,
+            #ff5e00,
+            #ff8a00,
+            #ff5e00);
+    font-weight: bold;
+    color: white;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.boardWelcome {
+    background-image: url(/img/loginBG.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* ----------------> BARRA LATERAL E MENU <----------------*/
@@ -128,7 +192,7 @@ span.material-icons {
 /* ----------------> BARRA DE AÇÕES <----------------*/
 .barraAcoes {
     position: sticky;
-    top: 130px;
+    top: 140px;
     z-index: 99;
     padding: 10px 15px;
 }
@@ -156,6 +220,13 @@ span.material-icons {
 }
 
 /* ----------------> Dashboard <----------------*/
+.barraCorCards {
+    height: 5px;
+    background: linear-gradient(to right,
+            #ff5e00,
+            #ff8a00,
+            #ff5e00);
+}
 
 .dashCards {
     height: 200px;
@@ -167,6 +238,7 @@ span.material-icons {
     justify-content: center;
     border-radius: 15px;
     border: none;
+    overflow: hidden;
 }
 
 .dashCards .dashInfo {
@@ -207,10 +279,11 @@ h2.h2numeros {
 .dashTarefas .card {
     border-radius: 15px;
     border: none;
-    height: 400px;  
+    height: 400px;
     min-height: 250px;
     padding: 0px 30px;
     font-size: 10px;
+    overflow: hidden;
 }
 
 .graficoTarefas {

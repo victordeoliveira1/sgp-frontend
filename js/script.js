@@ -417,8 +417,8 @@ function cancelarFormulario(idFormulario) {
         });
 }
 
-function mostrarSenha() {
-    const inputSenha = elem("senhaUsuario");
+function mostrarSenha(idElemento) {
+    const inputSenha = elem(idElemento);
     if (inputSenha.type === "password") {
         inputSenha.type = "text";
     } else {
