@@ -36,7 +36,7 @@
                     <div class="col-12">
                         <div class="menu">
                             <ul>
-                                <li><a class="menuItem active" href="index.html">
+                                <li><a class="menuItem" href="index.html">
                                         <span class="material-icons">dashboard</span>
                                         Dashboard
                                     </a>
@@ -52,7 +52,7 @@
                                         Tarefas
                                     </a></li>
 
-                                <li><a class="menuItem" href="usuarios.html">
+                                <li><a class="menuItem active" href="usuarios.html">
                                         <span class="material-icons">person</span>
                                         Usuarios
                                     </a>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-auto mb-5">
+                <div class="row mt-auto">
                     <div class="col-12">
                         <hr class="mb-1" style="background-color: white; border: none;height: 2px;">
 
@@ -93,7 +93,7 @@
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
                                     <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                        style="width: 40px; height: 40px;min-width: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        style="width: 40px; height: 40px;min-width: 40px; background-color:var(--cor-siglasBG); color: white; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b id="nomeUsuario">Username</b>
                                 </div>
@@ -187,7 +187,8 @@
                                 <label for="cpfUsuario" class="form-label fw-semibold">CPF: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="cpfUsuario" name="cpfUsuario" class="form-control"
-                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" maxlength="11" minlength="11" autocomplete="off" required>
+                                    placeholder="000.000.000-00" maxlength="14" inputmode="numeric" maxlength="11"
+                                    minlength="11" autocomplete="off" required>
                                 <div class="invalid-feedback">Informe o CPF.</div>
 
                             </div>
@@ -233,8 +234,8 @@
                                 <div class="input-group">
                                     <input type="password" id="senhaUsuario" name="senhaUsuario" class="form-control"
                                         placeholder="Digite a senha" maxlength="19" minlength="6" required>
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        id="toggleSenha" onclick="mostrarSenha('senhaUsuario')">Mostrar</button>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggleSenha"
+                                        onclick="mostrarSenha('senhaUsuario')">Mostrar</button>
                                     <div class="invalid-feedback">Insira uma senha com 8 a 19 digitos</div>
 
                                 </div>
@@ -244,8 +245,8 @@
                             <div class="d-grid gap-2">
                                 <button type="button" class="btn btn-success btn-lg"
                                     onclick="validarFormUsuario()">Adicionar Usuário</button>
-                                <button type="button" class="btn btn-outline-danger btn-lg"
-                                    data-bs-dismiss="modal" onclick="cancelarFormulario('formUsuario')">Cancelar</button>
+                                <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
+                                    onclick="cancelarFormulario('formUsuario')">Cancelar</button>
                             </div>
 
                         </form>
@@ -259,8 +260,9 @@
         <!-- Fim do modal -->
         <script src=" js/bootstrap.js">
         </script>
-        <script src="js/script.js">
+        <script src="js/main.js">
         </script>
+        <script src="js/usuarios.js"></script>
 </body>
 
 </html>

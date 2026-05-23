@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-auto mb-5">
+                <div class="row mt-auto">
                     <div class="col-12">
                         <hr class="mb-1" style="background-color: white; border: none;height: 2px;">
 
@@ -93,7 +93,7 @@
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
                                     <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center"
-                                        style="width: 40px; height: 40px;min-width: 40px; background-color: gray; color: white; padding: 4px; font-size: 20px;"
+                                        style="width: 40px; height: 40px;min-width: 40px; background-color:var(--cor-siglasBG); color: white; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b id="nomeUsuario">Username</b>
                                 </div>
@@ -128,7 +128,7 @@
                                             <div class="col-5 col-md-6 dashInfo">
                                                 <h4 class="my-0"><b>Projetos</b></h4>
                                                 <h2 class="h2numeros" id="numProjetosAtivos">0</h2>
-                                                <h5><b>Ativos</b></h5>
+                                                <h6><b>Ativos</b></h6>
                                             </div>
                                             <div class="col-7 col-md-6 dashInfo">
                                                 <div class="icones"
@@ -151,7 +151,7 @@
                                         <div class="col-5 col-md-6 dashInfo">
                                             <h4 class="my-0"><b>Tarefas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasTotal">0</h2>
-                                            <h5><b>no total</b></h5>
+                                            <h6><b>no total</b></h6>
                                         </div>
                                         <div class="col-7 col-md-6 dashInfo">
                                             <div class="icones"
@@ -168,12 +168,11 @@
                             <div class=" dashCards col-12 col-xl-6 col-xxl-3">
                                 <div class="card shadow">
                                     <div class="row barraCorCards"></div> <!-- Barra Cor Cards-->
-
                                     <div class="row mx-0 d-flex flex-nowrap h-100">
                                         <div class="col-5 col-md-6 dashInfo">
                                             <h4 class="my-0"><b>Concluídas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasConcluidas">0</h2>
-                                            <h5><b id="pTarefasConcluidas">x% do total</b></h5>
+                                            <h6><b id="pTarefasConcluidas">x% do total</b></h6>
                                         </div>
                                         <div class="col-7 col-md-6 dashInfo">
                                             <div class="icones"
@@ -195,7 +194,7 @@
                                         <div class="col-5 col-md-6 dashInfo">
                                             <h4 class="my-0"><b>Atrasadas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasAtrasadas">0</h2>
-                                            <h5><b id="pTarefasAtrasadas">x% do total</b></h5>
+                                            <h6><b id="pTarefasAtrasadas">x% do total</b></h6>
                                         </div>
                                         <div class="col-7 col-md-6 dashInfo">
                                             <div class="icones"
@@ -222,9 +221,10 @@
                                         <h4 class="p-0"><b>Tarefas por Status</b></h4>
 
                                     </div>
-                                    <div class="row mt-3 mb-3" style="height: 100%;">
+                                    <div class="row mt-2 mb-3" style="height: 100%; width: 100;">
                                         <div class="graficoTarefas col-12">
-                                            <h4><b>GRÁFICO TAREFA POR STATUS</b></h4>
+                                            <!-- <h4><b>GRÁFICO TAREFA POR STATUS</b></h4> -->
+                                            <canvas id="graficoTarefaPorStatus"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -235,10 +235,10 @@
                                     <!-- Barra Cor Cards-->
 
                                     <div class="row  mt-3 border-bottom">
-                                        <h4 class="p-0" style="font-size: clamp(13px, 1.3vw, 24px);"><b>Tarefas
+                                        <h4 class="p-0" style="font-size: clamp(13px, 2vw, 24px);"><b>Tarefas
                                                 concluídas (últimos 7 dias)</b></h4>
                                     </div>
-                                    <div class="row mt-3 mb-3" style="height: 100%;">
+                                    <div class="row mt-2 mb-3" style="height: 100%;">
                                         <div class="graficoTarefas">
                                             <h4><b>GRÁFICO TAREFAS CONCLUÍDAS</b></h4>
                                         </div>
@@ -257,13 +257,16 @@
                                     <div class="row mt-3 border-bottom">
                                         <h4 class="p-0"><b>Projetos Recentes</b></h4>
                                     </div>
-                                    <div class="row  mt-3 mb-2" style="height: 100%;">
-                                        <div class="graficoTarefas col-12">
-                                            <h4><b>LISTA PROJETOS RECENTES</b></h4>
+                                    <div class="row mt-2 mb-2 h-100">
+                                        <!-- LISTA PROJETOS RECENTES -->
+                                        <div class="graficoTarefas col-12 flex-column" id="projetosRecentes">
+
+
+                                            <!--  -->
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <h5 class="p-0"><b><a href="">Ver Todos</a></b></h5>
+                                        <h5 class="p-0"><b><a href="projetos.html">Ver Todos</a></b></h5>
                                     </div>
                                 </div>
                             </div>
@@ -274,13 +277,14 @@
                                     <div class="row mt-3 border-bottom">
                                         <h4 class="p-0"><b>Tarefas Recentes</b></h4>
                                     </div>
-                                    <div class="row  mt-3 mb-2" style="height: 100%;">
-                                        <div class="graficoTarefas">
-                                            <h4><b>LISTA TAREFAS RECENTES</b></h4>
+                                    <div class="row  mt-2 mb-2" style="height: 100%;">
+                                        <div class="graficoTarefas col-12 flex-column" id="tarefasRecentes">
+                                        <!-- LISTA TAREFAS RECENTES -->
                                         </div>
+                                        <!--  -->
                                     </div>
                                     <div class="row">
-                                        <h5 class="p-0"><b><a href="">Ver Todas</a></b></h5>
+                                        <h5 class="p-0"><b><a href="tarefas.html">Ver Todas</a></b></h5>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +300,9 @@
 
         <script src=" js/bootstrap.js">
         </script>
-        <script src="js/script.js">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/dashboard.js"></script>
         </script>
 </body>
 

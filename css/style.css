@@ -6,6 +6,8 @@
     --cor-geral: aliceblue;
     --font-textos: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --cor-login: rgb(212, 211, 211);
+    --cor-siglasBG: orange;
+
 
     --cor-icone-projetos: 0, 102, 255;
     --cor-icone-tarefas: 0, 102, 255;
@@ -269,7 +271,7 @@ span.material-icons {
 }
 
 h2.h2numeros {
-    font-size: 60px;
+    font-size: 55px;
     margin: 0px;
 }
 
@@ -291,8 +293,10 @@ h2.h2numeros {
 
 .graficoTarefas {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: cadetblue;
+    display: flex;align-items: center;
+    justify-content: center;    
+    /* background-color: cadetblue; */
+    gap: 3px;
+    
+    padding: 0px;
 }

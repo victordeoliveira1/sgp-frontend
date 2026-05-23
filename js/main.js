@@ -1,18 +1,3 @@
-// const number = [1, 2, 3, 4, 5];
-// const teste02 = number.filter(num => num >= 3);
-
-// const arrayMap = number.map(k => k * 2);
-
-// console.log(number.shift());
-
-
-// const tarefaTeste = JSON.parse(localStorage.getItem("tarefa"));
-
-// console.log(tarefaTeste);
-
-// let numProjetos = JSON.parse(localStorage.getItem("projetos")).length;
-// const hoje = Date.now().toString();
-
 //===============================================================
 // ====================== INICIALIZAÇÃO =========================
 //===============================================================
@@ -30,16 +15,10 @@ const nomeUsuario = "Victor de Oliveira";
 setTextValue("emailLogin", "victor@email.com");
 setTextValue("senhaLogin", "123456");
 
-
 const dadosUsuarioLogado = JSON.parse(localStorage.getItem("dadosUser") || null);
 
 const usuarioLogado = JSON.parse(localStorage.getItem("user") || null);
-if (usuarioLogado) {
-    if (window.location.href.includes("login.html")) {
-        logar(usuarioLogado);
-        window.location.href = "index.html";
-    }
-} else {
+if (!usuarioLogado) {
     if (!window.location.href.includes("login.html")) {
         localStorage.removeItem("dadosUser");
         window.location.href = "login.html";
@@ -52,11 +31,7 @@ if (usuarioLogado) {
 
 const listaUsuarios = elem("listaUsuarios");
 const siglaNomeUsuario = elem("siglaNome");
-
-const selectProjetoTarefa = elem("projetoTarefa");
-
 const cpfInput = elem("cpfUsuario");
-
 
 const ERROS = {
     emailVazio: "Informe o E-mail",
@@ -158,99 +133,12 @@ function formatarCPF(cpf) {
     return cpf;
 }
 
-//===============================================================
-// ================== LOGAR E LOGOUT ========================
-//===============================================================
-function logar(usuarioLogado) {
-    const usuarioCompletoEncontrado = arrayUsuarios.find(usuario => usuario.id == usuarioLogado.id);
-    const existeUserSalvo = JSON.parse(localStorage.getItem("user") || null);
-    if (existeUserSalvo) {
-        localStorage.removeItem("user");
-    }
-    if (usuarioLogado.ml || !usuarioLogado.ml) {
-        localStorage.setItem("user", JSON.stringify(usuarioLogado));
-    }
-
-    if (usuarioCompletoEncontrado) {
-        const dadosUser = {
-            nome: usuarioCompletoEncontrado.nome,
-            email: usuarioCompletoEncontrado.email,
-            dataNascimento: usuarioCompletoEncontrado.dataNascimento,
-            status: usuarioCompletoEncontrado.status
-        }
-        localStorage.setItem("dadosUser", JSON.stringify(dadosUser));
-        window.location.href = "index.html";
-    } else {
-        localStorage.removeItem("user");
-        localStorage.removeItem("dadosUser");
-        alert(ERROS.erroInesperado)
-        window.location.href = "login.html"
-    }
-}
-
-
 function logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("dadosUser");
     window.location.href = "login.html"
 
 }
-//===============================================================
-// ================== AUTENTICAÇÃO LOGIN ========================
-//===============================================================
-
-function autenticacaoLogin() {
-    elem("MensagemErroLogin").style.opacity = 0;
-    setTextHTML("MensagemErroLogin", ERROS.emailOuSenhaNaoEncontrado);
-    limparErro("emailLogin");
-    limparErro("senhaLogin");
-
-    const login = elem("emailLogin").value;
-    const senha = elem("senhaLogin").value;
-
-    if (login == "") {
-        setMensagemErro("emailLogin", "");
-        setTextHTML("MensagemErroLogin", "Preencha o campo.");
-    }
-    if (senha == "") {
-        setMensagemErro("senhaLogin", "");
-        setTextHTML("MensagemErroLogin", "Preencha o campo.");
-    }
-
-    const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-
-    const autLogin = arrayUsuarios.some(usuario => usuario.email.toLowerCase() == login.toLowerCase());
-    if (!autLogin) {
-        setMensagemErro("emailLogin", "");
-        setMensagemErro("senhaLogin", "");
-        elem("MensagemErroLogin").style.opacity = 1;
-        return;
-    }
-
-    const autSenha = arrayUsuarios.some(usuario => usuario.senha == senha);
-    if (!autSenha) {
-        setMensagemErro("emailLogin", "");
-        setMensagemErro("senhaLogin", "");
-        elem("MensagemErroLogin").style.opacity = 1;
-        return;
-    }
-
-    const user = arrayUsuarios.find(usuario => usuario.email.toLowerCase() == login.toLowerCase() && usuario.senha == senha);
-    if (!user) {
-        setTextHTML("MensagemErroLogin", ERROS.erroInesperado);
-        elem("MensagemErroLogin").style.opacity = 1;
-    } else {
-        const manterLogado = elem("manterLogado").checked;
-        const userLogado = {
-            ml: manterLogado,
-            id: user.id,
-            timestampLogin: Date.now()
-        }
-        logar(userLogado);
-    }
-
-}
-
 //===============================================================
 // ====================== AUTOCOMPLETE ==========================
 //===============================================================
@@ -260,267 +148,13 @@ if (listaUsuarios) {
 }
 
 //===============================================================
-// ====================== DASHBOARD =============================
-//===============================================================
-const numProjetos = arrayProjetos.filter(projeto => projeto.status.toUpperCase() == "ATIVO").length;
-const numTarefas = arrayTarefas.length;
-const numTarefasConcluidas = arrayTarefas.filter(tarefa => tarefa.status.toUpperCase() == "CONCLUIDA").length;
-
-let pTotalTarefas = 0;
-if (numTarefas > 0) {
-    pTotalTarefas = ((numTarefasConcluidas / numTarefas) * 100).toFixed(1);
-}
-
-const numTarefasAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje).length
-
-let pTarefasAtrasadas = 0;
-if (numTarefas > 0) {
-    pTarefasAtrasadas = ((numTarefasAtrasadas / numTarefas) * 100).toFixed(1);
-}
-
-//===============================================================
-// ====================== SETANDO VALORES =======================
-//===============================================================
-
-setTextValue("dataCriacaoTarefa", hoje);
-
-setTextValue("statusProjeto", "ATIVO");
-
-setTextValue("dataCriacaoProjeto", hoje);
-
-//===============================================================
 // ===================== SETANDO INNERHTML ======================
 //===============================================================
-if (elem("MensagemErroLogin")) {
-    elem("MensagemErroLogin").style.opacity = 0;
-    setTextHTML("MensagemErroLogin", ERROS.emailOuSenhaNaoEncontrado);
-}
-//======================== DASHBOARD ============================
-
-setTextHTML("numProjetosAtivos", numProjetos);
-
-setTextHTML("numTarefasTotal", numTarefas);
-
-setTextHTML("numTarefasConcluidas", numTarefasConcluidas);
-
-setTextHTML("pTarefasConcluidas", pTotalTarefas + "% do total");
-
-setTextHTML("numTarefasAtrasadas", numTarefasAtrasadas);
-
-setTextHTML("pTarefasAtrasadas", pTarefasAtrasadas + "% do total");
-//====================== PERFIL USUARIO ========================
 
 if (dadosUsuarioLogado) {
     setTextHTML("siglaNome", exibirSiglaNome(dadosUsuarioLogado.nome));
     const nomePreview = dadosUsuarioLogado.nome.split(' ')[0];
     setTextHTML("nomeUsuario", nomePreview);
-}
-
-//===============================================================
-// ====================== SELECT PROJETOS =======================
-//===============================================================
-if (selectProjetoTarefa) {
-    let listaDeProjetos = '<option value="" disabled selected>Selecione</option>';
-    arrayProjetos.forEach(projeto => {
-        listaDeProjetos = listaDeProjetos + "<option value=" + projeto.titulo + ">" + projeto.titulo + "</option>";
-    })
-    selectProjetoTarefa.innerHTML = listaDeProjetos;
-}
-
-//===============================================================
-// =================== USANDO MÁSCARAS ==========================
-//===============================================================
-
-if (cpfInput) {
-    mascaraCPF("cpfUsuario");
-}
-
-//===============================================================
-// ================ VALIDAÇÃO FORM TAREFA =======================
-//===============================================================
-
-function validarFormTarefa() {
-    const form = elem("formTarefa");
-
-    const titulo = elem("tituloTarefa").value;
-    const prioridade = elem("prioridadeTarefa").value;
-    const responsavel = elem("responsavelTarefa").value;
-    const descricao = elem("descricaoTarefa").value;
-    const dataCriacao = elem("dataCriacaoTarefa").value;
-    const dataConclusao = elem("dataConclusaoTarefa").value;
-    const status = elem("statusTarefa").value;
-    const projeto = elem("projetoTarefa").value;
-
-    if (!form.checkValidity()) {
-        form.classList.add("was-validated");
-        return;
-    }
-    const inputCriacao = elem("dataCriacaoTarefa");
-    const inputConclusao = elem("dataConclusaoTarefa");
-
-    inputCriacao.classList.remove("is-invalid");
-    inputConclusao.classList.remove("is-invalid");
-
-    if (dataConclusao && dataCriacao > dataConclusao) {
-
-        inputCriacao.classList.add("is-invalid");
-        inputConclusao.classList.add("is-invalid");
-
-        alert(ERROS.dataCriacao);
-
-        return;
-    }
-    const tarefa = {
-        id: Date.now().toString(),
-        titulo: titulo,
-        prioridade: prioridade,
-        responsavel: responsavel,
-        descricao: descricao,
-        dataCriacao: dataCriacao,
-        dataConclusao: dataConclusao,
-        status: status,
-        projeto: projeto
-    };
-
-    console.log(tarefa);
-    let tarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
-    tarefas.push(tarefa);
-    localStorage.setItem("tarefas", JSON.stringify(tarefas));
-
-    const modal = bootstrap.Modal.getInstance(elem("modalTarefa"));
-
-    modal.hide();
-
-    alert(CONFIRMACAO.cadastroTarefas);
-    form.reset();
-    form.classList.remove("was-validated");
-    elem("dataCriacaoTarefa").value = hoje;
-
-}
-
-//===============================================================
-// ================ VALIDAÇÃO FORM PROJETO ======================
-//===============================================================
-
-function validarFormProjeto() {
-
-    const form = elem("formProjeto");
-
-    const titulo = elem("tituloProjeto").value;
-    const descricao = elem("descricaoProjeto").value;
-    const dataCriacao = elem("dataCriacaoProjeto").value;
-    const dataConclusao = elem("dataConclusaoProjeto").value;
-    const status = elem("statusProjeto").value;
-    const responsavel = elem("responsavelProjeto").value;
-
-    if (!form.checkValidity()) {
-        form.classList.add("was-validated");
-        return;
-    }
-
-    const inputCriacao = elem("dataCriacaoProjeto");
-    const inputConclusao = elem("dataConclusaoProjeto");
-
-    inputCriacao.classList.remove("is-invalid");
-    inputConclusao.classList.remove("is-invalid");
-
-
-    if (dataConclusao && dataCriacao > dataConclusao) {
-        inputCriacao.classList.add("is-invalid");
-        inputConclusao.classList.add("is-invalid");
-        alert(ERROS.dataCriacao);
-        return;
-    }
-
-    const projeto = {
-        id: Date.now().toString(),
-        titulo: titulo,
-        descricao: descricao,
-        dataCriacao: dataCriacao,
-        dataConclusao: dataConclusao,
-        status: status,
-        responsavel: responsavel
-
-    };
-
-    console.log(projeto);
-
-    let projetos = JSON.parse(localStorage.getItem("projetos") || "[]");
-    projetos.push(projeto);
-    localStorage.setItem("projetos", JSON.stringify(projetos));
-
-    const modal = bootstrap.Modal.getInstance(elem("modalProjeto"));
-    modal.hide();
-
-
-    alert(CONFIRMACAO.cadastroProjeto);
-    form.reset();
-    form.classList.remove("was-validated");
-
-    elem("dataCriacaoProjeto").value = hoje;
-}
-
-//===============================================================
-// ================ VALIDAÇÃO FORM USUARIO ======================
-//===============================================================
-
-function validarFormUsuario() {
-
-    const form = elem("formUsuario");
-
-    const nome = elem("nomeUsuario").value;
-    const cpf = elem("cpfUsuario").value;
-    const email = elem("emailUsuario").value;
-    const dataNascimento = elem("dataNascimento").value;
-    const status = elem("statusUsuario").value;
-    const senha = elem("senhaUsuario").value;
-
-    limparErro("emailUsuario", ERROS.emailVazio)
-    limparErro("cpfUsuario", ERROS.cpfVazio)
-
-    if (!form.checkValidity()) {
-        form.classList.add("was-validated");
-        return;
-    }
-    let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-
-    const cpfLimpo = cpf.replace(/\D/g, "");
-
-    const cpfJaExiste = usuarios.some(usuario => usuario.cpf == cpfLimpo);
-    if (cpfJaExiste) {
-        setMensagemErro("cpfUsuario", ERROS.cpfCadastrado);
-        return;
-    }
-
-    const emailJaExiste = usuarios.some(usuario => usuario.email.toLowerCase() == email.toLowerCase());
-    if (emailJaExiste) {
-        setMensagemErro("emailUsuario", ERROS.emailCadastrado);
-        return;
-    }
-
-
-
-
-    const usuario = {
-        id: Date.now().toString(),
-        nome: nome,
-        cpf: cpfLimpo,
-        email: email,
-        dataNascimento: dataNascimento,
-        status: status,
-        senha: senha
-    };
-
-    usuarios.push(usuario);
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-    const modal = bootstrap.Modal.getInstance(elem("modalUsuario"));
-    modal.hide();
-
-
-    alert(CONFIRMACAO.cadastroUsuario);
-    form.reset();
-    form.classList.remove("was-validated");
 }
 
 //===============================================================
@@ -559,6 +193,7 @@ function carregarUsuariosAutocomplete() {
         listaUsuarios.appendChild(option);
     });
 }
+
 //===============================================================
 // ======================= MASCARAS =============================
 //===============================================================
@@ -592,6 +227,7 @@ function mascaraCPF(idCampo) {
 
 }
 
+
 //===============================================================
 // ==============================================================
 //===============================================================
@@ -615,7 +251,7 @@ function alimentarLocalStorage() {
             descricao: "Aplicativo para acompanhamento de treinos.",
             dataCriacao: "2026-04-10",
             dataConclusao: "2026-07-15",
-            status: "PENDENTE",
+            status: "CANCELADO",
             responsavel: "Maria Souza"
         },
 
@@ -635,7 +271,7 @@ function alimentarLocalStorage() {
             descricao: "Criação de site pessoal responsivo.",
             dataCriacao: "2026-05-12",
             dataConclusao: "2026-05-28",
-            status: "FAZENDO",
+            status: "ATIVO",
             responsavel: "Ana Clara"
         },
 
@@ -768,7 +404,7 @@ function alimentarLocalStorage() {
             descricao: "Criar funcionalidade de cadastro de usuários.",
             dataCriacao: "2026-05-03",
             dataConclusao: "2026-05-20",
-            status: "FAZENDO",
+            status: "EM_ANDAMENTO",
             projeto: "Sistema Financeiro"
         },
 
@@ -792,7 +428,7 @@ function alimentarLocalStorage() {
             descricao: "Criar tabelas e relacionamentos no banco.",
             dataCriacao: "2026-05-08",
             dataConclusao: "2026-05-18",
-            status: "FAZENDO",
+            status: "EM_ANDAMENTO",
             projeto: "App de Academia"
         },
 
@@ -828,7 +464,7 @@ function alimentarLocalStorage() {
             descricao: "Adaptar telas para dispositivos móveis.",
             dataCriacao: "2026-05-09",
             dataConclusao: "2026-05-22",
-            status: "FAZENDO",
+            status: "EM_ANDAMENTO",
             projeto: "Sistema de Gestão Escolar"
         }
 
