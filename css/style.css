@@ -23,7 +23,7 @@ a {
 }
 
 span.material-icons {
-    font-size:25px;
+    font-size: 25px;
     margin-right: 10px;
 }
 
@@ -32,10 +32,11 @@ span.material-icons {
 .camposLogin.is-invalid:focus {
     box-shadow: none;
 }
+
 .backgroundLogin {
     height: 100vh;
     width: 100vw;
-    background-image: url(/img/background.png);
+    background-image: url(../img/background.png);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -87,7 +88,7 @@ span.material-icons {
 }
 
 .boardWelcome {
-    background-image: url(/img/loginBG.png);
+    background-image: url(../img/loginBG.png);
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
@@ -265,6 +266,10 @@ span.material-icons {
     display: flex;
 }
 
+.dashInfo h6 {
+    font-size: clamp(12px, 2vw, 16px);
+}
+
 .card span {
     font-size: 60px;
     margin: 0px;
@@ -273,6 +278,10 @@ span.material-icons {
 h2.h2numeros {
     font-size: 55px;
     margin: 0px;
+}
+
+.tituloCard {
+    font-size: clamp(16px, 2vw, 25px);
 }
 
 /* ----------------> Dashboard tarefas <----------------*/
@@ -292,11 +301,12 @@ h2.h2numeros {
 }
 
 .graficoTarefas {
-    height: 100%;
-    display: flex;align-items: center;
-    justify-content: center;    
+    height:95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* background-color: cadetblue; */
     gap: 3px;
-    
+
     padding: 0px;
 }

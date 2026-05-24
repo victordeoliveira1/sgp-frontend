@@ -126,7 +126,7 @@
 
                                         <div class="row mx-0 d-flex flex-nowrap h-100">
                                             <div class="col-5 col-md-6 dashInfo">
-                                                <h4 class="my-0"><b>Projetos</b></h4>
+                                                <h4 class="my-0 tituloCard"><b>Projetos</b></h4>
                                                 <h2 class="h2numeros" id="numProjetosAtivos">0</h2>
                                                 <h6><b>Ativos</b></h6>
                                             </div>
@@ -149,7 +149,7 @@
 
                                     <div class="row mx-0 d-flex flex-nowrap h-100">
                                         <div class="col-5 col-md-6 dashInfo">
-                                            <h4 class="my-0"><b>Tarefas</b></h4>
+                                            <h4 class="my-0 tituloCard"><b>Tarefas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasTotal">0</h2>
                                             <h6><b>no total</b></h6>
                                         </div>
@@ -170,7 +170,7 @@
                                     <div class="row barraCorCards"></div> <!-- Barra Cor Cards-->
                                     <div class="row mx-0 d-flex flex-nowrap h-100">
                                         <div class="col-5 col-md-6 dashInfo">
-                                            <h4 class="my-0"><b>Concluídas</b></h4>
+                                            <h4 class="my-0 tituloCard"><b>Concluídas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasConcluidas">0</h2>
                                             <h6><b id="pTarefasConcluidas">x% do total</b></h6>
                                         </div>
@@ -192,7 +192,7 @@
 
                                     <div class="row mx-0 d-flex flex-nowrap h-100">
                                         <div class="col-5 col-md-6 dashInfo">
-                                            <h4 class="my-0"><b>Atrasadas</b></h4>
+                                            <h4 class="my-0 tituloCard"><b>Atrasadas</b></h4>
                                             <h2 class="h2numeros" id="numTarefasAtrasadas">0</h2>
                                             <h6><b id="pTarefasAtrasadas">x% do total</b></h6>
                                         </div>
@@ -213,34 +213,45 @@
                         <!-- Tarefas Status -->
                         <div class="row mx-3">
                             <div class="dashTarefas mx col-12 col-xxl-6">
-                                <div class="card shadow">
+                                <div class="card shadow d-flex flex-column">
                                     <div class="row barraCorCards" style="margin-left:-30px;margin-right:-30px;"></div>
                                     <!-- Barra Cor Cards-->
 
                                     <div class="row mt-3 border-bottom">
                                         <h4 class="p-0"><b>Tarefas por Status</b></h4>
-
                                     </div>
-                                    <div class="row mt-2 mb-3" style="height: 100%; width: 100;">
+                                    <div class="row mt-2 mb-3" style="height: 70%;">
                                         <div class="graficoTarefas col-12">
-                                            <!-- <h4><b>GRÁFICO TAREFA POR STATUS</b></h4> -->
                                             <canvas id="graficoTarefaPorStatus"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 mb-3" style="height: 10%;margin-top: auto;">
+                                        <div class="col-12 d-flex flex-row">
+                                            <span class="material-icons mx-1"
+                                                style="color:rgb(var(--cor-icone-concluidos));font-size: 20px;">check_circle</span>
+                                            <h6 id="numTotalTarefasConcluidas">Total de tarefas concluídas:</h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="dashTarefas col-12 col-xxl-6">
-                                <div class="card shadow">
+                                <div class="card shadow d-flex flex-column">
                                     <div class="row barraCorCards" style="margin-left:-30px;margin-right:-30px;"></div>
                                     <!-- Barra Cor Cards-->
 
                                     <div class="row  mt-3 border-bottom">
-                                        <h4 class="p-0" style="font-size: clamp(13px, 2vw, 24px);"><b>Tarefas
-                                                concluídas (últimos 7 dias)</b></h4>
+                                        <h4 class="p-0"><b>Suas Tarefas</b></h4>
                                     </div>
-                                    <div class="row mt-2 mb-3" style="height: 100%;">
-                                        <div class="graficoTarefas">
-                                            <h4><b>GRÁFICO TAREFAS CONCLUÍDAS</b></h4>
+                                    <div class="row mt-2 mb-3" style="height: 70%;">
+                                        <div class="graficoTarefas col-12">
+                                            <canvas id="graficoStatus"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 mb-3 " style="height: 10%;margin-top: auto;">
+                                        <div class="col-12 d-flex">
+                                            <span class="material-icons mx-1"
+                                                style="color:rgb(var(--cor-icone-concluidos));font-size: 20px;">check_circle</span>
+                                            <h6 id="numSuasTarefasConcluidas">Total de tarefas concluídas: </h6>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +290,7 @@
                                     </div>
                                     <div class="row  mt-2 mb-2" style="height: 100%;">
                                         <div class="graficoTarefas col-12 flex-column" id="tarefasRecentes">
-                                        <!-- LISTA TAREFAS RECENTES -->
+                                            <!-- LISTA TAREFAS RECENTES -->
                                         </div>
                                         <!--  -->
                                     </div>

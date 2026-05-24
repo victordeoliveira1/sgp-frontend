@@ -11,12 +11,17 @@ setTextValue("dataCriacaoTarefa", hoje);
 //===============================================================
 
 if (selectProjetoTarefa) {
-    let listaDeProjetos = '<option value="" disabled selected>Selecione</option>';
+    let listaDeProjetos ='<option value="" disabled selected>Selecione</option>';
+    const projetosAtivos = arrayProjetos.filter(projeto => projeto.status.toUpperCase() == "ATIVO");// caso queira colocar só projetos ativos
     arrayProjetos.forEach(projeto => {
-        listaDeProjetos = listaDeProjetos + "<option value=" + projeto.titulo + ">" + projeto.titulo + "</option>";
-    })
+        listaDeProjetos +=
+            "<option value='" + projeto.titulo + "'>" +
+            projeto.titulo +
+            "</option>";
+    });
     selectProjetoTarefa.innerHTML = listaDeProjetos;
 }
+
 
 //===============================================================
 // ================ VALIDAÇÃO FORM TAREFA =======================

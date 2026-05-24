@@ -10,7 +10,7 @@ const arrayProjetos = JSON.parse(localStorage.getItem("projetos") || "[]");
 const arrayTarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
 const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-const nomeUsuario = "Victor de Oliveira";
+let nomeUsuario = "Usuario Padrão";
 
 setTextValue("emailLogin", "victor@email.com");
 setTextValue("senhaLogin", "123456");
@@ -152,6 +152,7 @@ if (listaUsuarios) {
 //===============================================================
 
 if (dadosUsuarioLogado) {
+    nomeUsuario = dadosUsuarioLogado.nome;
     setTextHTML("siglaNome", exibirSiglaNome(dadosUsuarioLogado.nome));
     const nomePreview = dadosUsuarioLogado.nome.split(' ')[0];
     setTextHTML("nomeUsuario", nomePreview);
@@ -403,7 +404,7 @@ function alimentarLocalStorage() {
             responsavel: "Maria Souza",
             descricao: "Criar funcionalidade de cadastro de usuários.",
             dataCriacao: "2026-05-03",
-            dataConclusao: "2026-05-20",
+            dataConclusao: "2026-08-20",
             status: "EM_ANDAMENTO",
             projeto: "Sistema Financeiro"
         },
@@ -415,8 +416,8 @@ function alimentarLocalStorage() {
             responsavel: "João Pedro",
             descricao: "Desenvolver dashboard principal do sistema.",
             dataCriacao: "2026-04-15",
-            dataConclusao: "2026-05-05",
-            status: "PENDENTE",
+            dataConclusao: "2026-08-05",
+            status: "EM_ANDAMENTO",
             projeto: "Sistema de Estoque"
         },
 
@@ -427,8 +428,8 @@ function alimentarLocalStorage() {
             responsavel: "Ana Clara",
             descricao: "Criar tabelas e relacionamentos no banco.",
             dataCriacao: "2026-05-08",
-            dataConclusao: "2026-05-18",
-            status: "EM_ANDAMENTO",
+            dataConclusao: "2026-09-18",
+            status: "PENDENTE",
             projeto: "App de Academia"
         },
 
@@ -436,11 +437,11 @@ function alimentarLocalStorage() {
             id: "5",
             titulo: "Criar página inicial",
             prioridade: "MEDIA",
-            responsavel: "Carlos Henrique",
+            responsavel: "Victor Alves",
             descricao: "Desenvolver homepage responsiva.",
             dataCriacao: "2026-05-12",
-            dataConclusao: "2026-05-25",
-            status: "PENDENTE",
+            dataConclusao: "2026-07-25",
+            status: "EM_ANDAMENTO",
             projeto: "Website Portfólio"
         },
 
@@ -452,7 +453,7 @@ function alimentarLocalStorage() {
             descricao: "Resolver erros identificados pelos usuários.",
             dataCriacao: "2026-05-02",
             dataConclusao: "2026-05-06",
-            status: "CONCLUIDA",
+            status: "EM_ANDAMENTO",
             projeto: "Sistema Financeiro"
         },
 
@@ -466,8 +467,43 @@ function alimentarLocalStorage() {
             dataConclusao: "2026-05-22",
             status: "EM_ANDAMENTO",
             projeto: "Sistema de Gestão Escolar"
-        }
+        },
 
+        {
+            id: "8",
+            titulo: "Integrar API de pagamentos",
+            prioridade: "ALTA",
+            responsavel: "Victor Alves",
+            descricao: "Realizar integração com gateway de pagamentos.",
+            dataCriacao: "2026-05-14",
+            dataConclusao: "2026-05-28",
+            status: "PENDENTE",
+            projeto: "Sistema Financeiro"
+        },
+
+        {
+            id: "9",
+            titulo: "Desenvolver tela de relatórios",
+            prioridade: "MEDIA",
+            responsavel: "Maria Souza",
+            descricao: "Criar interface para visualização de relatórios.",
+            dataCriacao: "2026-05-16",
+            dataConclusao: "2026-05-30",
+            status: "CONCLUIDA",
+            projeto: "Sistema de Gestão Escolar"
+        },
+
+        {
+            id: "10",
+            titulo: "Implementar filtro de produtos",
+            prioridade: "BAIXA",
+            responsavel: "Ana Clara",
+            descricao: "Adicionar filtros de busca na listagem de produtos.",
+            dataCriacao: "2026-05-18",
+            dataConclusao: "2026-06-02",
+            status: "EM_ANDAMENTO",
+            projeto: "Sistema de Estoque"
+        }
     ];
     let tarefasLista = JSON.parse(
         localStorage.getItem("tarefas") || "[]"
