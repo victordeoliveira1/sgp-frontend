@@ -176,7 +176,7 @@ new Chart(ctx, {
             data: valores,
 
             backgroundColor: [
-                "#bdbdbd",
+                "rgb(255, 193, 7)",
                 "#4f75ff",
             ],
 
@@ -269,7 +269,7 @@ new Chart(ctx2, {
                     0
                 ],
 
-                backgroundColor: "#bdbdbd",
+                backgroundColor: "rgb(255, 193, 7)",
 
                 borderRadius: 10,
 
