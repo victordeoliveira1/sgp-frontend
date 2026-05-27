@@ -25,7 +25,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="logo">
-                            <img src="img/logo.png" alt="">
+                            <a href="index.html">
+                                <img src="img/logo.png" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -132,11 +134,28 @@
                 </div>
                 <!-- Conteúdo principal -->
                 <div class="row">
-                    <div class="conteudo col-md-12">
+                    <div class="conteudo col-md-12" style="height: fit-content;">
                         <!-- Tabela Usuarios -->
-                        <div class="row mx-0 mt-4" style="height: 800px;">
-                            <div class="graficoTarefas col-12 h-100">
-                                <h4><b>TABELA</b></h4>
+                        <div class="row mx-0 mt-4 px-3" style="height: fit-content;">
+                            <div class="col-12 table-responsive d-flex flex-column gap-2" id="usuarios-container"
+                                style="height: fit-content;">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead class="cabecalhoTabela">
+                                        <tr>
+                                            <th>Usuário</th>
+                                            <th>CPF</th>
+                                            <th>E-mail</th>
+                                            <th>Idade</th>
+                                            <th>Status</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="corpoTabelaUsuarios">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="paginacaoUsuarios" class="d-flex justify-content-center mt-3 gap-2">
                             </div>
                         </div>
                         <!-- Fim tabela Usuarios -->
@@ -176,7 +195,7 @@
                             <div class="mb-3">
                                 <label for="nomeUsuario" class="form-label fw-semibold">Nome: <span
                                         class="text-danger">*</span></label>
-                                <input type="text" id="nomeUsuario" name="nomeUsuario" class="form-control"
+                                <input type="text" id="nomeUsuarioForm" name="nomeUsuario" class="form-control"
                                     placeholder="Digite o nome" autocomplete="off" required>
                                 <div class="invalid-feedback">Informe o nome.</div>
 
@@ -243,7 +262,7 @@
 
                             <!-- Botões -->
                             <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-success btn-lg"
+                                <button type="button" class="btn btn-primary btn-lg"
                                     onclick="validarFormUsuario()">Adicionar Usuário</button>
                                 <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
                                     onclick="cancelarFormulario('formUsuario')">Cancelar</button>

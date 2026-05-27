@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" href="img/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://googleapis.com" />
+
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
 
@@ -25,7 +27,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="logo">
-                            <img src="img/logo.png" alt="">
+                            <a href="index.html">
+                                <img src="img/logo.png" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -91,8 +95,8 @@
                                         </span>
                                     </button>
                                     <!-- <img src="img/avatar.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
-                                    <b class="rounded-circle align-middle d-inline-flex justify-content-center align-items-center text-white"
-                                        style="width: 40px; height: 40px; min-width: 40px; background-color:var(--cor-siglasBG); padding: 4px; font-size: 20px;"
+                                    <b class="siglaNome rounded-circle align-middle d-inline-flex justify-content-center align-items-center text-white"
+                                        style="width: 40px; height: 40px; min-width: 40px; padding: 4px; font-size: 20px;"
                                         id="siglaNome"></b>
                                     <b id="nomeUsuario">Username</b>
                                 </div>
@@ -134,12 +138,29 @@
                 </div>
 
                 <!-- Conteúdo principal -->
-                <div class="row mx-0 px-0">
-                    <div class="conteudo col-md-12">
+                <div class="row">
+                    <div class="conteudo col-md-12" style="height: fit-content;">
                         <!-- Tabela Projetos -->
-                        <div class="row mx-0 mt-4" style="height: 800px;">
-                            <div class="graficoTarefas col-12 h-100">
-                                <h4><b>TABELA</b></h4>
+                        <div class="row mx-0 mt-4 px-3" style="height: fit-content;">
+                            <div class="col-12 table-responsive d-flex flex-column gap-2" id="projetos-container"
+                                style="height: fit-content;">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead class="cabecalhoTabela">
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Descrição</th>
+                                            <th>Responsável</th>
+                                            <th>Status</th>
+                                            <th>Progresso</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="corpoTabelaProjetos">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="paginacaoProjetos" class="d-flex justify-content-center mt-3 gap-2">
                             </div>
                         </div>
                         <!-- Fim tabela projetos -->
@@ -231,14 +252,14 @@
                                     autocomplete="off" required>
                                 <datalist id="listaUsuarios"></datalist>
 
-                                <div class="invalid-feedback">Informe um responsável.</div>
+                                > <div class="invalid-feedback">Informe um responsável.</div>
 
                             </div>
                         </div>
 
                         <!-- Botões -->
                         <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-success btn-lg"
+                            <button type="button" class="btn btn-primary btn-lg"
                                 onclick="validarFormProjeto()">Salvar</button>
                             <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
                                 onclick="cancelarFormulario('formProjeto');setarData('dataCriacaoProjeto',hoje)">Cancelar</button>
@@ -248,12 +269,46 @@
 
                 </div>
 
+
+
             </div>
 
         </div>
 
     </div>
     <!-- Fim do modal -->
+
+    <!-- Modal Info-->
+    <div class="modal fade" id="modalInfoProjeto" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="modal-info-title">
+                        Modal
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body" id="modal-info-body">
+
+                    <!-- Div vazia -->
+                    <div id="conteudoModal" style="min-height: 150px;">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="modal-base-area"></div>
     <script src="js/bootstrap.js">
     </script>
     <script src="js/main.js">

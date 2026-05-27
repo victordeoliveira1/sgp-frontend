@@ -202,7 +202,15 @@ span.material-icons {
     z-index: 99;
     padding: 10px 15px;
 }
-
+.siglaNome{
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    background-color:var(--cor-siglasBG);
+     color: white;
+     padding: 4px;
+     font-size: 20px;
+}
 /* ----------------> BARRA TITULO E CONTEUDO <----------------*/
 .barraTitulo {
     height: 50px;
@@ -301,7 +309,7 @@ h2.h2numeros {
 }
 
 .graficoTarefas {
-    height:95%;
+    height: 95%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,4 +317,23 @@ h2.h2numeros {
     gap: 3px;
 
     padding: 0px;
+}
+
+/* ----------------> Projetos <----------------*/
+table {
+
+    table-layout: fixed;
+
+    width: 100%;
+}
+
+.cabecalhoTabela th {
+    background-color: var(--cor-primaria);
+    color: white;    
+    
+}
+tr{
+    white-space: nowrap;
+    text-align: center;
+    background-color:rgb(24, 100, 24);
 }

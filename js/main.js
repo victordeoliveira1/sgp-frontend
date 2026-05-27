@@ -6,11 +6,12 @@ alimentarLocalStorage();
 const hoje = new Date().toISOString().split('T')[0];
 
 
-const arrayProjetos = JSON.parse(localStorage.getItem("projetos") || "[]");
+let arrayProjetos = getProjetos();
 const arrayTarefas = JSON.parse(localStorage.getItem("tarefas") || "[]");
 const arrayUsuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
 let nomeUsuario = "Usuario Padrão";
+
 
 setTextValue("emailLogin", "victor@email.com");
 setTextValue("senhaLogin", "123456");
@@ -59,6 +60,16 @@ function elem(idElemento) {
 
 function setarData(idElemento, data) {
     elem(idElemento).value = data;
+}
+
+function getProjetos() {
+    return JSON.parse(localStorage.getItem("projetos") || "[]");
+}
+function getTarefas() {
+    return JSON.parse(localStorage.getItem("tarefas") || "[]");
+}
+function getUsuarios() {
+    return JSON.parse(localStorage.getItem("usuarios") || "[]");
 }
 
 function setMensagemErro(idElemento, mensagem) {
@@ -112,6 +123,25 @@ function exibirSiglaNome(nomeUsuario) {
     return sigla.toUpperCase();
 }
 
+
+function gerarCorPorNome(nome) {
+
+    nome = nome.trim().toLowerCase();
+
+    let hash = 0;
+
+    for (let i = 0; i < nome.length; i++) {
+        hash = nome.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    const r = (hash >> 0) & 255;
+    const g = (hash >> 8) & 255;
+    const b = (hash >> 16) & 255;
+
+    return `rgb(${Math.abs(r)}, ${Math.abs(g)}, ${Math.abs(b)})`;
+}
+
+
 function formatarCPF(cpf) {
     cpf = cpf.replace(/\D/g, "");
     cpf = cpf.slice(0, 11);
@@ -139,6 +169,66 @@ function logout() {
     window.location.href = "login.html"
 
 }
+
+function getStatusColor(status) {
+
+    switch (status) {
+        case "ATIVO":
+            return "info";
+
+        case "CONCLUIDA":
+        case "CONCLUIDO":
+            return "success";
+
+        case "EM_ANDAMENTO":
+            return "primary";
+
+        case "PENDENTE":
+            return "secondary";
+
+        case "CANCELADO":
+            return "danger";
+
+        default:
+            return "dark";
+    }
+}
+function formatarData(data) {
+    if (!data) {
+        return "";
+    }
+    const novaData = new Date(data);
+    return novaData.toLocaleDateString(
+        "pt-BR"
+    );
+}
+
+function calcularIdade(dataNascimento) {
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+
+    const mesAtual = hoje.getMonth();
+    const diaAtual = hoje.getDate();
+
+    const mesNascimento = nascimento.getMonth();
+    const diaNascimento = nascimento.getDate();
+
+    // Verifica se ainda não fez aniversário esse ano
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+        idade--;
+    }
+    return idade;
+}
+
+function limitarCaracteres(texto, limite) {
+
+    if (texto.length > limite) {
+        return texto.slice(0, limite) + "...";
+    }
+
+    return texto;
+}
 //===============================================================
 // ====================== AUTOCOMPLETE ==========================
 //===============================================================
@@ -156,6 +246,8 @@ if (dadosUsuarioLogado) {
     setTextHTML("siglaNome", exibirSiglaNome(dadosUsuarioLogado.nome));
     const nomePreview = dadosUsuarioLogado.nome.split(' ')[0];
     setTextHTML("nomeUsuario", nomePreview);
+    elem("siglaNome").style.setProperty("--cor-siglasBG", gerarCorPorNome(nomeUsuario));
+
 }
 
 //===============================================================
@@ -194,6 +286,53 @@ function carregarUsuariosAutocomplete() {
         listaUsuarios.appendChild(option);
     });
 }
+//===============================================================
+// ======================= CRIAR MODAL =============================
+//===============================================================
+
+
+
+function criarModalEAbrir({
+    tamanho,
+    titulo,
+    corpo,
+    rodape
+}) {
+    if (elem("modal-base-area")) {
+        elem("modal-base-area").innerHTML = "";
+
+        elem("modal-base-area").innerHTML = `
+    <div class="modal fade" id="modal-base" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="modal-info-title">
+                        Modal
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body" id="modal-info-body">
+                    <p>${corpo}</p>
+                    <!-- Div vazia -->
+                <div id="conteudoModal" style="min-height: 150px;">
+
+                    </div>
+                </div>
+                <div class="modal-footer">                    
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>`;
+
+        const modal = new bootstrap.Modal(document.getElementById("modal-base"));
+        modal.show();
+    }
+}
 
 //===============================================================
 // ======================= MASCARAS =============================
@@ -227,6 +366,57 @@ function mascaraCPF(idCampo) {
     });
 
 }
+
+//===============================================================
+// ================== TABELAS E PAGINAÇÃO =======================
+//===============================================================
+
+function criarTabela(
+    {
+        nomeObjeto,
+        arrayTabela,
+        idTabela,
+        idPaginacao,
+        conteudoHTML,
+        paginaAtual,
+        itensPorPagina,
+        onChangeFunction
+    }) {
+
+    elem(idTabela).innerHTML = "";
+    elem(idPaginacao).innerHTML = "";
+
+    const primeiroItem = (paginaAtual - 1) * itensPorPagina;
+    const ultimoItem = primeiroItem + itensPorPagina;
+    const listaParaExibir = arrayTabela.slice(primeiroItem, ultimoItem);
+
+    listaParaExibir.forEach(element => {
+        elem(idTabela).innerHTML += conteudoHTML(element);
+    });
+
+
+
+    //==== CALCULA A QUANTIDADE DE PÁGINAS E CRIA OS BOTÕES DEIXANDO COLORIDO ======
+    const totalPaginas = Math.ceil(arrayTabela.length / itensPorPagina);
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        elem(idPaginacao).innerHTML += `
+            <button class="btn ${i === paginaAtual ? "btn-primary" : "btn-outline-primary"}"
+                onclick="${onChangeFunction}(${i},${nomeObjeto})">
+                ${i}
+            </button>
+        `;
+    }
+    //==============================================================================
+}
+
+function trocarPagina(numeroPagina, objeto) {
+
+    objeto.paginaAtual = numeroPagina;
+
+    criarTabela(objeto);
+}
+
 
 
 //===============================================================
@@ -262,7 +452,7 @@ function alimentarLocalStorage() {
             descricao: "Controle de receitas e despesas empresariais.",
             dataCriacao: "2026-03-05",
             dataConclusao: "2026-06-20",
-            status: "CONCLUIDO",
+            status: "ATIVO",
             responsavel: "João Pedro"
         },
 
@@ -272,7 +462,7 @@ function alimentarLocalStorage() {
             descricao: "Criação de site pessoal responsivo.",
             dataCriacao: "2026-05-12",
             dataConclusao: "2026-05-28",
-            status: "ATIVO",
+            status: "CONCLUIDO",
             responsavel: "Ana Clara"
         },
 
@@ -359,6 +549,56 @@ function alimentarLocalStorage() {
             dataNascimento: "1992-01-17",
             status: "ATIVO",
             senha: "carlos321"
+        },
+
+        {
+            id: "6",
+            nome: "Lucas Ferreira",
+            cpf: "25874136900",
+            email: "lucas@email.com",
+            dataNascimento: "1999-09-12",
+            status: "ATIVO",
+            senha: "lucas123"
+        },
+
+        {
+            id: "7",
+            nome: "Fernanda Lima",
+            cpf: "36925814700",
+            email: "fernanda@email.com",
+            dataNascimento: "1997-04-03",
+            status: "ATIVO",
+            senha: "fernanda456"
+        },
+
+        {
+            id: "8",
+            nome: "Ricardo Mendes",
+            cpf: "95175385200",
+            email: "ricardo@email.com",
+            dataNascimento: "1990-12-21",
+            status: "INATIVO",
+            senha: "ricardo789"
+        },
+
+        {
+            id: "9",
+            nome: "Juliana Rocha",
+            cpf: "75315945600",
+            email: "juliana@email.com",
+            dataNascimento: "2001-06-14",
+            status: "ATIVO",
+            senha: "juliana321"
+        },
+
+        {
+            id: "10",
+            nome: "Gabriel Costa",
+            cpf: "85245612300",
+            email: "gabriel@email.com",
+            dataNascimento: "1996-08-30",
+            status: "ATIVO",
+            senha: "gabriel654"
         }
 
     ];
@@ -429,7 +669,7 @@ function alimentarLocalStorage() {
             descricao: "Criar tabelas e relacionamentos no banco.",
             dataCriacao: "2026-05-08",
             dataConclusao: "2026-09-18",
-            status: "PENDENTE",
+            status: "CANCELADA",
             projeto: "App de Academia"
         },
 
@@ -441,7 +681,7 @@ function alimentarLocalStorage() {
             descricao: "Desenvolver homepage responsiva.",
             dataCriacao: "2026-05-12",
             dataConclusao: "2026-07-25",
-            status: "EM_ANDAMENTO",
+            status: "CONCLUIDA",
             projeto: "Website Portfólio"
         },
 
@@ -454,17 +694,17 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-05-02",
             dataConclusao: "2026-05-06",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema Financeiro"
+            projeto: "Sistema de Gestão Escolar"
         },
 
         {
             id: "7",
             titulo: "Implementar responsividade",
             prioridade: "MEDIA",
-            responsavel: "Maria Souza",
+            responsavel: "Victor Alves",
             descricao: "Adaptar telas para dispositivos móveis.",
             dataCriacao: "2026-05-09",
-            dataConclusao: "2026-05-22",
+            dataConclusao: "2026-08-22",
             status: "EM_ANDAMENTO",
             projeto: "Sistema de Gestão Escolar"
         },
@@ -503,6 +743,66 @@ function alimentarLocalStorage() {
             dataConclusao: "2026-06-02",
             status: "EM_ANDAMENTO",
             projeto: "Sistema de Estoque"
+        },
+        // Novas tarefas
+        {
+            id: "11",
+            titulo: "Criar sistema de notificações",
+            prioridade: "MEDIA",
+            responsavel: "Lucas Ferreira",
+            descricao: "Implementar notificações em tempo real no sistema.",
+            dataCriacao: "2026-05-20",
+            dataConclusao: "2026-06-10",
+            status: "EM_ANDAMENTO",
+            projeto: "Sistema Financeiro"
+        },
+
+        {
+            id: "12",
+            titulo: "Refatorar código do backend",
+            prioridade: "ALTA",
+            responsavel: "Fernanda Lima",
+            descricao: "Melhorar organização e performance do backend.",
+            dataCriacao: "2026-05-18",
+            dataConclusao: "2026-06-25",
+            status: "EM_ANDAMENTO",
+            projeto: "Sistema de Estoque"
+        },
+
+        {
+            id: "13",
+            titulo: "Criar página de contato",
+            prioridade: "BAIXA",
+            responsavel: "Juliana Rocha",
+            descricao: "Desenvolver página de contato responsiva.",
+            dataCriacao: "2026-05-05",
+            dataConclusao: "2026-05-15",
+            status: "CONCLUIDA",
+            projeto: "Website Portfólio"
+        },
+
+        {
+            id: "14",
+            titulo: "Implementar autenticação JWT",
+            prioridade: "ALTA",
+            responsavel: "Gabriel Costa",
+            descricao: "Adicionar autenticação segura utilizando JWT.",
+            dataCriacao: "2026-05-22",
+            dataConclusao: "2026-06-12",
+            status: "PENDENTE",
+            projeto: "Sistema de Gestão Escolar"
+        },
+
+        {
+            id: "15",
+            titulo: "Documentar endpoints da API",
+            prioridade: "MEDIA",
+            responsavel: "Ricardo Mendes",
+            descricao: "Criar documentação completa da API do sistema.",
+            dataCriacao: "2026-05-10",
+            dataConclusao: "2026-05-28",
+            status: "CANCELADA",
+            projeto: "App de Academia"
         }
     ];
     let tarefasLista = JSON.parse(
