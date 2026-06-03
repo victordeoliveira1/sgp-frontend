@@ -1,8 +1,8 @@
 //===============================================================
 // =================== TABELA DE PROJETOS =======================
 //===============================================================
-function calcularProgressoProjeto(projetoTitulo) {
-    const todasTarefas = getTarefas().filter(tarefas => tarefas.projeto == projetoTitulo);
+function calcularProgressoProjeto(projetoId) {
+    const todasTarefas = getTarefas().filter(t => t.projeto == projetoId);
     const tarefasConcluidas = todasTarefas.filter(tarefas => tarefas.status.toUpperCase() == "CONCLUIDA");
     console.log(tarefasConcluidas.length)
     if (todasTarefas.length === 0) {
@@ -22,11 +22,11 @@ const objetoProjeto = {
         <tr>
             <td class="text-" style="font-weight:bold">${projeto.titulo}</td>
 
-            <td class="${projeto.descricao ? "text-dark" : "text-secondary"}" title="${projeto.descricao}">
+            <td class="${projeto.descricao ? "text-dark" : "text-secondary"}" title="${projeto.descricao}" style="white-space:wrap">
               ${limitarCaracteres(projeto.descricao, 40) || "Não informado"}
             </td>
 
-            <td>${projeto.responsavel}</td>
+            <td>${getNomeUsuarioPorId(projeto.responsavel)}</td>
             
             <td>
                 <span class="badge rounded-pill bg-${getStatusColor(projeto.status)}">
@@ -37,11 +37,11 @@ const objetoProjeto = {
             <td class="text-center">
                 <div class="d-flex align-items-center justify-content-center gap-2">
                     <div class="progress" style="height: 15px; width: 150px;">
-                        <div class="progress-bar bg-success" style="width:${calcularProgressoProjeto(projeto.titulo)}%;">
+                        <div class="progress-bar bg-success" style="width:${calcularProgressoProjeto(projeto.id)}%;">
                         </div>
                     </div>
                         <span style="font-size: 13px; font-weight: bold; min-width: 35px;">
-                        ${calcularProgressoProjeto(projeto.titulo)}%
+                        ${calcularProgressoProjeto(projeto.id)}%
                         </span>
                     </div>
             </td>
@@ -71,6 +71,7 @@ const objetoProjeto = {
 }
 
 criarTabela(objetoProjeto);
+carregarUsuariosAutocomplete("listaResponsaveisProjeto");
 //=================== EXCLUIR PROJETO =======================
 let _idProjetoParaExcluir = null;
 
@@ -96,7 +97,8 @@ function executarExclusaoProjeto() {
 //=================== PREENCHER INFORMAÇÕES DO PROJETO =======================
 
 function preencherModalInfoProjeto(projetoId) {
-    const projeto = getProjetos().find(projeto => projeto.id == projetoId);
+    const projeto = getProjetos().find(p => p.id == projetoId);
+    const nomeResponsavel = getNomeUsuarioPorId(projeto.responsavel);
     setTextHTML("modal-info-title", "Projeto: " + projeto.titulo);
     const texto = `
         <p><b>Descrição: </b>${projeto.descricao}</p>
@@ -108,10 +110,10 @@ function preencherModalInfoProjeto(projetoId) {
         <p><b>Data de criação: </b>${formatarData(projeto.dataCriacao)}</p>
         <p><b>Data de conclusão: </b>${formatarData(projeto.dataConclusao) || "Não informada"}</p>
         <p><b>Responsável: </b>
-        <b class="siglaNome rounded-circle me-1 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default; background-color:${gerarCorPorNome(projeto.responsavel)}">
-                ${exibirSiglaNome(projeto.responsavel)}
-                </b>  
-        ${projeto.responsavel}
+        <b class="siglaNome rounded-circle me-1 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default; background-color:${gerarCorPorNome(nomeResponsavel)}">
+                ${exibirSiglaNome(nomeResponsavel)}
+                </b>
+        ${nomeResponsavel}
         </p>
     `;
     setTextHTML("modal-info-body", texto);
@@ -139,7 +141,7 @@ function abrirModalEdicao(projetoId) {
     setTextValue("dataCriacaoProjeto", projeto.dataCriacao);
     setTextValue("dataConclusaoProjeto", projeto.dataConclusao);
     setTextValue("statusProjeto", projeto.status);
-    setTextValue("responsavelProjeto", projeto.responsavel);
+    setTextValue("responsavelProjeto", getNomeUsuarioPorId(projeto.responsavel));
 
     const modal = new bootstrap.Modal(elem("modalProjeto"));
     modal.show();
@@ -160,7 +162,8 @@ function validarFormProjeto() {
     const dataCriacao = elem("dataCriacaoProjeto").value;
     const dataConclusao = elem("dataConclusaoProjeto").value;
     const status = elem("statusProjeto").value;
-    const responsavel = elem("responsavelProjeto").value;
+    const nomeResponsavel = elem("responsavelProjeto").value;
+    const responsavel = getUsuarios().find(u => u.nome == nomeResponsavel)?.id ?? nomeResponsavel;
 
     if (!form.checkValidity()) {
         form.classList.add("was-validated");
@@ -199,6 +202,7 @@ function validarFormProjeto() {
     alert(CONFIRMACAO.cadastroProjeto);
     form.reset();
     form.classList.remove("was-validated");
+    carregarUsuariosAutocomplete("listaResponsaveisProjeto");
 
     objetoProjeto.arrayTabela = getProjetos();
     criarTabela(objetoProjeto);

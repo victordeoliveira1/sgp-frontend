@@ -30,7 +30,6 @@ if (!usuarioLogado) {
 // ====================== ELEMENTOS =============================
 //===============================================================
 
-const listaUsuarios = elem("listaUsuarios");
 const siglaNomeUsuario = elem("siglaNome");
 
 const ERROS = {
@@ -69,6 +68,12 @@ function getTarefas() {
 }
 function getUsuarios() {
     return JSON.parse(localStorage.getItem("usuarios") || "[]");
+}
+function getNomeUsuarioPorId(id) {
+    return getUsuarios().find(u => u.id == id)?.nome ?? "Desconhecido";
+}
+function getTituloprojetoPorId(id) {
+    return getProjetos().find(p => p.id == id)?.titulo ?? "Desconhecido";
 }
 
 function setMensagemErro(idElemento, mensagem) {
@@ -233,9 +238,6 @@ function limitarCaracteres(texto, limite) {
 // ====================== AUTOCOMPLETE ==========================
 //===============================================================
 
-if (listaUsuarios) {
-    carregarUsuariosAutocomplete();
-}
 
 //===============================================================
 // ===================== SETANDO INNERHTML ======================
@@ -275,15 +277,27 @@ function mostrarSenha(idElemento) {
     }
 }
 
-function carregarUsuariosAutocomplete() {
-    const listaUsuarios = elem("listaUsuarios");
-    listaUsuarios.innerHTML = "";
-    const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-
-    usuarios.forEach(usuario => {
+function carregarUsuariosAutocomplete(idDatalist) {
+    const lista = elem(idDatalist);
+    if (!lista) return;
+    lista.innerHTML = "";
+    getUsuarios().forEach(usuario => {
         const option = document.createElement("option");
         option.value = usuario.nome;
-        listaUsuarios.appendChild(option);
+        lista.appendChild(option);
+    });
+}
+
+function carregarProjetosSelect(idSelect) {
+    const select = elem(idSelect);
+    if (!select) return;
+    const projetos = getProjetos();
+    select.innerHTML = '<option value="" disabled selected>Selecione</option>';
+    projetos.forEach(projeto => {
+        const option = document.createElement("option");
+        option.value = projeto.id;
+        option.textContent = projeto.titulo;
+        select.appendChild(option);
     });
 }
 //===============================================================
@@ -433,7 +447,7 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-05-01",
             dataConclusao: "2026-08-30",
             status: "ATIVO",
-            responsavel: "Victor Alves"
+            responsavel: "1"
         },
 
         {
@@ -443,7 +457,7 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-04-10",
             dataConclusao: "2026-07-15",
             status: "CANCELADO",
-            responsavel: "Maria Souza"
+            responsavel: "2"
         },
 
         {
@@ -453,7 +467,7 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-03-05",
             dataConclusao: "2026-06-20",
             status: "ATIVO",
-            responsavel: "João Pedro"
+            responsavel: "3"
         },
 
         {
@@ -463,7 +477,7 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-05-12",
             dataConclusao: "2026-05-28",
             status: "CONCLUIDO",
-            responsavel: "Ana Clara"
+            responsavel: "4"
         },
 
         {
@@ -473,7 +487,7 @@ function alimentarLocalStorage() {
             dataCriacao: "2026-02-18",
             dataConclusao: "2026-06-01",
             status: "ATIVO",
-            responsavel: "Carlos Henrique"
+            responsavel: "5"
         }
 
     ];
@@ -629,180 +643,180 @@ function alimentarLocalStorage() {
             id: "1",
             titulo: "Criar tela de login",
             prioridade: "ALTA",
-            responsavel: "Victor Alves",
+            responsavel: "1",
             descricao: "Desenvolver a interface de login do sistema.",
             dataCriacao: "2026-05-01",
             dataConclusao: "2026-05-10",
             status: "CONCLUIDA",
-            projeto: "Sistema de Gestão Escolar"
+            projeto: "1"
         },
 
         {
             id: "2",
             titulo: "Implementar cadastro de usuários",
             prioridade: "MEDIA",
-            responsavel: "Maria Souza",
+            responsavel: "2",
             descricao: "Criar funcionalidade de cadastro de usuários.",
             dataCriacao: "2026-05-03",
             dataConclusao: "2026-08-20",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema Financeiro"
+            projeto: "3"
         },
 
         {
             id: "3",
             titulo: "Criar dashboard",
             prioridade: "ALTA",
-            responsavel: "João Pedro",
+            responsavel: "3",
             descricao: "Desenvolver dashboard principal do sistema.",
             dataCriacao: "2026-04-15",
             dataConclusao: "2026-08-05",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema de Estoque"
+            projeto: "5"
         },
 
         {
             id: "4",
             titulo: "Configurar banco de dados",
             prioridade: "BAIXA",
-            responsavel: "Ana Clara",
+            responsavel: "4",
             descricao: "Criar tabelas e relacionamentos no banco.",
             dataCriacao: "2026-05-08",
             dataConclusao: "2026-09-18",
             status: "CANCELADA",
-            projeto: "App de Academia"
+            projeto: "2"
         },
 
         {
             id: "5",
             titulo: "Criar página inicial",
             prioridade: "MEDIA",
-            responsavel: "Victor Alves",
+            responsavel: "1",
             descricao: "Desenvolver homepage responsiva.",
             dataCriacao: "2026-05-12",
             dataConclusao: "2026-07-25",
             status: "CONCLUIDA",
-            projeto: "Website Portfólio"
+            projeto: "4"
         },
 
         {
             id: "6",
             titulo: "Corrigir bugs do sistema",
             prioridade: "ALTA",
-            responsavel: "Victor Alves",
+            responsavel: "1",
             descricao: "Resolver erros identificados pelos usuários.",
             dataCriacao: "2026-05-02",
             dataConclusao: "2026-05-06",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema de Gestão Escolar"
+            projeto: "1"
         },
 
         {
             id: "7",
             titulo: "Implementar responsividade",
             prioridade: "MEDIA",
-            responsavel: "Victor Alves",
+            responsavel: "1",
             descricao: "Adaptar telas para dispositivos móveis.",
             dataCriacao: "2026-05-09",
             dataConclusao: "2026-08-22",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema de Gestão Escolar"
+            projeto: "1"
         },
 
         {
             id: "8",
             titulo: "Integrar API de pagamentos",
             prioridade: "ALTA",
-            responsavel: "Victor Alves",
+            responsavel: "1",
             descricao: "Realizar integração com gateway de pagamentos.",
             dataCriacao: "2026-05-14",
             dataConclusao: "2026-05-28",
             status: "PENDENTE",
-            projeto: "Sistema Financeiro"
+            projeto: "3"
         },
 
         {
             id: "9",
             titulo: "Desenvolver tela de relatórios",
             prioridade: "MEDIA",
-            responsavel: "Maria Souza",
+            responsavel: "2",
             descricao: "Criar interface para visualização de relatórios.",
             dataCriacao: "2026-05-16",
             dataConclusao: "2026-05-30",
             status: "CONCLUIDA",
-            projeto: "Sistema de Gestão Escolar"
+            projeto: "1"
         },
 
         {
             id: "10",
             titulo: "Implementar filtro de produtos",
             prioridade: "BAIXA",
-            responsavel: "Ana Clara",
+            responsavel: "4",
             descricao: "Adicionar filtros de busca na listagem de produtos.",
             dataCriacao: "2026-05-18",
             dataConclusao: "2026-06-02",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema de Estoque"
+            projeto: "5"
         },
-        // Novas tarefas
+
         {
             id: "11",
             titulo: "Criar sistema de notificações",
             prioridade: "MEDIA",
-            responsavel: "Lucas Ferreira",
+            responsavel: "6",
             descricao: "Implementar notificações em tempo real no sistema.",
             dataCriacao: "2026-05-20",
             dataConclusao: "2026-06-10",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema Financeiro"
+            projeto: "3"
         },
 
         {
             id: "12",
             titulo: "Refatorar código do backend",
             prioridade: "ALTA",
-            responsavel: "Fernanda Lima",
+            responsavel: "7",
             descricao: "Melhorar organização e performance do backend.",
             dataCriacao: "2026-05-18",
             dataConclusao: "2026-06-25",
             status: "EM_ANDAMENTO",
-            projeto: "Sistema de Estoque"
+            projeto: "5"
         },
 
         {
             id: "13",
             titulo: "Criar página de contato",
             prioridade: "BAIXA",
-            responsavel: "Juliana Rocha",
+            responsavel: "9",
             descricao: "Desenvolver página de contato responsiva.",
             dataCriacao: "2026-05-05",
             dataConclusao: "2026-05-15",
             status: "CONCLUIDA",
-            projeto: "Website Portfólio"
+            projeto: "4"
         },
 
         {
             id: "14",
             titulo: "Implementar autenticação JWT",
             prioridade: "ALTA",
-            responsavel: "Gabriel Costa",
+            responsavel: "10",
             descricao: "Adicionar autenticação segura utilizando JWT.",
             dataCriacao: "2026-05-22",
             dataConclusao: "2026-06-12",
             status: "PENDENTE",
-            projeto: "Sistema de Gestão Escolar"
+            projeto: "1"
         },
 
         {
             id: "15",
             titulo: "Documentar endpoints da API",
             prioridade: "MEDIA",
-            responsavel: "Ricardo Mendes",
+            responsavel: "8",
             descricao: "Criar documentação completa da API do sistema.",
             dataCriacao: "2026-05-10",
             dataConclusao: "2026-05-28",
             status: "CANCELADA",
-            projeto: "App de Academia"
+            projeto: "2"
         }
     ];
     let tarefasLista = JSON.parse(

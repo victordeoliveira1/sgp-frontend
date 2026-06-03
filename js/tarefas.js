@@ -18,17 +18,17 @@ const objetoTarefa = {
         <tr>
             <td class="text-start" style="font-weight:bold; white-space:wrap">${tarefa.titulo}</td>
             <td class="text-start">
-                <b class="siglaNome rounded-circle me-2 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default;background-color:${gerarCorPorNome(tarefa.responsavel)}">
-                    ${exibirSiglaNome(tarefa.responsavel)}
+                <b class="siglaNome rounded-circle me-2 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default;background-color:${gerarCorPorNome(getNomeUsuarioPorId(tarefa.responsavel))}">
+                    ${exibirSiglaNome(getNomeUsuarioPorId(tarefa.responsavel))}
                 </b>
-                <b>${tarefa.responsavel}</b>
+                <b>${getNomeUsuarioPorId(tarefa.responsavel)}</b>
             </td>
             <td>
                 <span class="badge rounded-pill bg-${getStatusColor(tarefa.status)}">
                     ${tarefa.status}
                 </span>
             </td>
-            <td>${tarefa.projeto}</td>
+            <td>${getTituloprojetoPorId(tarefa.projeto)}</td>
             <td>${dataConclusaoHTML}</td>
             <td>
                 <button class="btn" data-bs-toggle="modal" data-bs-target="#modalInfoTarefa" onclick="preencherModalInfoTarefa('${tarefa.id}')">
@@ -76,6 +76,8 @@ function executarExclusaoTarefa() {
 function preencherModalInfoTarefa(tarefaId) {
     const tarefa = getTarefas().find(t => t.id == tarefaId);
     if (!tarefa) return;
+    const nomeResponsavel = getNomeUsuarioPorId(tarefa.responsavel);
+    const tituloProjeto = getTituloprojetoPorId(tarefa.projeto);
     setTextHTML("modal-info-tarefa-title", "Tarefa: " + tarefa.titulo);
     const vencida = tarefa.dataConclusao && tarefa.dataConclusao < hoje;
     const dataConclusaoInfo = tarefa.dataConclusao
@@ -91,14 +93,14 @@ function preencherModalInfoTarefa(tarefaId) {
             </span>
         </p>
         <p><b>Prioridade: </b>${tarefa.prioridade}</p>
-        <p><b>Projeto: </b>${tarefa.projeto}</p>
+        <p><b>Projeto: </b>${tituloProjeto}</p>
         <p><b>Data de criação: </b>${formatarData(tarefa.dataCriacao)}</p>
         <p><b>Data de conclusão: </b>${dataConclusaoInfo}</p>
         <p><b>Responsável: </b>
-            <b class="siglaNome rounded-circle me-1 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default; background-color:${gerarCorPorNome(tarefa.responsavel)}">
-                ${exibirSiglaNome(tarefa.responsavel)}
+            <b class="siglaNome rounded-circle me-1 align-middle d-inline-flex justify-content-center align-items-center" style="cursor:default; background-color:${gerarCorPorNome(nomeResponsavel)}">
+                ${exibirSiglaNome(nomeResponsavel)}
             </b>
-            ${tarefa.responsavel}
+            ${nomeResponsavel}
         </p>
     `;
     setTextHTML("modal-info-tarefa-body", texto);
@@ -114,7 +116,7 @@ function abrirModalEdicaoTarefa(tarefaId) {
     setTextHTML("btnSalvarTarefa", "Salvar");
     setTextValue("tituloTarefa", tarefa.titulo);
     setTextValue("prioridadeTarefa", tarefa.prioridade);
-    setTextValue("responsavelTarefa", tarefa.responsavel);
+    setTextValue("responsavelTarefa", getNomeUsuarioPorId(tarefa.responsavel));
     setTextValue("descricaoTarefa", tarefa.descricao);
     setTextValue("dataCriacaoTarefa", tarefa.dataCriacao);
     setTextValue("dataConclusaoTarefa", tarefa.dataConclusao);
@@ -132,28 +134,13 @@ function resetarModalTarefa() {
     setTextValue("dataCriacaoTarefa", hoje);
 }
 
-const selectProjetoTarefa = elem("projetoTarefa");
-
 //===============================================================
 // ====================== SETANDO VALORES =======================
 //===============================================================
 
 setTextValue("dataCriacaoTarefa", hoje);
-//===============================================================
-// ====================== SELECT PROJETOS =======================
-//===============================================================
-
-if (selectProjetoTarefa) {
-    let listaDeProjetos ='<option value="" disabled selected>Selecione</option>';
-    const projetosAtivos = arrayProjetos.filter(projeto => projeto.status.toUpperCase() == "ATIVO");// caso queira colocar só projetos ativos
-    arrayProjetos.forEach(projeto => {
-        listaDeProjetos +=
-            "<option value='" + projeto.titulo + "'>" +
-            projeto.titulo +
-            "</option>";
-    });
-    selectProjetoTarefa.innerHTML = listaDeProjetos;
-}
+carregarUsuariosAutocomplete("listaResponsaveisTarefa");
+carregarProjetosSelect("projetoTarefa");
 
 
 //===============================================================
@@ -165,7 +152,8 @@ function validarFormTarefa() {
 
     const titulo = elem("tituloTarefa").value;
     const prioridade = elem("prioridadeTarefa").value;
-    const responsavel = elem("responsavelTarefa").value;
+    const nomeResponsavel = elem("responsavelTarefa").value;
+    const responsavel = getUsuarios().find(u => u.nome == nomeResponsavel)?.id ?? nomeResponsavel;
     const descricao = elem("descricaoTarefa").value;
     const dataCriacao = elem("dataCriacaoTarefa").value;
     const dataConclusao = elem("dataConclusaoTarefa").value;
@@ -210,6 +198,8 @@ function validarFormTarefa() {
     alert(CONFIRMACAO.cadastroTarefas);
     form.reset();
     form.classList.remove("was-validated");
+    carregarUsuariosAutocomplete("listaResponsaveisTarefa");
+    carregarProjetosSelect("projetoTarefa");
 
     objetoTarefa.arrayTabela = getTarefas();
     criarTabela(objetoTarefa);

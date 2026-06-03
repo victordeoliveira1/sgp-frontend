@@ -20,6 +20,7 @@ function logar(usuarioLogado) {
 
     if (usuarioCompletoEncontrado) {
         const dadosUser = {
+            id: usuarioCompletoEncontrado.id,
             nome: usuarioCompletoEncontrado.nome,
             email: usuarioCompletoEncontrado.email,
             dataNascimento: usuarioCompletoEncontrado.dataNascimento,

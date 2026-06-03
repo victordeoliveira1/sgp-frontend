@@ -114,7 +114,7 @@
                 <!-- FIM DA ESTRUTURA BASE -->
                 <div class="barraAcoes">
                     <div class="row mx-0 flex-row">
-                        <div class="col-7 col-md-8 col-lg-5">
+                        <div class="col-7 col-md-8 col-lg-5" style="visibility:hidden;">
                             <div class="input-group flex-nowrap">
                                 <span class="input-group-text mx">
                                     <span class="material-icons">search</span>
@@ -218,11 +218,9 @@
                                     </label>
 
                                     <input type="text" id="responsavelTarefa" name="responsavelTarefa"
-                                        class="form-control" list="listaUsuarios" placeholder="Digite o responsável"
-                                        autocomplete="off" required>
-
-                                    <datalist id="listaUsuarios"></datalist>
-
+                                        class="form-control" list="listaResponsaveisTarefa"
+                                        placeholder="Digite o responsável" autocomplete="off" required>
+                                    <datalist id="listaResponsaveisTarefa"></datalist>
                                     <div class="invalid-feedback">
                                         Informe o responsável.
                                     </div>

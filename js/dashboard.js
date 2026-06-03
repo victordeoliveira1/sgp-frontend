@@ -33,7 +33,7 @@ const tarefasRecentes = arrayTarefas.slice(-4).reverse();
 setTextHTML("tarefasRecentes", "");
 tarefasRecentes.forEach(tarefa => {
     let corpoTarefasRecentes = elem("tarefasRecentes").innerHTML;
-    montarPreviewItem("tarefasRecentes", corpoTarefasRecentes, "checklist", tarefa.titulo, "Projeto: " + tarefa.projeto, tarefa.status);
+    montarPreviewItem("tarefasRecentes", corpoTarefasRecentes, "checklist", tarefa.titulo, "Projeto: " + getTituloprojetoPorId(tarefa.projeto), tarefa.status);
 });
 
 
@@ -233,17 +233,19 @@ new Chart(ctx, {
 // ======================= GRÁFICO 02 ===========================
 //===============================================================
 
-const totalTarefasConcluidasDoUsuario = arrayTarefas.filter(tarefa => tarefa.status === "CONCLUIDA" && tarefa.responsavel.toLowerCase() == nomeUsuario.toLowerCase()).length;
+const idUsuarioLogado = dadosUsuarioLogado?.id;
+
+const totalTarefasConcluidasDoUsuario = arrayTarefas.filter(tarefa => tarefa.status === "CONCLUIDA" && tarefa.responsavel == idUsuarioLogado).length;
 
 setTextHTML("numSuasTarefasConcluidas", "<b>Suas tarefas concluídas:(" + totalTarefasConcluidasDoUsuario + ")</b>");
 
 
-const numPendentes = arrayTarefas.filter(tarefa => tarefa.status === "PENDENTE" && tarefa.responsavel.toLowerCase() == nomeUsuario.toLowerCase()).length;
+const numPendentes = arrayTarefas.filter(tarefa => tarefa.status === "PENDENTE" && tarefa.responsavel == idUsuarioLogado).length;
 
-const numEmAndamento = arrayTarefas.filter(tarefa => tarefa.status === "EM_ANDAMENTO" && tarefa.responsavel.toLowerCase() == nomeUsuario.toLowerCase()).length;
+const numEmAndamento = arrayTarefas.filter(tarefa => tarefa.status === "EM_ANDAMENTO" && tarefa.responsavel == idUsuarioLogado).length;
 
 
-const numAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje && tarefas.status.toUpperCase() == "EM_ANDAMENTO" && tarefas.responsavel.toLowerCase() == nomeUsuario.toLowerCase()).length
+const numAtrasadas = arrayTarefas.filter(tarefas => tarefas.dataConclusao != "" && tarefas.dataConclusao < hoje && tarefas.status.toUpperCase() == "EM_ANDAMENTO" && tarefas.responsavel == idUsuarioLogado).length
 
 
 

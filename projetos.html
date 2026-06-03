@@ -119,7 +119,7 @@
                 <!-- Barra de ações -->
                 <div class="barraAcoes">
                     <div class="row mx-0 flex-row">
-                        <div class="col-7 col-md-8 col-lg-5">
+                        <div class="col-7 col-md-8 col-lg-5" style="visibility:hidden;">
                             <div class="input-group flex-nowrap">
                                 <span class="input-group-text mx">
                                     <span class="material-icons">search</span>
@@ -249,11 +249,10 @@
                                 <label for="responsavelProjeto" class="form-label fw-semibold">Responsável: <span
                                         class="text-danger">*</span></label>
                                 <input type="text" id="responsavelProjeto" name="responsavelProjeto"
-                                    class="form-control" list="listaUsuarios" placeholder="Digite o responsável"
-                                    autocomplete="off" required>
-                                <datalist id="listaUsuarios"></datalist>
-
-                                 <div class="invalid-feedback">Informe um responsável.</div>
+                                    class="form-control" list="listaResponsaveisProjeto"
+                                    placeholder="Digite o responsável" autocomplete="off" required>
+                                <datalist id="listaResponsaveisProjeto"></datalist>
+                                <div class="invalid-feedback">Informe um responsável.</div>
 
                             </div>
                         </div>

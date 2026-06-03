@@ -158,6 +158,13 @@ function validarFormUsuario() {
 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
+    if (idEdicao == usuarioLogado?.id) {
+        localStorage.setItem("dadosUser", JSON.stringify({ id: idEdicao, nome, email, dataNascimento, status }));
+        setTextHTML("siglaNome", exibirSiglaNome(nome));
+        setTextHTML("nomeUsuario", nome.split(" ")[0]);
+        elem("siglaNome").style.setProperty("--cor-siglasBG", gerarCorPorNome(nome));
+    }
+
     resetarModalUsuario();
     const modal = bootstrap.Modal.getInstance(elem("modalUsuario"));
     modal.hide();
