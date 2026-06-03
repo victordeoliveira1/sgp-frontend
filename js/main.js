@@ -32,7 +32,6 @@ if (!usuarioLogado) {
 
 const listaUsuarios = elem("listaUsuarios");
 const siglaNomeUsuario = elem("siglaNome");
-const cpfInput = elem("cpfUsuario");
 
 const ERROS = {
     emailVazio: "Informe o E-mail",
@@ -184,9 +183,10 @@ function getStatusColor(status) {
             return "primary";
 
         case "PENDENTE":
-            return "secondary";
+            return "warning";
 
         case "CANCELADO":
+        case "CANCELADA":
             return "danger";
 
         default:

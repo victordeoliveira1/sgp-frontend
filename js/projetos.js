@@ -52,11 +52,11 @@ const objetoProjeto = {
                     info
                     </span>
                 </button>
-                <a href="projetos.html?id=${projeto.id}&action=edit" class="btn">
-                   <span class="material-symbols-outlined text-primary">
+                <button class="btn" onclick="abrirModalEdicao('${projeto.id}')">
+                    <span class="material-symbols-outlined text-primary">
                     edit
-                    </span>              
-                </a> 
+                    </span>
+                </button>
                  <button onclick="confirmarExclusaoProjeto('${projeto.id}')"class="btn"> 
                     <span class="material-symbols-outlined text-danger">
                      delete
@@ -72,9 +72,24 @@ const objetoProjeto = {
 
 criarTabela(objetoProjeto);
 //=================== EXCLUIR PROJETO =======================
+let _idProjetoParaExcluir = null;
+
 function confirmarExclusaoProjeto(idprojeto) {
-    const novoArray = getProjetos().filter(projeto => projeto.id != idprojeto);
+    const projeto = getProjetos().find(p => p.id == idprojeto);
+    if (!projeto) return;
+    _idProjetoParaExcluir = idprojeto;
+    setTextHTML("nomeProjeto-exclusao", projeto.titulo);
+    const modal = new bootstrap.Modal(elem("modalConfirmarExclusao"));
+    modal.show();
+}
+
+function executarExclusaoProjeto() {
+    if (!_idProjetoParaExcluir) return;
+    const novoArray = getProjetos().filter(p => p.id != _idProjetoParaExcluir);
     localStorage.setItem("projetos", JSON.stringify(novoArray));
+    _idProjetoParaExcluir = null;
+    const modal = bootstrap.Modal.getInstance(elem("modalConfirmarExclusao"));
+    modal.hide();
     objetoProjeto.arrayTabela = getProjetos();
     criarTabela(objetoProjeto);
 }
@@ -113,6 +128,29 @@ setTextValue("dataCriacaoProjeto", hoje);
 // ================ VALIDAÇÃO FORM PROJETO ======================
 //===============================================================
 
+function abrirModalEdicao(projetoId) {
+    const projeto = getProjetos().find(p => p.id == projetoId);
+    if (!projeto) return;
+
+    elem("projetoIdEdicao").value = projeto.id;
+    setTextHTML("tituloModalProjeto", "Editar Projeto");
+    setTextValue("tituloProjeto", projeto.titulo);
+    setTextValue("descricaoProjeto", projeto.descricao);
+    setTextValue("dataCriacaoProjeto", projeto.dataCriacao);
+    setTextValue("dataConclusaoProjeto", projeto.dataConclusao);
+    setTextValue("statusProjeto", projeto.status);
+    setTextValue("responsavelProjeto", projeto.responsavel);
+
+    const modal = new bootstrap.Modal(elem("modalProjeto"));
+    modal.show();
+}
+
+function resetarModalProjeto() {
+    elem("projetoIdEdicao").value = "";
+    setTextHTML("tituloModalProjeto", "Novo Projeto");
+    setTextValue("dataCriacaoProjeto", hoje);
+}
+
 function validarFormProjeto() {
 
     const form = elem("formProjeto");
@@ -135,7 +173,6 @@ function validarFormProjeto() {
     inputCriacao.classList.remove("is-invalid");
     inputConclusao.classList.remove("is-invalid");
 
-
     if (dataConclusao && dataCriacao > dataConclusao) {
         inputCriacao.classList.add("is-invalid");
         inputConclusao.classList.add("is-invalid");
@@ -143,33 +180,27 @@ function validarFormProjeto() {
         return;
     }
 
-    const projeto = {
-        id: Date.now().toString(),
-        titulo: titulo,
-        descricao: descricao,
-        dataCriacao: dataCriacao,
-        dataConclusao: dataConclusao,
-        status: status,
-        responsavel: responsavel
+    const idEdicao = elem("projetoIdEdicao").value;
+    let projetos = getProjetos();
 
-    };
+    if (idEdicao) {
+        const index = projetos.findIndex(p => p.id == idEdicao);
+        projetos[index] = { id: idEdicao, titulo, descricao, dataCriacao, dataConclusao, status, responsavel };
+    } else {
+        projetos.push({ id: Date.now().toString(), titulo, descricao, dataCriacao, dataConclusao, status, responsavel });
+    }
 
-    console.log(projeto);
-
-    let projetos = JSON.parse(localStorage.getItem("projetos") || "[]");
-    projetos.push(projeto);
     localStorage.setItem("projetos", JSON.stringify(projetos));
 
+    resetarModalProjeto();
     const modal = bootstrap.Modal.getInstance(elem("modalProjeto"));
     modal.hide();
-
 
     alert(CONFIRMACAO.cadastroProjeto);
     form.reset();
     form.classList.remove("was-validated");
 
-    elem("dataCriacaoProjeto").value = hoje;
-    objetoProjeto.arrayTabela=getProjetos();
+    objetoProjeto.arrayTabela = getProjetos();
     criarTabela(objetoProjeto);
 }
 

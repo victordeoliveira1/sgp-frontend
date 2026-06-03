@@ -178,11 +178,11 @@
                     <!-- Cabeçalho -->
                     <div class="modal-header">
 
-                        <h5 class="modal-title">
+                        <h5 class="modal-title" id="tituloModalUsuario">
                             Novo Usuário
                         </h5>
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="resetarModalUsuario()"></button>
 
                     </div>
 
@@ -190,6 +190,7 @@
                     <div class="modal-body">
 
                         <form id="formUsuario">
+                            <input type="hidden" id="usuarioIdEdicao">
 
                             <!-- Nome -->
                             <div class="mb-3">
@@ -262,10 +263,10 @@
 
                             <!-- Botões -->
                             <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-primary btn-lg"
+                                <button type="button" id="btnSalvarUsuario" class="btn btn-primary btn-lg"
                                     onclick="validarFormUsuario()">Adicionar Usuário</button>
                                 <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
-                                    onclick="cancelarFormulario('formUsuario')">Cancelar</button>
+                                    onclick="cancelarFormulario('formUsuario');resetarModalUsuario()">Cancelar</button>
                             </div>
 
                         </form>
@@ -277,6 +278,31 @@
 
         </div>
         <!-- Fim do modal -->
+
+        <!-- Modal de confirmação de exclusão -->
+        <div class="modal fade" id="modalConfirmarExclusaoUsuario" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title text-danger">
+                            <span class="material-symbols-outlined align-middle me-1">delete</span>
+                            Excluir Usuário
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body pt-2">
+                        <p class="mb-1">Tem certeza que deseja excluir o usuário:</p>
+                        <p class="fw-bold" id="nomeUsuario-exclusao"></p>
+                        <p class="text-secondary small mb-0">Esta ação não pode ser desfeita.</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="executarExclusaoUsuario()">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src=" js/bootstrap.js">
         </script>
         <script src="js/main.js">

@@ -135,10 +135,23 @@
                 <div class="row">
                     <div class="conteudo col-md-12">
                         <!-- Tabela Tarefas -->
-                        <div class="row mx-0 mt-4" style="height: 800px;">
-                            <div class="graficoTarefas col-12 h-100">
-                                <h4><b>TABELA</b></h4>
+                        <div class="row mx-0 mt-4 px-3" style="height: fit-content;">
+                            <div class="col-12 table-responsive d-flex flex-column gap-2" style="height: fit-content;">
+                                <table class="table table-hover align-middle table-striped">
+                                    <thead class="cabecalhoTabela">
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Responsável</th>
+                                            <th>Status</th>
+                                            <th>Projeto</th>
+                                            <th>Data de Conclusão</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="corpoTabelaTarefas"></tbody>
+                                </table>
                             </div>
+                            <div id="paginacaoTarefas" class="d-flex justify-content-center mt-3 gap-2"></div>
                         </div>
                         <!-- Fim tabela Tarefas -->
 
@@ -159,18 +172,19 @@
                     <!-- Cabeçalho -->
                     <div class="modal-header">
 
-                        <h5 class="modal-title">
+                        <h5 class="modal-title" id="tituloModalTarefa">
                             Nova Tarefa
                         </h5>
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="resetarModalTarefa()"></button>
 
                     </div>
 
                     <!-- Corpo -->
-                    <div class="modal-body" id="modalTarefa">
+                    <div class="modal-body">
 
                         <form id="formTarefa">
+                            <input type="hidden" id="tarefaIdEdicao">
                             <!-- Título -->
                             <div class="mb-3">
                                 <label for="tituloTarefa" class="form-label fw-semibold">Título: <span
@@ -285,10 +299,10 @@
 
                             <!-- Botões -->
                             <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-primary btn-lg"
+                                <button type="button" id="btnSalvarTarefa" class="btn btn-primary btn-lg"
                                     onclick="validarFormTarefa()">Salvar</button>
                                 <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
-                                    onclick="cancelarFormulario('formTarefa');setarData('dataCriacaoTarefa',hoje)">Cancelar</button>
+                                    onclick="cancelarFormulario('formTarefa');resetarModalTarefa()">Cancelar</button>
                             </div>
 
                         </form>
@@ -301,6 +315,47 @@
 
         </div>
         <!-- Fim do modal -->
+
+        <!-- Modal Info Tarefa -->
+        <div class="modal fade" id="modalInfoTarefa" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-info-tarefa-title">Tarefa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="modal-info-tarefa-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmação de exclusão -->
+        <div class="modal fade" id="modalConfirmarExclusaoTarefa" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title text-danger">
+                            <span class="material-symbols-outlined align-middle me-1">delete</span>
+                            Excluir Tarefa
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body pt-2">
+                        <p class="mb-1">Tem certeza que deseja excluir a tarefa:</p>
+                        <p class="fw-bold" id="nomeTarefa-exclusao"></p>
+                        <p class="text-secondary small mb-0">Esta ação não pode ser desfeita.</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="executarExclusaoTarefa()">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src=" js/bootstrap.js">
         </script>
         <script src="js/main.js">

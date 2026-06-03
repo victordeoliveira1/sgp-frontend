@@ -182,17 +182,18 @@
                 <!-- Cabeçalho -->
                 <div class="modal-header">
 
-                    <h5 class="modal-title">
+                    <h5 class="modal-title" id="tituloModalProjeto">
                         Novo Projeto
                     </h5>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="resetarModalProjeto()"></button>
 
                 </div>
 
                 <!-- Corpo -->
                 <div class="modal-body">
                     <form id="formProjeto">
+                        <input type="hidden" id="projetoIdEdicao">
 
                         <!-- Nome do projeto -->
                         <div class="mb-3">
@@ -252,7 +253,7 @@
                                     autocomplete="off" required>
                                 <datalist id="listaUsuarios"></datalist>
 
-                                > <div class="invalid-feedback">Informe um responsável.</div>
+                                 <div class="invalid-feedback">Informe um responsável.</div>
 
                             </div>
                         </div>
@@ -262,7 +263,7 @@
                             <button type="button" class="btn btn-primary btn-lg"
                                 onclick="validarFormProjeto()">Salvar</button>
                             <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
-                                onclick="cancelarFormulario('formProjeto');setarData('dataCriacaoProjeto',hoje)">Cancelar</button>
+                                onclick="cancelarFormulario('formProjeto');resetarModalProjeto()">Cancelar</button>
                         </div>
 
                     </form>
@@ -306,6 +307,30 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Modal de confirmação de exclusão -->
+    <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-danger">
+                        <span class="material-symbols-outlined align-middle me-1">delete</span>
+                        Excluir Projeto
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-2">
+                    <p class="mb-1">Tem certeza que deseja excluir o projeto:</p>
+                    <p class="fw-bold" id="nomeProjeto-exclusao"></p>
+                    <p class="text-secondary small mb-0">Esta ação não pode ser desfeita.</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="executarExclusaoProjeto()">Excluir</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="modal-base-area"></div>
