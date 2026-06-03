@@ -153,7 +153,9 @@ function validarFormTarefa() {
     const titulo = elem("tituloTarefa").value;
     const prioridade = elem("prioridadeTarefa").value;
     const nomeResponsavel = elem("responsavelTarefa").value;
-    const responsavel = getUsuarios().find(u => u.nome == nomeResponsavel)?.id ?? nomeResponsavel;
+    const usuarioEncontrado = getUsuarios().find(u => u.nome == nomeResponsavel);
+    const responsavel = usuarioEncontrado ? usuarioEncontrado.id : nomeResponsavel;
+
     const descricao = elem("descricaoTarefa").value;
     const dataCriacao = elem("dataCriacaoTarefa").value;
     const dataConclusao = elem("dataConclusaoTarefa").value;

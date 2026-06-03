@@ -163,7 +163,8 @@ function validarFormProjeto() {
     const dataConclusao = elem("dataConclusaoProjeto").value;
     const status = elem("statusProjeto").value;
     const nomeResponsavel = elem("responsavelProjeto").value;
-    const responsavel = getUsuarios().find(u => u.nome == nomeResponsavel)?.id ?? nomeResponsavel;
+    const usuarioEncontrado = getUsuarios().find(u => u.nome == nomeResponsavel);
+    const responsavel = usuarioEncontrado ? usuarioEncontrado.id : nomeResponsavel;
 
     if (!form.checkValidity()) {
         form.classList.add("was-validated");
